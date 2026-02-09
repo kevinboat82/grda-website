@@ -31,16 +31,16 @@
 /* Glassmorphism Card (Green Variant) */
 /* Glassmorphism Card (Green Variant) */
 .stat-card {
-    background: rgba(0, 107, 63, 0.85);
-    /* Green Glass Default */
+    background: rgba(0, 107, 63, 0.85) !important;
+    /* Green Glass Default Forced */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
     padding: 1.5rem 1rem;
     text-align: center;
-    color: white;
-    /* White text default */
+    color: white !important;
+    /* White text default forced */
     transition: all 0.3s ease;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
 }

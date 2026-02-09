@@ -30,8 +30,8 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: var(--color-primary);
-    /* Green background default */
+    background: var(--color-primary) !important;
+    /* Green background default forced */
     padding: 1.25rem 2rem;
     border-radius: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -40,8 +40,8 @@
     flex: 1 1 250px;
     min-width: 200px;
     max-width: 400px;
-    color: white;
-    /* White text default */
+    color: white !important;
+    /* White text default forced */
 }
 
 .stat-item:hover {

@@ -453,6 +453,7 @@ const Media = () => {
                                 <img
                                     src={item.imageUrl}
                                     alt={item.caption || "Gallery Image"}
+                                    loading="lazy"
                                 />
                                 {item.caption && (
                                     <div className="gallery-caption">

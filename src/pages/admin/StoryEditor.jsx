@@ -24,6 +24,8 @@ const StoryEditor = () => {
     const [category, setCategory] = useState('news'); // Default category
     const [link, setLink] = useState('');
     const [linkText, setLinkText] = useState('');
+    const [statValue, setStatValue] = useState('');
+    const [statLabel, setStatLabel] = useState('');
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [existingImageUrl, setExistingImageUrl] = useState('');
@@ -45,6 +47,10 @@ const StoryEditor = () => {
                         setCategory(data.category || 'news');
                         setLink(data.link || '');
                         setLinkText(data.linkText || '');
+                        if (data.stats) {
+                            setStatValue(data.stats.value || '');
+                            setStatLabel(data.stats.label || '');
+                        }
                         setExistingImageUrl(data.image || '');
                         setImagePreview(data.image || null);
                     } else {
@@ -98,6 +104,10 @@ const StoryEditor = () => {
                 link,
                 linkText,
                 image: imageUrl,
+                stats: (statValue || statLabel) ? {
+                    value: statValue,
+                    label: statLabel
+                } : null,
                 updatedAt: new Date()
             };
 
@@ -219,6 +229,33 @@ const StoryEditor = () => {
                                 onChange={(e) => setLinkText(e.target.value)}
                                 placeholder="Read More"
                             />
+                        </div>
+                    </div>
+
+                    <div className="form-grid">
+                        <div className="form-group">
+                            <label>Statistic Value (Optional)</label>
+                            <input
+                                type="text"
+                                value={statValue}
+                                onChange={(e) => setStatValue(e.target.value)}
+                                placeholder="e.g., 2027, 9, 160km"
+                            />
+                            <p className="form-help">
+                                Shown as the main number in the slider status box
+                            </p>
+                        </div>
+                        <div className="form-group">
+                            <label>Statistic Label (Optional)</label>
+                            <input
+                                type="text"
+                                value={statLabel}
+                                onChange={(e) => setStatLabel(e.target.value)}
+                                placeholder="e.g., Target Year, Board Members"
+                            />
+                            <p className="form-help">
+                                Shown below the value in the slider status box
+                            </p>
                         </div>
                     </div>
 

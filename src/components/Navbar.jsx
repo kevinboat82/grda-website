@@ -35,7 +35,10 @@ const Navbar = () => {
             <div className="container navbar-container">
                 <NavLink to="/" className="navbar-logo">
                     <img src="/grda-logo.png" alt="GRDA Logo" className="logo-image" />
-                    <span>GHANA RAILWAY DEVELOPMENT AUTHORITY</span>
+                    <div className="navbar-logo-text">
+                        <span className="logo-line-1">GHANA RAILWAY</span>
+                        <span className="logo-line-2">DEVELOPMENT AUTHORITY</span>
+                    </div>
                 </NavLink>
 
                 {/* Desktop Navigation */}

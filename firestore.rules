@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Match the stories collection
+    match /stories/{story} {
+      // Allow anyone to read (so they show up on the home page)
+      allow read: if true;
+      
+      // Only allow authenticated users (admin) to create, update, or delete
+      allow write: if request.auth != null;
+    }
+
+    // Match the media_gallery collection
+    match /media_gallery/{media} {
+      // Allow anyone to read
+      allow read: if true;
+      
+      // Only allow authenticated users to create or delete
+      allow write: if request.auth != null;
+    }
+
+    // Match the projects collection
+    match /projects/{project} {
+      // Allow anyone to read
+      allow read: if true;
+      
+      // Only allow authenticated users (admin) to create, update, or delete
+      allow write: if request.auth != null;
+    }
+    
+    // Default deny for everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

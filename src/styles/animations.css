@@ -1,0 +1,64 @@
+/* Global Animation Base Class */
+.animate-on-scroll {
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    will-change: opacity, transform;
+}
+
+/* Specific Animations */
+
+/* Fade Up */
+.animate-on-scroll.fade-up {
+    transform: translateY(30px);
+}
+
+.animate-on-scroll.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade In */
+.animate-on-scroll.fade-in {
+    transform: scale(0.95);
+}
+
+.animate-on-scroll.fade-in.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Slide From Left */
+.animate-on-scroll.slide-left {
+    transform: translateX(-50px);
+}
+
+.animate-on-scroll.slide-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Slide From Right */
+.animate-on-scroll.slide-right {
+    transform: translateX(50px);
+}
+
+.animate-on-scroll.slide-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Stagger Children (Helpful for lists/grids) */
+/* Requires manually adding style={{ transitionDelay: '0.1s' }} etc. to children */
+
+/* Animation Utilities for Flip Cards etc */
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

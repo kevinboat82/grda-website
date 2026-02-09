@@ -6,6 +6,8 @@ import { ArrowLeft, Calendar, Clock, ChevronRight, Archive, X } from 'lucide-rea
 import { archiveStories, getArchiveMonths } from '../data/archiveStories';
 import './StoryDetail.css';
 
+import MasonryGallery from '../components/MasonryGallery';
+
 const StoryDetail = () => {
     const { id } = useParams();
     const [story, setStory] = useState(null);
@@ -13,6 +15,7 @@ const StoryDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [galleryItems, setGalleryItems] = useState([]);
 
     // Check if this is an archive story
     const isArchive = id?.startsWith('archive-');
@@ -57,6 +60,40 @@ const StoryDetail = () => {
         };
         fetchData();
     }, [id, isArchive]);
+
+    // Prepare gallery items when story loads
+    useEffect(() => {
+        if (story?.gallery && story.gallery.length > 0) {
+            const loadImages = async () => {
+                const items = await Promise.all(
+                    story.gallery.map(async (url, index) => {
+                        return new Promise((resolve) => {
+                            const img = new Image();
+                            img.onload = () => {
+                                resolve({
+                                    id: `gallery-${index}`,
+                                    img: url,
+                                    height: img.naturalHeight,
+                                    width: img.naturalWidth // Added width just in case, though Masonry only uses height logic currently
+                                });
+                            };
+                            img.onerror = () => {
+                                // Fallback for failed images
+                                resolve({
+                                    id: `gallery-${index}`,
+                                    img: url,
+                                    height: 300
+                                });
+                            };
+                            img.src = url;
+                        });
+                    })
+                );
+                setGalleryItems(items);
+            };
+            loadImages();
+        }
+    }, [story]);
 
     // Format the date
     const formatDate = (timestamp) => {
@@ -158,23 +195,17 @@ const StoryDetail = () => {
                         )}
 
                         {/* Story Gallery */}
-                        {story.gallery && story.gallery.length > 0 && (
+                        {galleryItems.length > 0 && (
                             <div className="story-gallery-section">
                                 <h3>Photo Gallery</h3>
-                                <div className="detail-gallery-grid">
-                                    {story.gallery.map((imgUrl, index) => (
-                                        <div
-                                            key={index}
-                                            className="detail-gallery-item"
-                                            onClick={() => setSelectedImage(imgUrl)}
-                                        >
-                                            <img src={imgUrl} alt={`Gallery ${index + 1}`} />
-                                            <div className="gallery-overlay">
-                                                <span className="view-text">View</span>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
+                                <MasonryGallery
+                                    items={galleryItems}
+                                    onImageClick={(url) => setSelectedImage(url)}
+                                    animateFrom="bottom"
+                                    blurToFocus={true}
+                                    stagger={0.1}
+                                    colorShiftOnHover={true}
+                                />
                             </div>
                         )}
 

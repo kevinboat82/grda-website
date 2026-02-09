@@ -49,10 +49,12 @@ const StatItem = ({ icon: Icon, value, label, suffix = '+' }) => {
             <div className="stat-icon">
                 <Icon size={24} />
             </div>
-            <div className="stat-value">
-                {count.toLocaleString()}{suffix}
+            <div className="stat-content">
+                <div className="stat-value">
+                    {count.toLocaleString()}{suffix}
+                </div>
+                <div className="stat-label">{label}</div>
             </div>
-            <div className="stat-label">{label}</div>
         </div>
     );
 };

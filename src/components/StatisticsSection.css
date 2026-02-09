@@ -123,22 +123,46 @@
 
 @media (max-width: 480px) {
     .stats-section {
-        padding: 1.5rem 0;
+        padding: 2rem 0;
     }
 
     .stats-grid {
-        gap: 0.5rem;
+        grid-template-columns: 1fr;
+        /* Stack vertically on very small screens */
+        gap: 1rem;
+        max-width: 300px;
+        /* Limit width */
+        margin: 0 auto;
     }
 
     .stat-card {
-        padding: 1rem 0.5rem;
+        padding: 1rem;
+        display: flex;
+        /* Horizontal layout on mobile for better space usage */
+        align-items: center;
+        text-align: left;
+        gap: 1rem;
+    }
+
+    .stat-icon {
+        margin: 0;
+        /* Remove bottom margin */
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+    }
+
+    .stat-content {
+        display: flex;
+        flex-direction: column;
     }
 
     .stat-value {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.1rem;
     }
 
     .stat-label {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
     }
 }

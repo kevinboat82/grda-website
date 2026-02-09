@@ -169,6 +169,34 @@ const StoryEditor = () => {
         }
     };
 
+    // Drag and Drop handlers
+    const [isDragging, setIsDragging] = useState(false);
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        setIsDragging(true);
+    };
+
+    const handleDragLeave = (e) => {
+        e.preventDefault();
+        setIsDragging(false);
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setIsDragging(false);
+
+        if (e.dataTransfer.files) {
+            const newFiles = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+            const newGalleryItems = newFiles.map(file => ({
+                id: `new-${Date.now()}-${Math.random()}`,
+                url: URL.createObjectURL(file), // Create preview URL
+                file: file
+            }));
+            setGallery(prev => [...prev, ...newGalleryItems]);
+        }
+    };
+
     if (initialLoading) {
         return (
             <div className="admin-loading">
@@ -193,6 +221,13 @@ const StoryEditor = () => {
 
             <div className="editor-form">
                 <form onSubmit={handleSubmit}>
+                    {/* ... (previous form fields omitted for brevity, but I will include them in context if needed, but here I am creating a chunk that starts from `if (initialLoading)` so I need to be careful. Wait, I should target the return block mainly, but I need to insert the handler functions first. Let's do a multi-replace or carefully target) */}
+                    {/* Actually, let's look at where I can insert the handlers. Line 102 seems good, before `handleSubmit`. But wait, `handleSubmit` is line 103. I can insert before `if (initialLoading)`.
+                    And then I need to update the JSX for the gallery section.
+                    
+                    Let's utilize `multi_replace_file_content` for this to be safer.
+                    */}
+
                     {/* Category Selection */}
                     <div className="form-group full-width">
                         <label>
@@ -330,34 +365,51 @@ const StoryEditor = () => {
 
                     <div className="form-group full-width">
                         <label>Story Gallery / Diary</label>
-                        <div className="gallery-grid">
-                            {gallery.map((item) => (
-                                <div key={item.id} className="gallery-item">
-                                    <img src={item.url} alt="Gallery item" />
-                                    <button
-                                        type="button"
-                                        onClick={() => removeGalleryImage(item.id)}
-                                        className="gallery-remove-btn"
-                                    >
-                                        <X size={14} />
-                                    </button>
+                        {/* Drag and Drop Gallery Zone */}
+                        <div
+                            className={`gallery-drop-zone ${isDragging ? 'active' : ''}`}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                        >
+                            {isDragging && (
+                                <div className="drop-message">
+                                    <Upload size={48} />
+                                    <span>Drop images here to add them</span>
                                 </div>
-                            ))}
-                            <label className="add-gallery-btn">
-                                <Plus size={24} />
-                                <span>Add Photos</span>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    multiple
-                                    onChange={handleGalleryUpload}
-                                    style={{ display: 'none' }}
-                                />
-                            </label>
+                            )}
+
+                            <div className="gallery-grid">
+                                {gallery.map((item) => (
+                                    <div key={item.id} className="gallery-item">
+                                        <img src={item.url} alt="Gallery item" />
+                                        <button
+                                            type="button"
+                                            onClick={() => removeGalleryImage(item.id)}
+                                            className="gallery-remove-btn"
+                                        >
+                                            <X size={14} />
+                                        </button>
+                                    </div>
+                                ))}
+                                <label className="add-gallery-btn">
+                                    <Plus size={24} />
+                                    <span>Add Photos</span>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        multiple
+                                        onChange={handleGalleryUpload}
+                                        style={{ display: 'none' }}
+                                    />
+                                </label>
+                            </div>
+                            {!isDragging && (
+                                <p className="form-help" style={{ textAlign: 'center', marginTop: '1rem' }}>
+                                    Drag & drop images here, or click "Add Photos" to select multiple files.
+                                </p>
+                            )}
                         </div>
-                        <p className="form-help">
-                            Add multiple photos to create a gallery at the bottom of the story.
-                        </p>
                     </div>
 
                     <div className="form-actions">

@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { Link } from 'react-router-dom';
-import { Plus, Trash2, Pencil, FolderOpen, FileText } from 'lucide-react';
+import { Plus, Trash2, Pencil, FolderOpen, FileText, Image as ImageIcon } from 'lucide-react';
+import MediaManager from './MediaManager';
 import './Admin.css';
 
 const Dashboard = () => {
     const [stories, setStories] = useState([]);
     const [projects, setProjects] = useState([]);
+    const [mediaCount, setMediaCount] = useState(0);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('stories');
 
@@ -21,6 +23,9 @@ const Dashboard = () => {
             const projectsSnapshot = await getDocs(collection(db, "projects"));
             const projectsData = projectsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setProjects(projectsData);
+
+            const mediaSnapshot = await getDocs(collection(db, "media_gallery"));
+            setMediaCount(mediaSnapshot.size);
         } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
@@ -60,6 +65,37 @@ const Dashboard = () => {
         <div className="admin-dashboard">
             <h1>Dashboard</h1>
 
+            {/* Overview Stats */}
+            <div className="stats-grid">
+                <div className="stat-card" onClick={() => setActiveTab('stories')}>
+                    <div className="stat-icon stories">
+                        <FileText size={24} />
+                    </div>
+                    <div className="stat-info">
+                        <h3>Stories</h3>
+                        <p>{stories.length}</p>
+                    </div>
+                </div>
+                <div className="stat-card" onClick={() => setActiveTab('projects')}>
+                    <div className="stat-icon projects">
+                        <FolderOpen size={24} />
+                    </div>
+                    <div className="stat-info">
+                        <h3>Projects</h3>
+                        <p>{projects.length}</p>
+                    </div>
+                </div>
+                <div className="stat-card" onClick={() => setActiveTab('media')}>
+                    <div className="stat-icon media">
+                        <ImageIcon size={24} />
+                    </div>
+                    <div className="stat-info">
+                        <h3>Media Items</h3>
+                        <p>{mediaCount}</p>
+                    </div>
+                </div>
+            </div>
+
             {/* Tabs */}
             <div className="admin-tabs">
                 <button
@@ -67,14 +103,21 @@ const Dashboard = () => {
                     className={`admin-tab ${activeTab === 'stories' ? 'active' : ''}`}
                 >
                     <FileText size={18} />
-                    Stories ({stories.length})
+                    Stories
                 </button>
                 <button
                     onClick={() => setActiveTab('projects')}
                     className={`admin-tab ${activeTab === 'projects' ? 'active' : ''}`}
                 >
                     <FolderOpen size={18} />
-                    Projects ({projects.length})
+                    Projects
+                </button>
+                <button
+                    onClick={() => setActiveTab('media')}
+                    className={`admin-tab ${activeTab === 'media' ? 'active' : ''}`}
+                >
+                    <ImageIcon size={18} />
+                    Media Gallery
                 </button>
             </div>
 
@@ -283,6 +326,13 @@ const Dashboard = () => {
                         )}
                     </div>
                 </>
+            )}
+
+            {/* Media Tab */}
+            {activeTab === 'media' && (
+                <div style={{ marginTop: '1rem' }}>
+                    <MediaManager />
+                </div>
             )}
         </div>
     );

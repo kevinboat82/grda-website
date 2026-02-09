@@ -30,50 +30,48 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: white;
-    /* White background default */
+    background: var(--color-primary);
+    /* Green background default */
     padding: 1.25rem 2rem;
     border-radius: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(229, 231, 235, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
     flex: 1 1 250px;
     min-width: 200px;
     max-width: 400px;
-    color: var(--color-text-main);
-    /* Dark text default */
+    color: white;
+    /* White text default */
 }
 
 .stat-item:hover {
     transform: translateY(-2px);
-    background: var(--color-primary);
-    /* Green on hover */
-    color: white;
+    background: var(--color-primary-dark);
+    /* Darker green on hover */
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .stat-item svg {
     flex-shrink: 0;
-    color: var(--color-primary);
-    /* Green icon default */
+    color: var(--color-secondary);
+    /* Gold icon default */
     padding: 10px;
-    background: rgba(17, 94, 61, 0.1);
-    /* Light green bg default */
+    background: rgba(255, 255, 255, 0.1);
+    /* Transparent white bg default */
     border-radius: 12px;
     box-sizing: content-box;
     transition: all 0.3s ease;
 }
 
 .stat-item:hover svg {
-    color: white;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .stat-value {
     font-size: 1.75rem;
     font-weight: 800;
-    color: var(--color-text-main);
-    /* Dark text default */
+    color: white;
+    /* White text default */
     line-height: 1;
     display: block;
     margin-bottom: 0.25rem;
@@ -87,8 +85,8 @@
 
 .stat-label {
     font-size: 0.8rem;
-    color: var(--color-text-light);
-    /* Muted/Dark text default */
+    color: rgba(255, 255, 255, 0.9);
+    /* Muted white text default */
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -97,7 +95,7 @@
 }
 
 .stat-item:hover .stat-label {
-    color: rgba(255, 255, 255, 0.9);
+    color: white;
 }
 
 /* Card Grid */

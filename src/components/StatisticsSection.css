@@ -31,63 +31,64 @@
 /* Glassmorphism Card (Green Variant) */
 /* Glassmorphism Card (Green Variant) */
 .stat-card {
-    background: rgba(255, 255, 255, 0.95);
-    /* White Glass Default */
+    background: rgba(0, 107, 63, 0.85);
+    /* Green Glass Default */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
     padding: 1.5rem 1rem;
     text-align: center;
-    color: var(--color-text-main);
+    color: white;
+    /* White text default */
     transition: all 0.3s ease;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
 }
 
 .stat-card:hover {
-    background: rgba(0, 107, 63, 0.9);
-    /* Green Glass Hover */
+    background: rgba(0, 107, 63, 0.95);
+    /* More opaque green on hover */
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: white;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    border-color: var(--color-secondary);
+    /* Gold border on hover */
 }
 
 .stat-icon {
     width: 48px;
     height: 48px;
-    background: rgba(0, 107, 63, 0.1);
-    /* Light green icon bg */
+    background: rgba(255, 255, 255, 0.15);
+    /* Transparent white icon bg */
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 1rem auto;
-    color: var(--color-primary);
-    /* Green icon */
+    color: var(--color-secondary);
+    /* Gold icon default */
     transition: all 0.3s ease;
 }
 
 .stat-card:hover .stat-icon {
     background: rgba(255, 255, 255, 0.2);
-    color: white;
+    transform: scale(1.05);
 }
 
 .stat-value {
     font-size: 2.25rem;
     font-weight: 800;
     margin-bottom: 0.25rem;
-    color: var(--color-primary);
-    /* Green value default */
+    color: white;
+    /* White value default */
     background: none;
     -webkit-text-fill-color: initial;
-    text-shadow: none;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .stat-card:hover .stat-value {
     color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .stat-label {
@@ -96,13 +97,13 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 600;
-    color: var(--color-text-muted);
-    /* Dark label */
+    color: rgba(255, 255, 255, 0.9);
+    /* White/Transparent label default */
     transition: color 0.3s ease;
 }
 
 .stat-card:hover .stat-label {
-    color: rgba(255, 255, 255, 0.9);
+    color: white;
 }
 
 /* ============================================ */

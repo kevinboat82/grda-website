@@ -35,7 +35,7 @@ const Navbar = () => {
             <div className="container navbar-container">
                 <NavLink to="/" className="navbar-logo">
                     <img src="/grda-logo.png" alt="GRDA Logo" className="logo-image" />
-                    <span>GRDA</span>
+                    <span>GHANA RAILWAY DEVELOPMENT AUTHORITY</span>
                 </NavLink>
 
                 {/* Desktop Navigation */}

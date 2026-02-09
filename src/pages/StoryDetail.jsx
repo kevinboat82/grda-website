@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { db } from '../firebase';
-import { ArrowLeft, Calendar, Clock, ChevronRight, Archive } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, ChevronRight, Archive, X } from 'lucide-react';
 import { archiveStories, getArchiveMonths } from '../data/archiveStories';
 import './StoryDetail.css';
 
@@ -12,6 +12,7 @@ const StoryDetail = () => {
     const [recentPosts, setRecentPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     // Check if this is an archive story
     const isArchive = id?.startsWith('archive-');
@@ -156,6 +157,27 @@ const StoryDetail = () => {
                             </div>
                         )}
 
+                        {/* Story Gallery */}
+                        {story.gallery && story.gallery.length > 0 && (
+                            <div className="story-gallery-section">
+                                <h3>Photo Gallery</h3>
+                                <div className="detail-gallery-grid">
+                                    {story.gallery.map((imgUrl, index) => (
+                                        <div
+                                            key={index}
+                                            className="detail-gallery-item"
+                                            onClick={() => setSelectedImage(imgUrl)}
+                                        >
+                                            <img src={imgUrl} alt={`Gallery ${index + 1}`} />
+                                            <div className="gallery-overlay">
+                                                <span className="view-text">View</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         {/* Back to stories */}
                         <div className="story-footer">
                             <Link to="/media" className="btn btn-outline">
@@ -230,6 +252,18 @@ const StoryDetail = () => {
                     </aside>
                 </div>
             </div>
+
+            {/* Lightbox Modal */}
+            {selectedImage && (
+                <div className="lightbox-overlay" onClick={() => setSelectedImage(null)}>
+                    <button className="lightbox-close" onClick={() => setSelectedImage(null)}>
+                        <X size={32} />
+                    </button>
+                    <div className="lightbox-content" onClick={e => e.stopPropagation()}>
+                        <img src={selectedImage} alt="Full size" />
+                    </div>
+                </div>
+            )}
         </article>
     );
 };

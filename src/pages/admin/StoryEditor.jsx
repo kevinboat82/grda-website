@@ -3,7 +3,7 @@ import { collection, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../firebase';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Upload, X, ArrowLeft, Tag } from 'lucide-react';
+import { Upload, X, ArrowLeft, Tag, Plus } from 'lucide-react';
 import './Editor.css';
 
 // Available categories
@@ -29,6 +29,7 @@ const StoryEditor = () => {
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [existingImageUrl, setExistingImageUrl] = useState('');
+    const [gallery, setGallery] = useState([]); // Array of { id, url, file }
     const [loading, setLoading] = useState(false);
     const [initialLoading, setInitialLoading] = useState(isEditMode);
     const navigate = useNavigate();
@@ -53,6 +54,13 @@ const StoryEditor = () => {
                         }
                         setExistingImageUrl(data.image || '');
                         setImagePreview(data.image || null);
+
+                        if (data.gallery && Array.isArray(data.gallery)) {
+                            setGallery(data.gallery.map((url, index) => ({
+                                id: `existing-${index}`,
+                                url: url
+                            })));
+                        }
                     } else {
                         alert("Story not found");
                         navigate('/admin/dashboard');
@@ -76,6 +84,22 @@ const StoryEditor = () => {
         }
     };
 
+    const handleGalleryUpload = (e) => {
+        if (e.target.files) {
+            const newFiles = Array.from(e.target.files);
+            const newGalleryItems = newFiles.map(file => ({
+                id: `new-${Date.now()}-${Math.random()}`,
+                url: URL.createObjectURL(file),
+                file: file
+            }));
+            setGallery(prev => [...prev, ...newGalleryItems]);
+        }
+    };
+
+    const removeGalleryImage = (itemId) => {
+        setGallery(prev => prev.filter(item => item.id !== itemId));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -89,11 +113,26 @@ const StoryEditor = () => {
         try {
             let imageUrl = existingImageUrl;
 
-            // Upload new image if selected
+            // Upload new main image if selected
             if (image) {
                 const storageRef = ref(storage, `hero-stories/${Date.now()}_${image.name}`);
                 await uploadBytes(storageRef, image);
                 imageUrl = await getDownloadURL(storageRef);
+            }
+
+            // Process Gallery Images
+            const galleryUrls = [];
+            for (const item of gallery) {
+                if (item.file) {
+                    // New upload
+                    const storageRef = ref(storage, `story-gallery/${Date.now()}_${item.file.name}`);
+                    await uploadBytes(storageRef, item.file);
+                    const url = await getDownloadURL(storageRef);
+                    galleryUrls.push(url);
+                } else {
+                    // Existing image
+                    galleryUrls.push(item.url);
+                }
             }
 
             const storyData = {
@@ -108,6 +147,7 @@ const StoryEditor = () => {
                     value: statValue,
                     label: statLabel
                 } : null,
+                gallery: galleryUrls,
                 updatedAt: new Date()
             };
 
@@ -286,6 +326,38 @@ const StoryEditor = () => {
                                 </label>
                             )}
                         </div>
+                    </div>
+
+                    <div className="form-group full-width">
+                        <label>Story Gallery / Diary</label>
+                        <div className="gallery-grid">
+                            {gallery.map((item) => (
+                                <div key={item.id} className="gallery-item">
+                                    <img src={item.url} alt="Gallery item" />
+                                    <button
+                                        type="button"
+                                        onClick={() => removeGalleryImage(item.id)}
+                                        className="gallery-remove-btn"
+                                    >
+                                        <X size={14} />
+                                    </button>
+                                </div>
+                            ))}
+                            <label className="add-gallery-btn">
+                                <Plus size={24} />
+                                <span>Add Photos</span>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    onChange={handleGalleryUpload}
+                                    style={{ display: 'none' }}
+                                />
+                            </label>
+                        </div>
+                        <p className="form-help">
+                            Add multiple photos to create a gallery at the bottom of the story.
+                        </p>
                     </div>
 
                     <div className="form-actions">

@@ -4,7 +4,6 @@ import { db } from '../firebase';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Calendar, ArrowRight, X, ChevronLeft, ChevronRight, Images, Search, Clock, Archive, Newspaper, Megaphone, FileText, CalendarDays } from 'lucide-react';
 import { archiveStories, getArchiveMonths } from '../data/archiveStories';
-import MasonryGallery from '../components/MasonryGallery';
 import './Media.css';
 
 // Category definitions
@@ -34,14 +33,19 @@ const getCategoryColor = (value) => {
 const Media = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [stories, setStories] = useState([]);
-    const [galleryData, setGalleryData] = useState([]); // Raw firestore data
-    const [masonryItems, setMasonryItems] = useState([]); // Processed for MasonryGallery
+    const [galleryImages, setGalleryImages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [activeCategory, setActiveCategory] = useState('all');
+    const [showAllPhotos, setShowAllPhotos] = useState(false);
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
 
     // Get selected archive month from URL params
     const selectedArchiveMonth = searchParams.get('archive')?.replace('-', ' ') || null;
+
+    // Number of photos to show in preview
+    const PREVIEW_COUNT = 6;
 
     // Get archive stories for the selected month
     const getFilteredArchiveStories = () => {
@@ -83,7 +87,7 @@ const Media = () => {
                     const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt) || new Date(0);
                     return dateB - dateA;
                 });
-                setGalleryData(media);
+                setGalleryImages(media);
             } catch (error) {
                 console.error("Error fetching media content:", error);
             } finally {
@@ -93,42 +97,6 @@ const Media = () => {
 
         fetchData();
     }, []);
-
-    // Load dimensions for Masonry layout
-    useEffect(() => {
-        if (galleryData.length > 0) {
-            const loadImages = async () => {
-                const items = await Promise.all(
-                    galleryData.map(async (item) => {
-                        return new Promise((resolve) => {
-                            const img = new Image();
-                            img.onload = () => {
-                                resolve({
-                                    id: item.id,
-                                    img: item.imageUrl,
-                                    height: img.naturalHeight,
-                                    width: img.naturalWidth,
-                                    title: item.caption // MasonryGallery uses 'title' for overlay text
-                                });
-                            };
-                            img.onerror = () => {
-                                resolve({
-                                    id: item.id,
-                                    img: item.imageUrl,
-                                    height: 300, // Fallback
-                                    width: 400,
-                                    title: item.caption
-                                });
-                            };
-                            img.src = item.imageUrl;
-                        });
-                    })
-                );
-                setMasonryItems(items);
-            };
-            loadImages();
-        }
-    }, [galleryData]);
 
     // Format date helper
     const formatDate = (timestamp) => {
@@ -153,6 +121,38 @@ const Media = () => {
     // Get archive months for sidebar
     const archiveMonths = getArchiveMonths();
 
+    // Lightbox functions
+    const openLightbox = (index) => {
+        setLightboxIndex(index);
+        setLightboxOpen(true);
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeLightbox = () => {
+        setLightboxOpen(false);
+        document.body.style.overflow = '';
+    };
+
+    const nextImage = () => {
+        setLightboxIndex((prev) => (prev + 1) % galleryImages.length);
+    };
+
+    const prevImage = () => {
+        setLightboxIndex((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1));
+    };
+
+    // Handle keyboard navigation for lightbox
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (!lightboxOpen) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [lightboxOpen]);
+
     if (loading) {
         return (
             <div style={{ padding: '4rem', textAlign: 'center' }}>
@@ -164,6 +164,8 @@ const Media = () => {
 
     const featuredStory = filteredStories[0];
     const otherStories = filteredStories.slice(1);
+    const visiblePhotos = showAllPhotos ? galleryImages : galleryImages.slice(0, PREVIEW_COUNT);
+    const remainingCount = galleryImages.length - PREVIEW_COUNT;
 
     return (
         <>
@@ -422,25 +424,89 @@ const Media = () => {
             </section>
 
             {/* Photo Gallery Section */}
-            <section className="section container gallery-section" style={{ paddingBottom: '4rem' }}>
+            <section className="section container gallery-section">
                 <div className="gallery-header">
                     <h2 className="section-title">
                         <Images size={24} />
                         Photo Gallery
                     </h2>
+                    {galleryImages.length > PREVIEW_COUNT && (
+                        <button
+                            className="btn btn-outline gallery-toggle"
+                            onClick={() => setShowAllPhotos(!showAllPhotos)}
+                        >
+                            {showAllPhotos ? 'Show Less' : `View All ${galleryImages.length} Photos`}
+                        </button>
+                    )}
                 </div>
 
-                {masonryItems.length === 0 ? (
+                {galleryImages.length === 0 ? (
                     <p className="empty-state">No photos in the gallery yet.</p>
                 ) : (
-                    <MasonryGallery
-                        items={masonryItems}
-                        colorShiftOnHover={true}
-                        animateFrom="bottom"
-                        stagger={0.05}
-                    />
+                    <div className={`gallery-grid ${showAllPhotos ? 'expanded' : ''}`}>
+                        {visiblePhotos.map((item, index) => (
+                            <div
+                                key={item.id}
+                                className="gallery-item"
+                                onClick={() => openLightbox(showAllPhotos ? index : index)}
+                            >
+                                <img
+                                    src={item.imageUrl}
+                                    alt={item.caption || "Gallery Image"}
+                                />
+                                {item.caption && (
+                                    <div className="gallery-caption">
+                                        {item.caption}
+                                    </div>
+                                )}
+                                {/* Show +X more on last preview item */}
+                                {!showAllPhotos && index === PREVIEW_COUNT - 1 && remainingCount > 0 && (
+                                    <div className="gallery-more-overlay">
+                                        <span>+{remainingCount}</span>
+                                        <small>more photos</small>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 )}
             </section>
+
+            {/* Lightbox Modal */}
+            {lightboxOpen && galleryImages.length > 0 && (
+                <div className="lightbox" onClick={closeLightbox}>
+                    <button className="lightbox-close" onClick={closeLightbox}>
+                        <X size={24} />
+                    </button>
+
+                    <button
+                        className="lightbox-nav lightbox-prev"
+                        onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                    >
+                        <ChevronLeft size={32} />
+                    </button>
+
+                    <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+                        <img
+                            src={galleryImages[lightboxIndex]?.imageUrl}
+                            alt={galleryImages[lightboxIndex]?.caption || "Photo"}
+                        />
+                        {galleryImages[lightboxIndex]?.caption && (
+                            <p className="lightbox-caption">{galleryImages[lightboxIndex].caption}</p>
+                        )}
+                        <p className="lightbox-counter">
+                            {lightboxIndex + 1} / {galleryImages.length}
+                        </p>
+                    </div>
+
+                    <button
+                        className="lightbox-nav lightbox-next"
+                        onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                    >
+                        <ChevronRight size={32} />
+                    </button>
+                </div>
+            )}
         </>
     );
 };

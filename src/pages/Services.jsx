@@ -1,10 +1,9 @@
 import TrainScheduleCard from '../components/TrainScheduleCard';
 import { routeSchedules } from '../data/schedules';
-import { FileText, Shield, PenTool, BookOpen, ArrowRight } from 'lucide-react';
+import { FileText, Shield, PenTool, BookOpen, ArrowRight, GraduationCap, Briefcase, CheckCircle } from 'lucide-react';
 import './Services.css';
 
 const Services = () => {
-
 
     const servicesData = [
         {
@@ -52,7 +51,58 @@ const Services = () => {
                 </div>
             </section>
 
-            <section className="section container" style={{ paddingTop: '0' }}>
+            {/* Specialized Services Section (New) */}
+            <section className="section section-specialized">
+                <div className="container">
+                    <div className="section-header">
+                        <h2>Specialized Services</h2>
+                        <p>Unique experiences tailored for education and private events.</p>
+                    </div>
+                    <div className="specialized-grid">
+
+                        {/* Educational Excursions Card */}
+                        <div className="special-card">
+                            <div className="special-card-content">
+                                <div className="special-card-icon">
+                                    <GraduationCap size={32} />
+                                </div>
+                                <h3>Educational Excursions</h3>
+                                <p>Immersive learning journeys designed for schools and universities. Students explore Ghana's geography, history, and engineering marvels firsthand from the comfort of our modern trains.</p>
+                                <ul className="feature-list">
+                                    <li><CheckCircle size={20} /> Guided History Tours</li>
+                                    <li><CheckCircle size={20} /> STEM Engineering Workshops</li>
+                                    <li><CheckCircle size={20} /> Group Student Discounts</li>
+                                </ul>
+                                <button className="btn-special green" onClick={() => window.location.href = '/contact'}>
+                                    Book a School Trip <ArrowRight size={18} />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Corporate & Private Charters Card */}
+                        <div className="special-card gold-theme">
+                            <div className="special-card-content">
+                                <div className="special-card-icon">
+                                    <Briefcase size={32} />
+                                </div>
+                                <h3>Corporate & Private Charters</h3>
+                                <p>Elevate your next corporate event or private celebration with an exclusive train charter. Experience luxury, privacy, and scenic views tailored to your specific itinerary.</p>
+                                <ul className="feature-list">
+                                    <li><CheckCircle size={20} /> Custom Routes & Schedules</li>
+                                    <li><CheckCircle size={20} /> Premium Onboard Catering</li>
+                                    <li><CheckCircle size={20} /> Branding & Private Carriages</li>
+                                </ul>
+                                <button className="btn-special gold" onClick={() => window.location.href = '/contact'}>
+                                    Inquire for Charters <ArrowRight size={18} />
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section className="section container">
                 <div className="section-header">
                     <h2>Regulatory & Technical Services</h2>
                     <p>Ensuring compliance and safety across the network.</p>

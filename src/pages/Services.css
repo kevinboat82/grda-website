@@ -55,7 +55,36 @@
 
 .service-card p {
     color: var(--color-text-muted);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    min-height: 3rem;
+    /* Align cards */
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-lg) 0;
+}
+
+.service-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-dark);
+    font-size: 0.95rem;
+}
+
+.service-features li .bullet {
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-primary-light);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.service-card:hover .service-features li .bullet {
+    background-color: var(--color-secondary);
 }
 
 .service-link {
@@ -70,6 +99,159 @@
 .service-link:hover {
     color: var(--color-secondary-dark);
     /* Gold on hover */
+}
+
+/* ============================================ */
+/* Specialized Services Section (Vibrant)       */
+/* ============================================ */
+
+.section-specialized {
+    background: linear-gradient(135deg, #f0fdf4 0%, #fffbeb 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.section-specialized::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+    z-index: 0;
+}
+
+.specialized-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.special-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.special-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.special-card-image {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    background: #e5e7eb;
+    /* Placeholder */
+}
+
+.special-card-content {
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.special-card-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #15803d 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(21, 128, 61, 0.3);
+}
+
+.special-card.gold-theme .special-card-icon {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, #b45309 100%);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.3);
+}
+
+.special-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 0.75rem;
+}
+
+.special-card p {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-text-dark);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.feature-list li svg {
+    color: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.special-card.gold-theme .feature-list li svg {
+    color: var(--color-secondary-dark);
+}
+
+.btn-special {
+    margin-top: auto;
+    width: 100%;
+    padding: 0.875rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-special.green {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+}
+
+.btn-special.green:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+.btn-special.gold {
+    background: #fffbeb;
+    color: #92400e;
+}
+
+.btn-special.gold:hover {
+    background: var(--color-secondary);
+    color: white;
 }
 
 /* ============================================ */

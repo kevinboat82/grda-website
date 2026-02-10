@@ -1,10 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&display=swap');
 @import './variables.css';
 
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+html {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+    font-size: 16px;
 }
 
 body {
@@ -14,6 +24,9 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    width: 100%;
+    min-height: 100vh;
 }
 
 h1,
@@ -28,24 +41,24 @@ h6 {
 }
 
 h1 {
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 2.5vw + 1rem, 3.5rem);
     font-weight: 700;
     letter-spacing: -0.02em;
 }
 
 h2 {
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 2vw + 0.5rem, 2.5rem);
     font-weight: 600;
     letter-spacing: -0.01em;
 }
 
 h3 {
-    font-size: 1.75rem;
+    font-size: clamp(1.125rem, 1vw + 0.5rem, 1.75rem);
     font-weight: 600;
 }
 
 h4 {
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 0.5vw + 0.75rem, 1.5rem);
     font-weight: 500;
 }
 
@@ -76,8 +89,11 @@ img {
 .container {
     width: 100%;
     max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-lg);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+    box-sizing: border-box;
 }
 
 .text-primary {

@@ -5,14 +5,14 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-primary) 0%, #004d2c 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, #FDB913 100%);
+    color: var(--color-primary-dark);
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 20px rgba(0, 107, 63, 0.4);
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px) scale(0.8);
@@ -27,9 +27,9 @@
 }
 
 .back-to-top:hover {
-    background: linear-gradient(135deg, #008a50 0%, var(--color-primary) 100%);
+    background: linear-gradient(135deg, #FFE44D 0%, var(--color-secondary) 100%);
     transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(0, 107, 63, 0.5);
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.5);
 }
 
 .back-to-top:active {
@@ -47,15 +47,15 @@
 /* Pulse animation on first appearance */
 @keyframes pulse-ring {
     0% {
-        box-shadow: 0 4px 20px rgba(0, 107, 63, 0.4);
+        box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
     }
 
     50% {
-        box-shadow: 0 4px 20px rgba(0, 107, 63, 0.6), 0 0 0 8px rgba(0, 107, 63, 0.1);
+        box-shadow: 0 4px 20px rgba(255, 215, 0, 0.6), 0 0 0 8px rgba(255, 215, 0, 0.1);
     }
 
     100% {
-        box-shadow: 0 4px 20px rgba(0, 107, 63, 0.4);
+        box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
     }
 }
 

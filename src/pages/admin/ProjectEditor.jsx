@@ -17,7 +17,12 @@ const ProjectEditor = () => {
         status: 'Ongoing',
         completionPercentage: 0,
         description: '',
-        location: ''
+        location: '',
+        startDate: '',
+        completionDate: '',
+        contractor: '',
+        budget: '',
+        scope: ''
     });
 
     const [coverImage, setCoverImage] = useState(null);
@@ -49,7 +54,12 @@ const ProjectEditor = () => {
                     status: data.status || 'Ongoing',
                     completionPercentage: data.completionPercentage || 0,
                     description: data.description || '',
-                    location: data.location || ''
+                    location: data.location || '',
+                    startDate: data.startDate || '',
+                    completionDate: data.completionDate || '',
+                    contractor: data.contractor || '',
+                    budget: data.budget || '',
+                    scope: data.scope || ''
                 });
                 setExistingCoverImage(data.coverImage || '');
                 setCoverImagePreview(data.coverImage || '');
@@ -244,14 +254,71 @@ const ProjectEditor = () => {
                     </div>
                 </div>
 
+                <div className="form-grid">
+                    <div className="form-group">
+                        <label>Start Date</label>
+                        <input
+                            type="date"
+                            name="startDate"
+                            value={formData.startDate}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Expected / Actual Completion Date</label>
+                        <input
+                            type="date"
+                            name="completionDate"
+                            value={formData.completionDate}
+                            onChange={handleChange}
+                        />
+                    </div>
+                </div>
+
+                <div className="form-grid">
+                    <div className="form-group">
+                        <label>Contractor / Partner</label>
+                        <input
+                            type="text"
+                            name="contractor"
+                            value={formData.contractor}
+                            onChange={handleChange}
+                            placeholder="e.g., Amandi Holdings, AFCONS Infrastructure"
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Estimated Budget</label>
+                        <input
+                            type="text"
+                            name="budget"
+                            value={formData.budget}
+                            onChange={handleChange}
+                            placeholder="e.g., $398 Million, GHS 2.5 Billion"
+                        />
+                    </div>
+                </div>
+
                 <div className="form-group full-width">
                     <label>Description</label>
                     <textarea
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
-                        placeholder="Describe the project..."
-                        rows={4}
+                        placeholder="Brief project description for the card view..."
+                        rows={3}
+                    />
+                </div>
+
+                <div className="form-group full-width">
+                    <label>Scope & Highlights</label>
+                    <textarea
+                        name="scope"
+                        value={formData.scope}
+                        onChange={handleChange}
+                        placeholder="Detailed project scope, key milestones, technical details...&#10;&#10;This will appear on the full case study page."
+                        rows={6}
                     />
                 </div>
 

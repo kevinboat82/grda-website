@@ -5,17 +5,17 @@ const partners = [
     {
         name: 'Amandi Investment',
         category: 'Construction',
-        logo: 'https://amandiinvestment.com/wp-content/uploads/2020/02/cropped-AMANDI-LOGO-2.png'
+        logo: '/images/partners/amandi.png'
     },
     {
         name: 'PESA',
         category: 'Rolling Stock',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Logo_Pesa.svg/320px-Logo_Pesa.svg.png'
+        logo: '/images/partners/pesa.jpeg'
     },
     {
         name: 'Afcons Infrastructure',
         category: 'Infrastructure',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Logo_of_AFCONS.svg/320px-Logo_of_AFCONS.svg.png'
+        logo: '/images/partners/afcons.jpeg'
     },
     {
         name: 'GE Transportation',
@@ -25,12 +25,7 @@ const partners = [
     {
         name: 'Ministry of Transport',
         category: 'Government',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Coat_of_arms_of_Ghana.svg/200px-Coat_of_arms_of_Ghana.svg.png'
-    },
-    {
-        name: 'China Railway',
-        category: 'Engineering',
-        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/China_Railway_logo.svg/200px-China_Railway_logo.svg.png'
+        logo: '/images/partners/mot.jpeg'
     },
     {
         name: 'World Bank',
@@ -40,17 +35,17 @@ const partners = [
     {
         name: 'African Development Bank',
         category: 'Funding Partner',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/African_Development_Bank_logo.svg/320px-African_Development_Bank_logo.svg.png'
+        logo: '/images/partners/adb.png'
     },
     {
-        name: 'Ghana Railway Company',
+        name: 'Ghana Railway Company Limited',
         category: 'Operations',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Coat_of_arms_of_Ghana.svg/200px-Coat_of_arms_of_Ghana.svg.png'
+        logo: '/images/partners/grcl.png'
     },
     {
         name: 'Ministry of Finance',
         category: 'Government',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Coat_of_arms_of_Ghana.svg/200px-Coat_of_arms_of_Ghana.svg.png'
+        logo: '/images/partners/mof.png'
     },
 ];
 

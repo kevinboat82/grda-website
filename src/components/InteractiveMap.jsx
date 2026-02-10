@@ -167,26 +167,26 @@ const InteractiveMap = () => {
             <circle
                 cx={city.x}
                 cy={city.y}
-                r={hoveredCity?.name === city.name ? 7 : 5}
-                fill={city.isForeign ? '#9333ea' : (isActive ? '#115E3D' : '#64748b')}
+                r={hoveredCity?.name === city.name ? 9 : 6}
+                fill={city.isForeign ? '#9333ea' : (isActive ? '#bf9647' : '#64748b')} // Using Gold (#bf9647) for active cities in new theme
                 stroke="white"
                 strokeWidth="2"
-                style={{ transition: 'all 0.2s' }}
+                style={{ transition: 'all 0.2s', zIndex: 50 }}
             />
             {hoveredCity?.name === city.name && (
-                <g>
+                <g style={{ pointerEvents: 'none', zIndex: 100 }}>
                     <rect
                         x={city.x + 10}
-                        y={city.y - 12}
-                        width={city.name.length * 7 + 10}
-                        height={20}
+                        y={city.y - 15}
+                        width={city.name.length * 8 + 12}
+                        height={24}
                         rx="4"
-                        fill="rgba(0,0,0,0.8)"
+                        fill="rgba(0,0,0,0.85)"
                     />
                     <text
-                        x={city.x + 15}
+                        x={city.x + 16}
                         y={city.y + 2}
-                        fontSize="11"
+                        fontSize="12"
                         fill="white"
                         fontWeight="500"
                     >
@@ -196,6 +196,19 @@ const InteractiveMap = () => {
             )}
         </g>
     );
+
+    // Coordinate Transformation Config
+    // Maps original 400x520 space to new 1000x1000 space
+    // Tuned manually to align with gh.svg
+    const transformX = (x) => (x * 2.3) + 20;
+    const transformY = (y) => (y * 2.05) - 30;
+
+    // Helper to transform path strings "M x y L x y..."
+    const transformPath = (pathString) => {
+        return pathString.replace(/([0-9.]+)\s+([0-9.]+)/g, (match, x, y) => {
+            return `${transformX(parseFloat(x))} ${transformY(parseFloat(y))}`;
+        });
+    };
 
     return (
         <div className="animate-on-scroll fade-in" style={{
@@ -255,130 +268,118 @@ const InteractiveMap = () => {
                 backgroundColor: '#e8f4f0',
                 borderRadius: 'var(--radius-md)',
                 overflow: 'hidden',
-                border: '1px solid #d1e7dd'
+                border: '1px solid #d1e7dd',
+                minHeight: '500px'
             }}>
                 <svg
-                    viewBox="0 0 400 520"
+                    viewBox="0 0 1000 1000"
                     style={{
                         width: '100%',
                         height: 'auto',
-                        maxHeight: '600px',
+                        maxHeight: '700px',
+                        backgroundColor: '#f1f5f9',
                     }}
                 >
-                    {/* Accurate Ghana outline - based on geographic boundaries */}
-                    {/* Ghana: Western border with Ivory Coast, Northern border with Burkina Faso, Eastern border with Togo, Southern Atlantic coast */}
-                    <path
-                        d="M 55 490 
-                           L 70 488 L 90 485 L 105 482 L 125 478 L 145 475 L 165 471 
-                           L 185 467 L 205 464 L 225 462 L 245 460 L 265 458 L 285 456 
-                           L 305 454 L 320 450 L 332 445 L 340 438 L 345 428 L 348 415 
-                           L 350 400 L 352 380 L 354 360 L 356 340 L 358 320 L 360 300 
-                           L 362 280 L 364 260 L 365 240 L 366 220 L 367 200 L 368 180 
-                           L 369 160 L 370 140 L 371 120 L 372 100 L 373 80 L 374 60 
-                           L 373 45 L 368 35 L 358 28 L 345 22 L 328 18 L 308 15 
-                           L 285 13 L 260 12 L 235 11 L 210 10 L 185 11 L 160 13 
-                           L 138 16 L 118 20 L 100 26 L 85 34 L 72 44 L 62 56 
-                           L 54 70 L 48 88 L 44 108 L 42 130 L 40 155 L 39 180 
-                           L 38 205 L 37 230 L 36 255 L 35 280 L 35 305 L 36 330 
-                           L 38 355 L 40 380 L 43 405 L 47 428 L 51 448 L 54 468 
-                           L 55 490 Z"
-                        fill="rgba(255,255,255,0.7)"
-                        stroke="#2d5a47"
-                        strokeWidth="2"
+                    {/* Base Map Image - The unified background for both tabs */}
+                    <image
+                        href="/images/gh.svg"
+                        x="0"
+                        y="0"
+                        width="1000"
+                        height="1000"
+                        opacity="0.35"
                     />
 
-                    {/* Lake Volta (simplified) */}
-                    <path
-                        d="M 280 380 
-                           C 285 360, 295 340, 300 320 
-                           C 305 300, 310 280, 305 260
-                           C 300 240, 290 225, 280 215
-                           C 275 225, 285 260, 280 290
-                           C 275 320, 265 350, 270 380
-                           Z"
-                        fill="rgba(59, 130, 246, 0.3)"
-                        stroke="rgba(59, 130, 246, 0.5)"
-                        strokeWidth="1"
-                    />
-
-                    {/* Country label */}
-                    <text x="200" y="508" fontSize="13" fill="#64748b" fontWeight="600" textAnchor="middle" letterSpacing="2">
-                        GHANA
-                    </text>
-
-                    {activeTab === 'existing' ? (
+                    {/* CONTENT FOR EXISTING ROUTES TAB */}
+                    {activeTab === 'existing' && (
                         <>
-                            {/* Existing railway lines */}
-                            {existingRoutes.map(route => (
-                                <g key={route.id}>
+                            {existingRoutes.map((route) => (
+                                <g key={route.id}
+                                    onMouseEnter={() => setHoveredRoute(route.id)}
+                                    onMouseLeave={() => setHoveredRoute(null)}
+                                    style={{ cursor: 'pointer' }}
+                                >
                                     <path
-                                        d={route.path}
-                                        stroke={hoveredRoute === route.id ? '#0f4d31' : '#115E3D'}
-                                        strokeWidth={hoveredRoute === route.id ? 5 : 4}
+                                        d={transformPath(route.path)}
                                         fill="none"
+                                        stroke={hoveredRoute === route.id ? 'rgba(17, 94, 61, 0.15)' : 'transparent'}
+                                        strokeWidth="20"
                                         strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        style={{ cursor: 'pointer', transition: 'all 0.2s' }}
-                                        onMouseEnter={() => setHoveredRoute(route.id)}
-                                        onMouseLeave={() => setHoveredRoute(null)}
+                                        style={{ transition: 'all 0.3s' }}
+                                    />
+                                    <path
+                                        d={transformPath(route.path)}
+                                        fill="none"
+                                        stroke="#115E3D"
+                                        strokeWidth="5"
+                                        strokeLinecap="round"
+                                        strokeDasharray="8,5"
                                     />
                                 </g>
                             ))}
 
-                            {/* City markers for existing routes */}
-                            {renderCityMarker(cities.takoradi, 'takoradi', true)}
-                            {renderCityMarker(cities.tarkwa, 'tarkwa', true)}
-                            {renderCityMarker(cities.dunkwa, 'dunkwa', true)}
-                            {renderCityMarker(cities.awaso, 'awaso', true)}
-                            {renderCityMarker(cities.obuasi, 'obuasi', true)}
-                            {renderCityMarker(cities.kumasi, 'kumasi', true)}
-                            {renderCityMarker(cities.tema, 'tema', true)}
-                            {renderCityMarker(cities.mpakadan, 'mpakadan', true)}
+                            {Object.values(cities).map((city, index) => {
+                                // Filter cities for Existing Network view logic (only show relevant ones or main ones)
+                                const isRelevant = existingRoutes.some(r => r.cities.includes(city.name));
+                                // Show major cities always for context
+                                const isMajor = ['Accra', 'Kumasi', 'Tamale', 'Takoradi'].includes(city.name);
 
-                            {/* Static labels for key cities */}
-                            <text x={cities.takoradi.x - 15} y={cities.takoradi.y + 18} fontSize="10" fill="#333" fontWeight="500" textAnchor="middle">Takoradi</text>
-                            <text x={cities.kumasi.x} y={cities.kumasi.y - 12} fontSize="11" fill="#115E3D" fontWeight="600" textAnchor="middle">KUMASI</text>
-                            <text x={cities.tema.x + 25} y={cities.tema.y} fontSize="10" fill="#333" fontWeight="500">Tema</text>
-                            <text x={cities.mpakadan.x + 5} y={cities.mpakadan.y + 18} fontSize="10" fill="#333" fontWeight="500">Mpakadan</text>
+                                if (isRelevant || isMajor) {
+                                    const projectedCity = {
+                                        ...city,
+                                        x: transformX(city.x),
+                                        y: transformY(city.y)
+                                    };
+                                    return renderCityMarker(projectedCity, `existing-${index}`, isRelevant);
+                                }
+                                return null;
+                            })}
                         </>
-                    ) : (
+                    )}
+
+                    {/* CONTENT FOR MASTER PLAN TAB */}
+                    {activeTab === 'planned' && (
                         <>
-                            {/* Master Plan railway lines by phase */}
-                            {masterPlanRoutes.map(route => (
-                                <g key={route.id}>
+                            {masterPlanRoutes.map((route) => (
+                                <g key={route.id}
+                                    onMouseEnter={() => setHoveredRoute(route.id)}
+                                    onMouseLeave={() => setHoveredRoute(null)}
+                                    style={{ cursor: 'pointer' }}
+                                >
                                     <path
-                                        d={route.path}
-                                        stroke={hoveredRoute === route.id ? phaseColors[route.phase] : phaseColors[route.phase]}
-                                        strokeWidth={hoveredRoute === route.id ? 5 : 3.5}
+                                        d={transformPath(route.path)}
                                         fill="none"
+                                        stroke={hoveredRoute === route.id ? `${phaseColors[route.phase]}30` : 'transparent'}
+                                        strokeWidth="25"
                                         strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeDasharray={route.phase > 1 ? "8 4" : "none"}
-                                        opacity={hoveredRoute === route.id ? 1 : 0.85}
-                                        style={{ cursor: 'pointer', transition: 'all 0.2s' }}
-                                        onMouseEnter={() => setHoveredRoute(route.id)}
-                                        onMouseLeave={() => setHoveredRoute(null)}
+                                        style={{ transition: 'all 0.3s' }}
+                                    />
+                                    <path
+                                        d={transformPath(route.path)}
+                                        fill="none"
+                                        stroke={phaseColors[route.phase]}
+                                        strokeWidth={route.isTransNational ? "6" : "7"}
+                                        strokeDasharray={route.isTransNational ? "10,6" : "0"}
+                                        strokeLinecap="round"
+                                        opacity="0.9"
                                     />
                                 </g>
                             ))}
 
-                            {/* All city markers */}
-                            {Object.entries(cities).map(([key, city]) =>
-                                renderCityMarker(city, key)
-                            )}
-
-                            {/* Key city labels */}
-                            <text x={cities.accra.x} y={cities.accra.y + 18} fontSize="10" fill="#333" fontWeight="500" textAnchor="middle">Accra</text>
-                            <text x={cities.kumasi.x} y={cities.kumasi.y - 12} fontSize="11" fill="#16a34a" fontWeight="600" textAnchor="middle">KUMASI</text>
-                            <text x={cities.tamale.x} y={cities.tamale.y - 12} fontSize="10" fill="#2563eb" fontWeight="500" textAnchor="middle">Tamale</text>
-                            <text x={cities.paga.x - 25} y={cities.paga.y + 5} fontSize="10" fill="#2563eb" fontWeight="500">Paga</text>
-                            <text x={cities.takoradi.x - 15} y={cities.takoradi.y + 18} fontSize="10" fill="#333" fontWeight="500" textAnchor="middle">Takoradi</text>
-                            <text x={cities.ouagadougou.x + 5} y={cities.ouagadougou.y + 15} fontSize="9" fill="#9333ea" fontWeight="500">Ouagadougou</text>
+                            {Object.values(cities).map((city, index) => {
+                                const projectedCity = {
+                                    ...city,
+                                    x: transformX(city.x),
+                                    y: transformY(city.y)
+                                };
+                                const isActive = masterPlanRoutes.some(r => r.cities.includes(city.name));
+                                return renderCityMarker(projectedCity, `planned-${index}`, isActive);
+                            })}
                         </>
                     )}
                 </svg>
 
-                {/* Route info tooltip */}
+                {/* SHARED TOOLTIPS & OVERLAYS */}
                 {hoveredRoute && (
                     <div style={{
                         position: 'absolute',
@@ -388,38 +389,31 @@ const InteractiveMap = () => {
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                        maxWidth: '250px',
-                        zIndex: 10,
+                        maxWidth: '280px',
+                        zIndex: 30,
                     }}>
-                        {activeTab === 'existing' ? (
-                            (() => {
-                                const route = existingRoutes.find(r => r.id === hoveredRoute);
-                                return route ? (
-                                    <>
-                                        <h4 style={{ margin: '0 0 0.5rem 0', color: '#115E3D', fontSize: '0.95rem' }}>{route.name}</h4>
-                                        <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.85rem', color: '#64748b' }}>Distance: {route.distance}</p>
-                                        <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.85rem', color: '#16a34a', fontWeight: '500' }}>Status: {route.status}</p>
-                                        <p style={{ margin: 0, fontSize: '0.8rem', color: '#94a3b8' }}>{route.cities.join(' → ')}</p>
-                                    </>
-                                ) : null;
-                            })()
-                        ) : (
-                            (() => {
-                                const route = masterPlanRoutes.find(r => r.id === hoveredRoute);
-                                return route ? (
-                                    <>
-                                        <h4 style={{ margin: '0 0 0.5rem 0', color: phaseColors[route.phase], fontSize: '0.95rem' }}>{route.name}</h4>
-                                        <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.85rem', color: '#64748b' }}>Distance: {route.distance}</p>
-                                        <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.85rem', color: phaseColors[route.phase], fontWeight: '500' }}>{getPhaseLabel(route.phase)}</p>
-                                        <p style={{ margin: 0, fontSize: '0.8rem', color: '#94a3b8' }}>{route.cities.join(' → ')}</p>
-                                    </>
-                                ) : null;
-                            })()
-                        )}
+                        {(() => {
+                            const route = activeTab === 'existing'
+                                ? existingRoutes.find(r => r.id === hoveredRoute)
+                                : masterPlanRoutes.find(r => r.id === hoveredRoute);
+
+                            return route ? (
+                                <>
+                                    <h4 style={{ margin: '0 0 0.5rem 0', color: route.phase ? phaseColors[route.phase] : '#115E3D', fontSize: '1rem' }}>{route.name}</h4>
+                                    <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.85rem', color: '#64748b' }}>Distance: <span style={{ fontWeight: '500', color: '#334155' }}>{route.distance}</span></p>
+                                    <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.85rem', color: '#16a34a', fontWeight: '500' }}>
+                                        {route.phase ? getPhaseLabel(route.phase) : `Status: ${route.status}`}
+                                    </p>
+                                    <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.8rem', color: '#94a3b8', borderTop: '1px solid #f1f5f9', paddingTop: '0.5rem' }}>
+                                        {route.cities.join(' → ')}
+                                    </p>
+                                </>
+                            ) : null;
+                        })()}
                     </div>
                 )}
 
-                {/* Legend */}
+                {/* LEGENDS */}
                 <div style={{
                     position: 'absolute',
                     bottom: '1rem',
@@ -427,42 +421,32 @@ const InteractiveMap = () => {
                     backgroundColor: 'white',
                     padding: '1rem',
                     borderRadius: 'var(--radius-md)',
-                    boxShadow: 'var(--shadow-sm)',
-                    textAlign: 'left',
+                    boxShadow: 'var(--shadow-md)',
                     fontSize: '0.8rem',
+                    zIndex: 20
                 }}>
                     {activeTab === 'existing' ? (
                         <>
                             <div style={{ fontWeight: '600', marginBottom: '0.5rem', color: '#333' }}>Existing Network</div>
-                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.4rem' }}>
-                                <div style={{ width: '24px', height: '4px', backgroundColor: '#115E3D', marginRight: '0.5rem', borderRadius: '2px' }}></div>
-                                <span style={{ color: '#64748b' }}>Operational (Narrow Gauge)</span>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <div style={{ width: '24px', height: '4px', backgroundColor: '#115E3D', marginRight: '0.5rem', borderRadius: '2px', borderStyle: 'dashed' }}></div>
+                                <span style={{ color: '#64748b' }}>Operational</span>
                             </div>
                         </>
                     ) : (
                         <>
-                            <div style={{ fontWeight: '600', marginBottom: '0.5rem', color: '#333' }}>Master Plan Phases</div>
-                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.4rem' }}>
-                                <div style={{ width: '24px', height: '4px', backgroundColor: phaseColors[1], marginRight: '0.5rem', borderRadius: '2px' }}></div>
-                                <span style={{ color: '#64748b' }}>Phase 1 (2020-2025)</span>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.4rem' }}>
-                                <div style={{ width: '24px', height: '4px', backgroundColor: phaseColors[2], marginRight: '0.5rem', borderRadius: '2px', borderBottom: '2px dashed ' + phaseColors[2] }}></div>
-                                <span style={{ color: '#64748b' }}>Phase 2 (2025-2030)</span>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.4rem' }}>
-                                <div style={{ width: '24px', height: '4px', backgroundColor: phaseColors[3], marginRight: '0.5rem', borderRadius: '2px', borderBottom: '2px dashed ' + phaseColors[3] }}></div>
-                                <span style={{ color: '#64748b' }}>Phase 3 (2030-2035)</span>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <div style={{ width: '10px', height: '10px', backgroundColor: '#9333ea', marginRight: '0.5rem', borderRadius: '50%' }}></div>
-                                <span style={{ color: '#64748b' }}>International</span>
-                            </div>
+                            <div style={{ fontWeight: '600', marginBottom: '0.5rem', color: '#1e293b' }}>Master Plan Phases</div>
+                            {[1, 2, 3].map(phase => (
+                                <div key={phase} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.4rem' }}>
+                                    <div style={{ width: '16px', height: '16px', borderRadius: '4px', backgroundColor: phaseColors[phase], marginRight: '0.5rem' }}></div>
+                                    <span style={{ color: '#64748b' }}>{getPhaseLabel(phase).split('(')[0]}</span>
+                                </div>
+                            ))}
                         </>
                     )}
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 

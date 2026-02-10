@@ -144,7 +144,7 @@ const HeroSlider = ({ stories = defaultStories }) => {
                 >
                     <div
                         className="hero-slide-bg"
-                        style={{ backgroundImage: `url(${story.image})` }}
+                        style={{ backgroundImage: `url('${story.image}')` }}
                     />
                     <div className="hero-slide-overlay" />
                 </div>

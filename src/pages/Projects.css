@@ -7,17 +7,28 @@
     text-align: center;
     margin-bottom: var(--spacing-3xl);
     padding: var(--spacing-2xl) 0;
-    background-color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary-darker) 0%, var(--color-primary) 50%, var(--color-primary-dark) 100%);
     color: white;
     margin-top: -96px;
-    /* Offset to sit behind navbar if translucent, but putting it below is safer. Let's make it a separate component header style. */
     padding-top: 120px;
-    /* Accounts for navbar */
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-secondary), var(--color-secondary-light), var(--color-secondary));
 }
 
 .page-header h1 {
     color: white;
     margin-bottom: var(--spacing-md);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .page-header p {
@@ -37,10 +48,10 @@
 
 .filter-btn {
     padding: var(--spacing-sm) var(--spacing-lg);
-    border: 1px solid var(--color-text-muted);
+    border: 1px solid rgba(0, 107, 63, 0.3);
     border-radius: var(--radius-full);
     background: transparent;
-    color: var(--color-text-muted);
+    color: var(--color-primary);
     font-weight: 500;
     transition: all var(--transition-fast);
 }
@@ -48,13 +59,15 @@
 .filter-btn.active,
 .filter-btn:hover {
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-secondary);
+    /* Gold text */
     border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(0, 107, 63, 0.2);
 }
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: var(--spacing-xl);
 }
 
@@ -63,12 +76,14 @@
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    transition: box-shadow var(--transition-normal);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all var(--transition-normal);
+    border: 1px solid rgba(0, 107, 63, 0.1);
 }
 
 .project-card-detail:hover {
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 10px 30px rgba(0, 107, 63, 0.15);
+    border-color: rgba(255, 215, 0, 0.3);
+    transform: translateY(-3px);
 }
 
 .project-card-image {
@@ -99,6 +114,13 @@
 .project-desc {
     color: var(--color-text-muted);
     margin-bottom: var(--spacing-md);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 
 .project-link {

@@ -1,11 +1,16 @@
+/* ============================================ */
+/* Navbar - Green Glass with Gold Accents       */
+/* ============================================ */
+
 .navbar {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: var(--color-surface-translucent);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: var(--shadow-sm);
+    background: var(--glass-green);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 50, 30, 0.3);
     transition: all var(--transition-normal);
 }
 
@@ -27,6 +32,7 @@
     height: 48px;
     width: auto;
     object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .navbar-logo-text {
@@ -40,15 +46,17 @@
     font-size: 1.1rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    color: var(--color-primary);
+    color: var(--color-secondary);
+    /* Gold */
     font-family: var(--font-heading);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .logo-line-2 {
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.02em;
-    color: var(--color-text-main);
+    color: rgba(255, 255, 255, 0.85);
     font-family: var(--font-heading);
 }
 
@@ -60,9 +68,11 @@
 
 .nav-link {
     font-weight: 500;
-    color: var(--color-text-main);
+    color: rgba(255, 255, 255, 0.9);
+    /* White text */
     position: relative;
     padding: var(--spacing-xs) 0;
+    transition: color var(--transition-fast);
 }
 
 .nav-link::after {
@@ -72,12 +82,14 @@
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--color-secondary);
+    background: var(--color-secondary);
+    /* Gold underline */
     transition: width var(--transition-fast);
 }
 
 .nav-link:hover {
-    color: var(--color-primary);
+    color: var(--color-secondary);
+    /* Gold on hover */
 }
 
 .nav-link:hover::after {
@@ -85,12 +97,14 @@
 }
 
 .nav-link.active {
-    color: var(--color-primary);
+    color: var(--color-secondary);
+    /* Gold for active */
 }
 
 .nav-link.active::after {
     width: 100%;
-    background-color: var(--color-accent);
+    background-color: var(--color-secondary);
+    /* Gold underline for active */
 }
 
 /* Dropdown Menu */
@@ -106,15 +120,18 @@
     top: 100%;
     left: 0;
     min-width: 220px;
-    background-color: white;
+    background: var(--glass-green-dark);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     padding: 0.5rem 0;
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
     transition: all 0.2s ease;
     z-index: 1000;
+    border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 .dropdown-container:hover .dropdown-menu {
@@ -126,15 +143,16 @@
 .dropdown-item {
     display: block;
     padding: 0.75rem 1.5rem;
-    color: var(--color-text-main);
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
     font-weight: 500;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
 }
 
 .dropdown-item:hover {
-    background-color: #f3f4f6;
-    color: var(--color-primary);
+    background: rgba(255, 215, 0, 0.15);
+    color: var(--color-secondary);
+    /* Gold on hover */
 }
 
 /* Mobile Menu Toggle Button */
@@ -145,7 +163,8 @@
     border-radius: var(--radius-md);
     background: transparent;
     border: none;
-    color: var(--color-primary);
+    color: var(--color-secondary);
+    /* Gold hamburger */
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -153,7 +172,7 @@
 }
 
 .mobile-menu-toggle:hover {
-    background: rgba(0, 107, 63, 0.1);
+    background: rgba(255, 215, 0, 0.15);
 }
 
 /* Mobile Navigation Overlay */
@@ -177,7 +196,7 @@
     visibility: visible;
 }
 
-/* Mobile Navigation Panel */
+/* Mobile Navigation Panel - Green Glass */
 .mobile-nav {
     display: none;
     position: fixed;
@@ -186,8 +205,8 @@
     width: 85%;
     max-width: 320px;
     height: 100vh;
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(180deg, #003d23 0%, #006B3F 100%);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
     z-index: 999;
     transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
@@ -208,23 +227,25 @@
 .mobile-nav-link {
     display: block;
     padding: 1rem 0;
-    color: var(--color-text-main);
+    color: rgba(255, 255, 255, 0.85);
+    /* White text */
     font-size: 1.1rem;
     font-weight: 500;
     text-decoration: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.2s ease;
 }
 
 .mobile-nav-link:hover,
 .mobile-nav-link.active {
-    color: var(--color-primary);
+    color: var(--color-secondary);
+    /* Gold on hover/active */
     padding-left: 0.5rem;
 }
 
 /* Mobile Dropdown */
 .mobile-dropdown {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mobile-dropdown-toggle {
@@ -235,7 +256,7 @@
     padding: 1rem 0;
     background: none;
     border: none;
-    color: var(--color-text-main);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 1.1rem;
     font-weight: 500;
     cursor: pointer;
@@ -243,24 +264,24 @@
 }
 
 .mobile-dropdown-toggle:hover {
-    color: var(--color-primary);
+    color: var(--color-secondary);
 }
 
 .mobile-dropdown-toggle svg {
     transition: transform 0.3s ease;
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .mobile-dropdown-toggle svg.rotate {
     transform: rotate(180deg);
-    color: var(--color-primary);
+    color: var(--color-secondary);
 }
 
 .mobile-dropdown-menu {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
-    background: rgba(0, 107, 63, 0.03);
+    background: rgba(255, 215, 0, 0.05);
     border-radius: var(--radius-md);
     margin-bottom: 0.5rem;
 }
@@ -272,7 +293,7 @@
 .mobile-dropdown-item {
     display: block;
     padding: 0.75rem 1.25rem;
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.95rem;
     font-weight: 500;
     text-decoration: none;
@@ -281,8 +302,8 @@
 
 .mobile-dropdown-item:hover,
 .mobile-dropdown-item.active {
-    color: var(--color-primary);
-    background: rgba(0, 107, 63, 0.05);
+    color: var(--color-secondary);
+    background: rgba(255, 215, 0, 0.1);
 }
 
 /* Responsive Breakpoints */

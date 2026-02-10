@@ -3,7 +3,7 @@ import { collection, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../firebase';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Upload, X, ArrowLeft, Tag, Plus } from 'lucide-react';
+import { Upload, X, ArrowLeft, Tag, Plus, Bold, Italic, List, ListOrdered, Heading, Quote, Type } from 'lucide-react';
 import './Editor.css';
 
 // Available categories
@@ -13,6 +13,66 @@ const CATEGORIES = [
     { value: 'articles', label: 'Articles' },
     { value: 'events', label: 'Events' }
 ];
+
+/* Rich Text Toolbar Component */
+const RichTextToolbar = ({ content, setContent, textAreaRef }) => {
+    const insertTag = (tagStart, tagEnd = '') => {
+        const textarea = textAreaRef.current;
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const text = content.substring(start, end);
+        const before = content.substring(0, start);
+        const after = content.substring(end);
+
+        const newText = before + tagStart + text + tagEnd + after;
+        setContent(newText);
+
+        // Reset cursor position
+        setTimeout(() => {
+            textarea.focus();
+            textarea.setSelectionRange(
+                start + tagStart.length,
+                end + tagStart.length
+            );
+        }, 0);
+    };
+
+    return (
+        <div className="rich-text-toolbar">
+            <div className="toolbar-group">
+                <button type="button" className="toolbar-btn" onClick={() => insertTag('<b>', '</b>')} title="Bold">
+                    <Bold />
+                </button>
+                <button type="button" className="toolbar-btn" onClick={() => insertTag('<i>', '</i>')} title="Italic">
+                    <Italic />
+                </button>
+            </div>
+            <div className="toolbar-group">
+                <button type="button" className="toolbar-btn" onClick={() => insertTag('<h2>', '</h2>')} title="Heading 2">
+                    <Heading /> <span style={{ fontSize: '10px', marginLeft: '2px', fontWeight: 'bold' }}>2</span>
+                </button>
+                <button type="button" className="toolbar-btn" onClick={() => insertTag('<h3>', '</h3>')} title="Heading 3">
+                    <Heading /> <span style={{ fontSize: '10px', marginLeft: '2px', fontWeight: 'bold' }}>3</span>
+                </button>
+            </div>
+            <div className="toolbar-group">
+                <button type="button" className="toolbar-btn" onClick={() => insertTag('<ul>\n<li>', '</li>\n</ul>')} title="Bullet List">
+                    <List />
+                </button>
+                <button type="button" className="toolbar-btn" onClick={() => insertTag('<ol>\n<li>', '</li>\n</ol>')} title="Numbered List">
+                    <ListOrdered />
+                </button>
+            </div>
+            <div className="toolbar-group">
+                <button type="button" className="toolbar-btn" onClick={() => insertTag('<blockquote>', '</blockquote>')} title="Quote">
+                    <Quote />
+                </button>
+            </div>
+        </div>
+    );
+};
 
 const StoryEditor = () => {
     const { id } = useParams(); // If id exists, we're editing
@@ -33,6 +93,7 @@ const StoryEditor = () => {
     const [loading, setLoading] = useState(false);
     const [initialLoading, setInitialLoading] = useState(isEditMode);
     const navigate = useNavigate();
+    const contentRef = React.useRef(null);
 
     // Load existing story data if in edit mode
     useEffect(() => {
@@ -270,13 +331,15 @@ const StoryEditor = () => {
                         />
                     </div>
 
-                    <div className="form-group full-width">
+                    <div className="form-group full-width has-toolbar">
                         <label>Full Story Content</label>
+                        <RichTextToolbar content={content} setContent={setContent} textAreaRef={contentRef} />
                         <textarea
+                            ref={contentRef}
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
-                            rows="10"
-                            placeholder="Write the full story here..."
+                            rows="14"
+                            placeholder="Write the full story here... Use the toolbar above to format text."
                         />
                         <p className="form-help">
                             This is the complete article that users will see when they click "Read More"

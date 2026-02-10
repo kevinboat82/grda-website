@@ -22,6 +22,8 @@ import Directorates from './pages/Directorates';
 import Units from './pages/Units';
 import ScrollToTop from './components/ScrollToTop';
 import BackToTop from './components/BackToTop';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 function App() {
   return (
@@ -42,6 +44,8 @@ function App() {
           <Route path="media" element={<Media />} />
           <Route path="contact" element={<Contact />} />
           <Route path="stories/:id" element={<StoryDetail />} />
+          <Route path="privacy" element={<PrivacyPolicy />} />
+          <Route path="terms" element={<TermsOfService />} />
         </Route>
 
         {/* Admin Routes */}

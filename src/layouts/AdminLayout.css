@@ -2,7 +2,8 @@
 .admin-layout {
     display: flex;
     min-height: 100vh;
-    background-color: #f3f4f6;
+    background-color: #f0faf5;
+    /* light green bg */
     position: relative;
     overflow-x: hidden;
 }
@@ -10,7 +11,7 @@
 /* Sidebar */
 .admin-sidebar {
     width: 260px;
-    background-color: var(--color-primary-dark);
+    background: linear-gradient(180deg, #002a18 0%, #003d23 30%, #006B3F 100%);
     color: white;
     display: flex;
     flex-direction: column;
@@ -20,7 +21,7 @@
     top: 0;
     z-index: 50;
     transition: transform 0.3s ease-in-out;
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgba(255, 215, 0, 0.15);
 }
 
 .sidebar-header {
@@ -28,7 +29,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 .sidebar-header img {
@@ -43,6 +44,8 @@
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 0.5px;
+    color: var(--color-secondary);
+    /* Gold title */
 }
 
 .close-sidebar {
@@ -79,21 +82,24 @@
 }
 
 .admin-nav-link:hover {
-    color: white;
-    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-secondary);
+    /* Gold on hover */
+    background-color: rgba(255, 215, 0, 0.08);
 }
 
 .admin-nav-link.active {
-    color: white;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-secondary);
+    /* Gold active */
+    background-color: rgba(255, 215, 0, 0.12);
     font-weight: 600;
+    border-left: 3px solid var(--color-secondary);
 }
 
 /* Sidebar Footer */
 .sidebar-footer {
     padding: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(255, 215, 0, 0.15);
+    background: rgba(0, 0, 0, 0.15);
 }
 
 .user-email {
@@ -151,8 +157,10 @@
     left: 0;
     right: 0;
     height: 60px;
-    background: white;
-    border-bottom: 1px solid #e5e7eb;
+    background: var(--glass-green);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
     z-index: 40;
     align-items: center;
     padding: 0 1rem;
@@ -165,7 +173,7 @@
     padding: 0.5rem;
     margin-left: -0.5rem;
     cursor: pointer;
-    color: var(--color-text-main);
+    color: white;
 }
 
 .mobile-logo {
@@ -174,7 +182,8 @@
     gap: 0.5rem;
     font-weight: 700;
     font-size: 1.1rem;
-    color: var(--color-text-main);
+    color: var(--color-secondary);
+    /* Gold */
 }
 
 .mobile-logo img {
@@ -185,7 +194,10 @@
 /* Overlay */
 .sidebar-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 45;
     opacity: 0;

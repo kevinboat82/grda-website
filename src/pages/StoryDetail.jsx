@@ -6,7 +6,6 @@ import { ArrowLeft, Calendar, Clock, ChevronRight, Archive, X } from 'lucide-rea
 import { archiveStories, getArchiveMonths } from '../data/archiveStories';
 import './StoryDetail.css';
 
-import MasonryGallery from '../components/MasonryGallery';
 
 const StoryDetail = () => {
     const { id } = useParams();
@@ -15,7 +14,6 @@ const StoryDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [galleryItems, setGalleryItems] = useState([]);
 
     // Check if this is an archive story
     const isArchive = id?.startsWith('archive-');
@@ -61,39 +59,6 @@ const StoryDetail = () => {
         fetchData();
     }, [id, isArchive]);
 
-    // Prepare gallery items when story loads
-    useEffect(() => {
-        if (story?.gallery && story.gallery.length > 0) {
-            const loadImages = async () => {
-                const items = await Promise.all(
-                    story.gallery.map(async (url, index) => {
-                        return new Promise((resolve) => {
-                            const img = new Image();
-                            img.onload = () => {
-                                resolve({
-                                    id: `gallery-${index}`,
-                                    img: url,
-                                    height: img.naturalHeight,
-                                    width: img.naturalWidth // Added width just in case, though Masonry only uses height logic currently
-                                });
-                            };
-                            img.onerror = () => {
-                                // Fallback for failed images
-                                resolve({
-                                    id: `gallery-${index}`,
-                                    img: url,
-                                    height: 300
-                                });
-                            };
-                            img.src = url;
-                        });
-                    })
-                );
-                setGalleryItems(items);
-            };
-            loadImages();
-        }
-    }, [story]);
 
     // Format the date
     const formatDate = (timestamp) => {
@@ -116,9 +81,23 @@ const StoryDetail = () => {
         });
     };
 
-    // Split content into paragraphs
+    // Render content (HTML or plain text)
     const renderContent = (content) => {
         if (!content) return <p className="no-content">Full story content coming soon.</p>;
+
+        // Check if content contains HTML tags
+        const hasHTML = /<\/?(p|div|h[1-6]|ul|ol|li|blockquote|b|i|em|strong|br)[\s>]/i.test(content);
+
+        if (hasHTML) {
+            return (
+                <div
+                    className="story-body-html"
+                    dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, '<br />') }}
+                />
+            );
+        }
+
+        // Fallback for plain text
         return content.split('\n\n').map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
         ));
@@ -150,7 +129,7 @@ const StoryDetail = () => {
             {/* Hero Image */}
             <div
                 className="story-hero"
-                style={{ backgroundImage: `url(${story.image})` }}
+                style={{ backgroundImage: `url('${story.image}')` }}
             >
                 <div className="story-hero-overlay">
                     <div className="container">
@@ -195,17 +174,20 @@ const StoryDetail = () => {
                         )}
 
                         {/* Story Gallery */}
-                        {galleryItems.length > 0 && (
+                        {story.gallery && story.gallery.length > 0 && (
                             <div className="story-gallery-section">
                                 <h3>Photo Gallery</h3>
-                                <MasonryGallery
-                                    items={galleryItems}
-                                    onImageClick={(url) => setSelectedImage(url)}
-                                    animateFrom="bottom"
-                                    blurToFocus={true}
-                                    stagger={0.1}
-                                    colorShiftOnHover={true}
-                                />
+                                <div className="story-gallery-grid">
+                                    {story.gallery.map((url, index) => (
+                                        <div
+                                            key={index}
+                                            className="story-gallery-item"
+                                            onClick={() => setSelectedImage(url)}
+                                        >
+                                            <img src={url} alt={`Gallery ${index + 1}`} />
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
 

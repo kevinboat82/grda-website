@@ -126,21 +126,14 @@ const ProjectDetail = () => {
                         <h2>Project Overview</h2>
                         <p>{project.description}</p>
 
-                        {/* Extended content placeholders (would come from DB in real rich text scenario) */}
-                        <h3>Strategic Importance</h3>
-                        <p>
-                            This project represents a critical component of the Ghana Railway Master Plan.
-                            By connecting key economic hubs, it will facilitate the efficient transport of
-                            goods and passengers, reducing travel times and road congestion.
-                        </p>
-
-                        <h3>Key Features</h3>
-                        <ul className="list-disc pl-5 space-y-2 mb-8 text-gray-700">
-                            <li>Modern Standard Gauge Railway specifications.</li>
-                            <li>State-of-the-art signalling and telecommunication systems.</li>
-                            <li>Construction of new passenger stations and freight terminals.</li>
-                            <li>Environmental impact mitigation measures.</li>
-                        </ul>
+                        {project.scope && (
+                            <>
+                                <h3>Scope & Highlights</h3>
+                                {project.scope.split('\n').filter(p => p.trim()).map((paragraph, idx) => (
+                                    <p key={idx}>{paragraph}</p>
+                                ))}
+                            </>
+                        )}
 
                         {/* Gallery */}
                         {(project.galleryImages && project.galleryImages.length > 0) && (
@@ -167,19 +160,19 @@ const ProjectDetail = () => {
                             <ul className="project-meta-list">
                                 <li className="meta-item">
                                     <span className="meta-label">Start Date</span>
-                                    <span className="meta-value">{project.startDate || '2023'}</span>
+                                    <span className="meta-value">{project.startDate || 'TBD'}</span>
                                 </li>
                                 <li className="meta-item">
                                     <span className="meta-label">Est. Completion</span>
-                                    <span className="meta-value">{project.endDate || '2026'}</span>
+                                    <span className="meta-value">{project.completionDate || 'TBD'}</span>
                                 </li>
                                 <li className="meta-item">
                                     <span className="meta-label">Contractor</span>
-                                    <span className="meta-value">{project.contractor || 'Multiple'}</span>
+                                    <span className="meta-value">{project.contractor || 'TBD'}</span>
                                 </li>
                                 <li className="meta-item">
-                                    <span className="meta-label">Funding</span>
-                                    <span className="meta-value">{project.funding || 'Government of Ghana'}</span>
+                                    <span className="meta-label">Budget</span>
+                                    <span className="meta-value">{project.budget || 'TBD'}</span>
                                 </li>
                             </ul>
                         </div>

@@ -6,7 +6,8 @@
 }
 
 .units-page-wrapper {
-    background-color: #f8fafc;
+    background-color: #f0faf5;
+    /* light green bg */
     min-height: 100vh;
     padding-bottom: 5rem;
 }
@@ -64,8 +65,9 @@
 
 .unit-nav-btn.active {
     background-color: var(--color-primary);
-    color: white;
-    box-shadow: 0 4px 12px rgba(17, 94, 61, 0.25);
+    color: var(--color-secondary);
+    /* Gold text */
+    box-shadow: 0 4px 12px rgba(0, 107, 63, 0.25);
 }
 
 .unit-nav-icon {
@@ -93,11 +95,16 @@
 
 /* Detail Header */
 .unit-detail-header {
-    background: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary-darker) 0%, var(--color-primary) 100%);
     color: white;
     padding: 3rem;
     position: relative;
     overflow: hidden;
+}
+
+.unit-detail-header h2 {
+    color: var(--color-secondary);
+    /* Gold heading */
 }
 
 .unit-detail-header svg {
@@ -176,7 +183,8 @@
 
 /* Performance Highlight Box */
 .performance-box {
-    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    background: linear-gradient(135deg, #f0faf5 0%, #e8f5ef 100%);
+    /* light green */
     border-radius: 16px;
     padding: 2rem;
     border-left: 5px solid var(--color-secondary);

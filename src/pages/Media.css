@@ -2,7 +2,19 @@
 
 /* Blog Header */
 .blog-header {
-    background: linear-gradient(135deg, var(--color-primary) 0%, #1a4a3a 100%);
+    background: linear-gradient(135deg, var(--color-primary-darker) 0%, var(--color-primary) 50%, var(--color-primary-dark) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-secondary), var(--color-secondary-light), var(--color-secondary));
 }
 
 /* Search and Filter Section */
@@ -96,7 +108,8 @@
 .category-tab.active {
     background: var(--color-primary);
     border-color: var(--color-primary);
-    color: white;
+    color: var(--color-secondary);
+    /* Gold text */
 }
 
 .category-icon {
@@ -350,7 +363,8 @@
     color: var(--color-primary);
     margin-bottom: 1rem;
     padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--color-primary);
+    border-bottom: 2px solid var(--color-secondary);
+    /* Gold border */
 }
 
 /* Recent Posts Widget */
@@ -498,7 +512,10 @@
 /* Lightbox */
 .lightbox {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.95);
     z-index: 9999;
     display: flex;
@@ -662,7 +679,10 @@
 
 .gallery-more-overlay {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(2px);
     display: flex;
@@ -679,7 +699,10 @@
 
 .gallery-more-overlay {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.7);
     display: flex;
     flex-direction: column;

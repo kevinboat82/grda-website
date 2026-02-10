@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HeroSlider, { defaultStories } from '../components/HeroSlider';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { db } from '../firebase';
 import TrainScheduleCard from '../components/TrainScheduleCard';
 import StatisticsSection from '../components/StatisticsSection';
@@ -12,38 +12,90 @@ import { routeSchedules } from '../data/schedules';
 import { archiveStories } from '../data/archiveStories';
 import './Home.css';
 
-// Get the 3 most recent archive stories sorted by date
-const getRecentStories = () => {
-    return [...archiveStories]
-        .sort((a, b) => {
-            const dateA = new Date(a.date + '-01');
-            const dateB = new Date(b.date + '-01');
-            return dateB - dateA;
-        })
-        .slice(0, 3);
-};
-
-// Format date for display
-const formatDate = (dateStr) => {
+// Format date for display (archive stories)
+const formatArchiveDate = (dateStr) => {
     const date = new Date(dateStr + '-01');
     return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+};
+
+// Format date for display (Firebase stories)
+const formatFirebaseDate = (timestamp) => {
+    if (!timestamp) return 'Recent';
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 };
 
 const Home = () => {
     const [stories, setStories] = useState(defaultStories);
     const [projects, setProjects] = useState([]);
+    const [latestNews, setLatestNews] = useState([]);
     useScrollAnimation();
 
     useEffect(() => {
         const fetchStories = async () => {
             try {
-                const querySnapshot = await getDocs(collection(db, "stories"));
+                const storiesRef = collection(db, "stories");
+                const q = query(storiesRef, orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
                 const storiesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
                 if (storiesData.length > 0) {
-                    setStories([...defaultStories, ...storiesData]);
+                    // Prepare Firebase stories for the HeroSlider
+                    const sliderStories = storiesData
+                        .filter(s => s.image) // Only include stories that have an image
+                        .map(s => ({
+                            ...s,
+                            subtitle: s.category || 'Latest Update',
+                            linkText: 'Read Full Story',
+                            stats: s.stats || null
+                        }));
+
+                    // Put newest Firebase stories FIRST, then defaults
+                    setStories([...sliderStories, ...defaultStories]);
+
+                    // Set latest news: Firebase stories first (newest), then archive stories
+                    const firebaseNewsCards = storiesData.slice(0, 3).map(s => ({
+                        id: s.id,
+                        title: s.title,
+                        description: s.description,
+                        image: s.image,
+                        category: s.category || 'news',
+                        date: s.createdAt,
+                        isFirebase: true
+                    }));
+
+                    // Get archive stories as fallback
+                    const archiveNewsCards = [...archiveStories]
+                        .sort((a, b) => new Date(b.date + '-01') - new Date(a.date + '-01'))
+                        .slice(0, 3)
+                        .map(s => ({
+                            ...s,
+                            isFirebase: false
+                        }));
+
+                    // Combine: Firebase stories first, fill remaining spots with archive
+                    const combined = [...firebaseNewsCards];
+                    const remaining = 3 - combined.length;
+                    if (remaining > 0) {
+                        combined.push(...archiveNewsCards.slice(0, remaining));
+                    }
+                    setLatestNews(combined);
+                } else {
+                    // No Firebase stories — use archive stories only
+                    const archiveNewsCards = [...archiveStories]
+                        .sort((a, b) => new Date(b.date + '-01') - new Date(a.date + '-01'))
+                        .slice(0, 3)
+                        .map(s => ({ ...s, isFirebase: false }));
+                    setLatestNews(archiveNewsCards);
                 }
             } catch (error) {
                 console.log("Error fetching stories (using defaults):", error);
+                // Fallback to archive stories
+                const archiveNewsCards = [...archiveStories]
+                    .sort((a, b) => new Date(b.date + '-01') - new Date(a.date + '-01'))
+                    .slice(0, 3)
+                    .map(s => ({ ...s, isFirebase: false }));
+                setLatestNews(archiveNewsCards);
             }
         };
 
@@ -97,7 +149,7 @@ const Home = () => {
                         <p>Updates from the Ghana Railway Development Authority.</p>
                     </div>
                     <div className="premium-news-grid">
-                        {getRecentStories().map((story, index) => (
+                        {latestNews.map((story, index) => (
                             <Link
                                 to={`/stories/${story.id}`}
                                 key={story.id}
@@ -116,7 +168,12 @@ const Home = () => {
                                 <div className="premium-card-content">
                                     <div className="premium-card-meta">
                                         <Calendar size={14} />
-                                        <span>{formatDate(story.date)}</span>
+                                        <span>
+                                            {story.isFirebase
+                                                ? formatFirebaseDate(story.date)
+                                                : formatArchiveDate(story.date)
+                                            }
+                                        </span>
                                     </div>
                                     <h3 className="premium-card-title">{story.title}</h3>
                                     <p className="premium-card-excerpt">{story.description}</p>
@@ -153,7 +210,7 @@ const Home = () => {
                                     key={project.id}
                                     className={`project-card animate-on-scroll ${index === 0 ? 'slide-left' : index === 2 ? 'slide-right' : 'fade-up'}`}
                                 >
-                                    <div className="project-image" style={{ backgroundImage: `url('${project.image || project.images?.[0] || 'https://images.unsplash.com/photo-1474487548417-781cb71495f3'}')` }}></div>
+                                    <div className="project-image" style={{ backgroundImage: `url('${project.coverImage || project.image || project.images?.[0] || ''}')` }}></div>
                                     <div className="project-content">
                                         <span className={`project-status ${project.status === 'Completed' ? 'status-completed' : 'status-ongoing'}`}>
                                             {project.status || 'Ongoing'}

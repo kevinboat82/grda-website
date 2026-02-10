@@ -200,8 +200,8 @@ const InteractiveMap = () => {
     // Coordinate Transformation Config
     // Maps original 400x520 space to new 1000x1000 space
     // Tuned manually to align with gh.svg
-    const transformX = (x) => (x * 2.3) + 20;
-    const transformY = (y) => (y * 2.05) - 30;
+    const transformX = (x) => (x * 2.15) + 35;
+    const transformY = (y) => (y * 1.85) + 25;
 
     // Helper to transform path strings "M x y L x y..."
     const transformPath = (pathString) => {

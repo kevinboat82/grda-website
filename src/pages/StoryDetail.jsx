@@ -12,7 +12,10 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
 // Configure PDF worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    'pdfjs-dist/build/pdf.worker.min.mjs',
+    import.meta.url,
+).toString();
 
 const StoryDetail = () => {
     const { id } = useParams();
@@ -119,6 +122,7 @@ const StoryDetail = () => {
                         <Document
                             file={contentData}
                             onLoadSuccess={onDocumentLoadSuccess}
+                            onLoadError={(error) => console.error('Error loading PDF:', error)}
                             className="pdf-document"
                         >
                             <Page

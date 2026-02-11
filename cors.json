@@ -4,7 +4,9 @@
             "http://localhost:5173",
             "http://localhost:3000",
             "https://grda-website.web.app",
-            "https://grda-website.firebaseapp.com"
+            "https://grda-website.firebaseapp.com",
+            "https://grda-website.vercel.app",
+            "*"
         ],
         "method": [
             "GET",

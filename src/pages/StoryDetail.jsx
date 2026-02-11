@@ -7,16 +7,39 @@ import { archiveStories, getArchiveMonths } from '../data/archiveStories';
 import './StoryDetail.css';
 
 
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+
+// Configure PDF worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+
 const StoryDetail = () => {
     const { id } = useParams();
+
     const [story, setStory] = useState(null);
     const [recentPosts, setRecentPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
 
+    // PDF State
+    const [numPages, setNumPages] = useState(null);
+    const [pageNumber, setPageNumber] = useState(1);
+
     // Check if this is an archive story
     const isArchive = id?.startsWith('archive-');
+
+    function onDocumentLoadSuccess({ numPages }) {
+        setNumPages(numPages);
+    }
+
+    const changePage = (offset) => {
+        setPageNumber(prevPageNumber => prevPageNumber + offset);
+    };
+
+    const previousPage = () => changePage(-1);
+    const nextPage = () => changePage(1);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -91,13 +114,49 @@ const StoryDetail = () => {
                         <FileText size={20} />
                         <span>PDF Document</span>
                     </div>
-                    <iframe
-                        src={`${contentData}#toolbar=0&navpanes=0&scrollbar=0`}
-                        title="Story PDF"
-                        className="pdf-viewer-embed"
-                    />
+
+                    <div className="pdf-document-wrapper">
+                        <Document
+                            file={contentData}
+                            onLoadSuccess={onDocumentLoadSuccess}
+                            className="pdf-document"
+                        >
+                            <Page
+                                pageNumber={pageNumber}
+                                renderTextLayer={false}
+                                renderAnnotationLayer={false}
+                                className="pdf-page"
+                                width={Math.min(window.innerWidth * 0.9, 800)} // Responsive width
+                            />
+                        </Document>
+                    </div>
+
+                    {numPages && (
+                        <div className="pdf-controls">
+                            <button
+                                type="button"
+                                disabled={pageNumber <= 1}
+                                onClick={previousPage}
+                                className="btn btn-outline btn-sm"
+                            >
+                                Previous
+                            </button>
+                            <p>
+                                Page {pageNumber} of {numPages}
+                            </p>
+                            <button
+                                type="button"
+                                disabled={pageNumber >= numPages}
+                                onClick={nextPage}
+                                className="btn btn-outline btn-sm"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
                 </div>
             );
+
         }
 
         // Text content

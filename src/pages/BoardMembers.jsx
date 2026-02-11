@@ -15,7 +15,7 @@ const boardMembers = [
     },
     {
         id: 3,
-        name: "Ms. Nafisatu Iddrisu",
+        name: "Mr. George Debrah",
         role: "Member",
         image: "https://api.dicebear.com/7.x/personas/svg?seed=NafisatuIddrisu&backgroundColor=ffd5dc"
     },
@@ -33,13 +33,13 @@ const boardMembers = [
     },
     {
         id: 6,
-        name: "Mr. Komla W. Ofori",
+        name: "Ing. Komla W. Ofori",
         role: "Member",
         image: "https://api.dicebear.com/7.x/personas/svg?seed=KomlaOfori&backgroundColor=bae1ff"
     },
     {
         id: 7,
-        name: "Mr. George Debrah",
+        name: "Ms. Nafisatu Iddrisu",
         role: "Member",
         image: "https://api.dicebear.com/7.x/personas/svg?seed=GeorgeDebrah&backgroundColor=e2f0cb"
     },
@@ -48,7 +48,20 @@ const boardMembers = [
         name: "Mr. George Lomotey",
         role: "Member",
         image: "https://api.dicebear.com/7.x/personas/svg?seed=GeorgeLomotey&backgroundColor=ffefd5"
-    }
+    },
+    {
+        id: 9,
+        name: "Dr. James Kutsuati",
+        role: "Member",
+        image: "https://api.dicebear.com/7.x/personas/svg?seed=JamesKutsuati&backgroundColor=ffefd5"
+    },
+    {
+        id: 10,
+        name: "Mrs. Audrey Smock Amoah",
+        role: "Member",
+        image: "https://api.dicebear.com/7.x/personas/svg?seed=GeorgeLomotey&backgroundColor=ffefd5"
+    },
+
 ];
 
 const BoardMembers = () => {

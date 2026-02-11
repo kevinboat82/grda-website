@@ -127,14 +127,6 @@ const Services = () => {
                     </div>
                     <div className="resources-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
                         <div className="resource-card" style={{ background: 'white', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <BookOpen size={24} color="var(--color-primary)" />
-                            <div>
-                                <h4 style={{ marginBottom: '0.25rem' }}>Railway Master Plan</h4>
-                                <span style={{ fontSize: '0.875rem', color: 'var(--color-text-light)' }}>PDF - 2.5MB</span>
-                            </div>
-                            <a href="#" style={{ marginLeft: 'auto', color: 'var(--color-secondary)' }}>Download</a>
-                        </div>
-                        <div className="resource-card" style={{ background: 'white', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                             <Shield size={24} color="var(--color-primary)" />
                             <div>
                                 <h4 style={{ marginBottom: '0.25rem' }}>Safety Guidelines</h4>

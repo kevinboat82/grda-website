@@ -3,7 +3,7 @@ import { collection, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../firebase';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Upload, X, ArrowLeft, Tag, Plus, Bold, Italic, List, ListOrdered, Heading, Quote, Type } from 'lucide-react';
+import { Upload, X, ArrowLeft, Tag, Plus, Bold, Italic, List, ListOrdered, Heading, Quote, Type, FileText } from 'lucide-react';
 import './Editor.css';
 
 // Available categories
@@ -86,6 +86,10 @@ const StoryEditor = () => {
     const [linkText, setLinkText] = useState('');
     const [statValue, setStatValue] = useState('');
     const [statLabel, setStatLabel] = useState('');
+    const [contentType, setContentType] = useState('text'); // 'text' or 'pdf'
+    const [pdfFile, setPdfFile] = useState(null);
+    const [pdfPreview, setPdfPreview] = useState(null);
+    const [existingPdfUrl, setExistingPdfUrl] = useState('');
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [existingImageUrl, setExistingImageUrl] = useState('');
@@ -112,6 +116,11 @@ const StoryEditor = () => {
                         if (data.stats) {
                             setStatValue(data.stats.value || '');
                             setStatLabel(data.stats.label || '');
+                        }
+                        setContentType(data.contentType || 'text');
+                        if (data.pdfUrl) {
+                            setExistingPdfUrl(data.pdfUrl);
+                            setPdfPreview(data.pdfUrl);
                         }
                         setExistingImageUrl(data.image || '');
                         setImagePreview(data.image || null);
@@ -196,10 +205,20 @@ const StoryEditor = () => {
                 }
             }
 
+            // Upload PDF if selected
+            let pdfUrl = existingPdfUrl;
+            if (contentType === 'pdf' && pdfFile) {
+                const pdfRef = ref(storage, `story-pdfs/${Date.now()}_${pdfFile.name}`);
+                await uploadBytes(pdfRef, pdfFile);
+                pdfUrl = await getDownloadURL(pdfRef);
+            }
+
             const storyData = {
                 title,
                 description,
-                content,
+                contentType,
+                content: contentType === 'text' ? content : '',
+                pdfUrl: contentType === 'pdf' ? pdfUrl : '',
                 category,
                 link,
                 linkText,
@@ -331,20 +350,85 @@ const StoryEditor = () => {
                         />
                     </div>
 
-                    <div className="form-group full-width has-toolbar">
-                        <label>Full Story Content</label>
-                        <RichTextToolbar content={content} setContent={setContent} textAreaRef={contentRef} />
-                        <textarea
-                            ref={contentRef}
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
-                            rows="14"
-                            placeholder="Write the full story here... Use the toolbar above to format text."
-                        />
-                        <p className="form-help">
-                            This is the complete article that users will see when they click "Read More"
-                        </p>
+                    {/* Content Type Toggle */}
+                    <div className="form-group full-width">
+                        <label>Story Content</label>
+                        <div className="content-type-toggle">
+                            <button
+                                type="button"
+                                className={`toggle-btn ${contentType === 'text' ? 'active' : ''}`}
+                                onClick={() => setContentType('text')}
+                            >
+                                <Type size={16} />
+                                Write Text
+                            </button>
+                            <button
+                                type="button"
+                                className={`toggle-btn ${contentType === 'pdf' ? 'active' : ''}`}
+                                onClick={() => setContentType('pdf')}
+                            >
+                                <FileText size={16} />
+                                Upload PDF
+                            </button>
+                        </div>
                     </div>
+
+                    {contentType === 'text' ? (
+                        <div className="form-group full-width has-toolbar">
+                            <label>Full Story Content</label>
+                            <RichTextToolbar content={content} setContent={setContent} textAreaRef={contentRef} />
+                            <textarea
+                                ref={contentRef}
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                                rows="14"
+                                placeholder="Write the full story here... Use the toolbar above to format text."
+                            />
+                            <p className="form-help">
+                                This is the complete article that users will see when they click "Read More"
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="form-group full-width">
+                            <label>PDF Document</label>
+                            <div className="pdf-upload-area">
+                                {pdfPreview ? (
+                                    <div className="pdf-preview-container">
+                                        <iframe
+                                            src={pdfPreview}
+                                            title="PDF Preview"
+                                            className="pdf-preview-embed"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => { setPdfFile(null); setPdfPreview(null); setExistingPdfUrl(''); }}
+                                            className="remove-image-btn"
+                                        >
+                                            <X size={16} /> Remove PDF
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <label className="upload-placeholder pdf-placeholder">
+                                        <FileText size={40} />
+                                        <div>Click to upload a PDF document</div>
+                                        <span className="upload-hint">The PDF will be displayed as a scrollable document in the story</span>
+                                        <input
+                                            type="file"
+                                            accept=".pdf,application/pdf"
+                                            onChange={(e) => {
+                                                if (e.target.files[0]) {
+                                                    setPdfFile(e.target.files[0]);
+                                                    setPdfPreview(URL.createObjectURL(e.target.files[0]));
+                                                    setExistingPdfUrl('');
+                                                }
+                                            }}
+                                            style={{ display: 'none' }}
+                                        />
+                                    </label>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
                     <div className="form-grid">
                         <div className="form-group">

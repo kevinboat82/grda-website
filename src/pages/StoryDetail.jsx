@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { db } from '../firebase';
-import { ArrowLeft, Calendar, Clock, ChevronRight, Archive, X } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, ChevronRight, Archive, X, FileText, Download } from 'lucide-react';
 import { archiveStories, getArchiveMonths } from '../data/archiveStories';
 import './StoryDetail.css';
 
@@ -82,7 +82,30 @@ const StoryDetail = () => {
     };
 
     // Render content (HTML or plain text)
-    const renderContent = (content) => {
+    const renderContent = (contentData, contentType) => {
+        // PDF content
+        if (contentType === 'pdf' && contentData) {
+            return (
+                <div className="pdf-viewer-container">
+                    <div className="pdf-viewer-header">
+                        <FileText size={20} />
+                        <span>PDF Document</span>
+                        <a href={contentData} target="_blank" rel="noopener noreferrer" className="pdf-download-btn">
+                            <Download size={16} />
+                            Open in New Tab
+                        </a>
+                    </div>
+                    <iframe
+                        src={contentData}
+                        title="Story PDF"
+                        className="pdf-viewer-embed"
+                    />
+                </div>
+            );
+        }
+
+        // Text content
+        const content = contentData;
         if (!content) return <p className="no-content">Full story content coming soon.</p>;
 
         // Check if content contains HTML tags
@@ -161,7 +184,10 @@ const StoryDetail = () => {
 
                         {/* Full content */}
                         <div className="story-body">
-                            {renderContent(story.content)}
+                            {renderContent(
+                                story.contentType === 'pdf' ? story.pdfUrl : story.content,
+                                story.contentType
+                            )}
                         </div>
 
                         {/* External link if provided */}

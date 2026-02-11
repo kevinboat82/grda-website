@@ -67,10 +67,10 @@ const StatisticsSection = () => {
             <div className="stats-bg-pattern"></div>
             <div className="container">
                 <div className="stats-grid">
-                    <StatItem icon={Train} value="970" label="Kilometers Track" suffix=" km" />
-                    <StatItem icon={Users} value="1500" label="Daily Passengers" />
-                    <StatItem icon={Map} value="12" label="Major Stations" suffix="" />
-                    <StatItem icon={TrendingUp} value="20" label="Completion" suffix="%" />
+                    <StatItem icon={Train} value="97" label="Kilometers Track" suffix=" km" />
+                    <StatItem icon={Users} value="600" label="Daily Passengers" />
+                    <StatItem icon={Map} value="8" label="Major Stations" suffix="" />
+                    <StatItem icon={TrendingUp} value="92" label="Completion" suffix="%" />
                 </div>
             </div>
         </section>

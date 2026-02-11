@@ -19,16 +19,16 @@ const Footer = () => {
                         Building a world-class railway network for Ghana's future prosperity and sustainable development.
                     </p>
                     <div className="footer-socials">
-                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=100090580692375" target="https://www.facebook.com/profile.php?id=100090580692375" rel="noopener noreferrer" className="social-icon">
                             <Facebook size={18} />
                         </a>
-                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                        <a href="https://x.com/GhRailAuthority" target="https://x.com/GhRailAuthority" rel="noopener noreferrer" className="social-icon">
                             <Twitter size={18} />
                         </a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                        <a href="https://www.linkedin.com/company/ghanarailwaydevelopmentauthority/" target="https://www.linkedin.com/company/ghanarailwaydevelopmentauthority/" rel="noopener noreferrer" className="social-icon">
                             <Linkedin size={18} />
                         </a>
-                        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                        <a href="https://www.youtube.com/@ghanarailwaydevelopment" target="https://www.youtube.com/@ghanarailwaydevelopment" rel="noopener noreferrer" className="social-icon">
                             <Youtube size={18} />
                         </a>
                     </div>

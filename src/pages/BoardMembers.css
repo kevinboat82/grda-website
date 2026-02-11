@@ -61,13 +61,17 @@
 .profile-modal-content {
     background: white;
     width: 100%;
-    max-width: 900px;
-    max-height: 90vh;
+    max-width: 1000px;
+    height: 85vh;
+    /* Fixed height relative to viewport */
     border-radius: 16px;
-    overflow-y: auto;
     position: relative;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     animation: slideUp 0.3s ease-out;
+    display: flex;
+    /* Flexbox for layout */
+    overflow: hidden;
+    /* Prevent outer scroll */
 }
 
 @keyframes slideUp {
@@ -110,26 +114,35 @@
 
 /* Modal Layout */
 .profile-modal-grid {
+    display: flex;
+    /* Changed from grid to flex for better height control in this context if needed, but grid is fine too. sticking to plan's grid idea but mapped to updated logic */
     display: grid;
-    grid-template-columns: 350px 1fr;
-    min-height: 500px;
+    grid-template-columns: 400px 1fr;
+    width: 100%;
+    height: 100%;
 }
 
 .profile-modal-image {
     background: #f3f4f6;
     height: 100%;
+    position: relative;
 }
 
 .profile-modal-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .profile-modal-info {
     padding: 3rem;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    /* Scrollable content */
+    height: 100%;
+    /* Take full height of parent */
 }
 
 .profile-name {
@@ -161,17 +174,35 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .profile-modal-content {
+        height: 90vh;
+        /* Slightly taller on mobile */
+        flex-direction: column;
+        /* Stack vertically */
+    }
+
     .profile-modal-grid {
         grid-template-columns: 1fr;
-        min-height: auto;
+        grid-template-rows: 300px 1fr;
+        display: block;
+        /* Let it flow normally or use flex/grid */
+        overflow-y: auto;
+        /* Allow entire modal to scroll if needed, but better to keep fixed header? */
+        /* Re-thinking mobile: usually better to have image scroll away. 
+           But to keep fixed height, we use flex col */
+        display: flex;
+        flex-direction: column;
     }
 
     .profile-modal-image {
         height: 300px;
+        flex-shrink: 0;
     }
 
     .profile-modal-info {
         padding: 2rem;
+        overflow-y: auto;
+        /* Scrollable info on mobile too */
     }
 
     .profile-name {

@@ -15,19 +15,19 @@ export const routeSchedules = [
             {
                 period: "Morning",
                 stops: [
-                    { station: "Tema Harbour", arrival: null, departure: "5:30am", isStop: false },
+                    { station: "Tema Harbour", arrival: null, departure: "6:00am", isStop: false },
                     { station: "Industrial Area", arrival: null, departure: null, isStop: true },
                     { station: "Ashaiman", arrival: null, departure: null, isStop: true },
-                    { station: "Afienya", arrival: "5:45am", departure: null, isStop: false }
+                    { station: "Afienya", arrival: "6:45am", departure: null, isStop: false }
                 ]
             },
             {
                 period: "Morning (2nd)",
                 stops: [
-                    { station: "Tema Harbour", arrival: null, departure: "7:20am", isStop: false },
+                    { station: "Tema Harbour", arrival: null, departure: "7:00am", isStop: false },
                     { station: "Industrial Area", arrival: null, departure: null, isStop: true },
                     { station: "Ashaiman", arrival: null, departure: null, isStop: true },
-                    { station: "Afienya", arrival: "7:50am", departure: null, isStop: false }
+                    { station: "Afienya", arrival: "7:45am", departure: null, isStop: false }
                 ]
             },
             {
@@ -50,9 +50,9 @@ export const routeSchedules = [
             }
         ],
         fares: {
-            temaToAfienya: "GHS 20.00",
-            afienyaToAdomi: "GHS 35.00",
-            temaToAdomi: "GHS 50.00"
+            temaToAfienya: "GHS 15.00",
+            afienyaToAdomi: "GHS 25.00",
+            temaToAdomi: "GHS 40.00"
         }
     },
 
@@ -69,10 +69,10 @@ export const routeSchedules = [
             {
                 period: "Morning",
                 stops: [
-                    { station: "Afienya", arrival: null, departure: "6:30am", isStop: false },
+                    { station: "Afienya", arrival: null, departure: "7:00am", isStop: false },
                     { station: "Ashaiman", arrival: null, departure: null, isStop: true },
                     { station: "Industrial Area", arrival: null, departure: null, isStop: true },
-                    { station: "Tema Harbour", arrival: "6:45am", departure: null, isStop: false }
+                    { station: "Tema Harbour", arrival: "7:45am", departure: null, isStop: false }
                 ]
             },
             {
@@ -114,9 +114,9 @@ export const routeSchedules = [
             }
         ],
         fares: {
-            temaToAfienya: "GHS 20.00",
-            afienyaToAdomi: "GHS 35.00",
-            temaToAdomi: "GHS 50.00"
+            temaToAfienya: "GHS 15.00",
+            afienyaToAdomi: "GHS 25.00",
+            temaToAdomi: "GHS 40.00"
         }
     },
 
@@ -156,9 +156,9 @@ export const routeSchedules = [
             }
         ],
         fares: {
-            temaToAfienya: "GHS 20.00",
-            afienyaToAdomi: "GHS 35.00",
-            temaToAdomi: "GHS 50.00"
+            temaToAfienya: "GHS 15.00",
+            afienyaToAdomi: "GHS 25.00",
+            temaToAdomi: "GHS 40.00"
         }
     },
 
@@ -198,9 +198,9 @@ export const routeSchedules = [
             }
         ],
         fares: {
-            temaToAfienya: "GHS 20.00",
-            afienyaToAdomi: "GHS 35.00",
-            temaToAdomi: "GHS 50.00"
+            temaToAfienya: "GHS 15.00",
+            afienyaToAdomi: "GHS 25.00",
+            temaToAdomi: "GHS 40.00"
         }
     }
 ];

@@ -150,7 +150,7 @@ const Projects = () => {
 
             <div className="projects-page container">
                 <div className="projects-filter">
-                    {['All', 'Ongoing Projects', 'Completed Projects', 'Upcoming Projects', 'Railway Master Plan'].map(f => (
+                    {['All', 'Ongoing Projects', 'Completed Projects', 'Upcoming Projects',].map(f => (
                         <button
                             key={f}
                             className={`filter-btn ${filter === f ? 'active' : ''}`}

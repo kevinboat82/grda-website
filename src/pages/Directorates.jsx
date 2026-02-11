@@ -5,26 +5,6 @@ import './Directorates.css';
 const directorates = [
     {
         id: 1,
-        title: "Administration",
-        shortTitle: "Admin",
-        name: "Godfred Gyan",
-        role: "Deputy Director of Administration",
-        duty: "Oversees general administrative, logistical, and secretarial support services to ensure efficient daily operations.",
-        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/Mr%20Gyan.JPG?alt=media&token=b2590d51-fe32-41c1-b425-4a8681e37f36",
-        color: "#115E3D"
-    },
-    {
-        id: 2,
-        title: "Human Resource",
-        shortTitle: "HR",
-        name: "Anita Disu",
-        role: "Deputy Director of Human Resources",
-        duty: "Manages recruitment, staff development, welfare, and industrial relations to maintain a motivated and skilled workforce.",
-        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/anita.JPG?alt=media&token=43147e76-9071-4068-b90b-91edd711bbd2",
-        color: "#1a7251"
-    },
-    {
-        id: 3,
         title: "Policy, Planning & Research",
         shortTitle: "PPRME",
         name: "AL-AMIN IS-HAK AL-HASSAN",
@@ -32,6 +12,27 @@ const directorates = [
         duty: "Responsible for strategic planning, policy formulation, research analysis, and monitoring of railway projects and programs.",
         image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/amin.JPG?alt=media&token=07d70129-68ee-4265-9e70-96f564f07c3f",
         color: "#0d5a3c"
+    },
+    {
+        id: 2,
+        title: "Projects Development",
+        shortTitle: "Projects",
+        name: "NANA OWUSU-ANSAH",
+        role: "Director of Projects",
+        duty: "Supervises the planning, design, and execution of railway infrastructure projects to ensure timely and quality delivery.",
+        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/nana%20owusu%20ansah.JPG?alt=media&token=23ffd2da-58d8-4d05-a8cd-8f63fe87de01",
+        color: "#2d5a47"
+    },
+
+    {
+        id: 3,
+        title: "Human Resource",
+        shortTitle: "HR",
+        name: "Anita Disu",
+        role: "Deputy Director of Human Resources",
+        duty: "Manages recruitment, staff development, welfare, and industrial relations to maintain a motivated and skilled workforce.",
+        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/anita.JPG?alt=media&token=43147e76-9071-4068-b90b-91edd711bbd2",
+        color: "#1a7251"
     },
     {
         id: 4,
@@ -65,14 +66,14 @@ const directorates = [
     },
     {
         id: 7,
-        title: "Projects Development",
-        shortTitle: "Projects",
-        name: "NANA OWUSU-ANSAH",
-        role: "Director of Projects",
-        duty: "Supervises the planning, design, and execution of railway infrastructure projects to ensure timely and quality delivery.",
-        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/nana%20owusu%20ansah.JPG?alt=media&token=23ffd2da-58d8-4d05-a8cd-8f63fe87de01",
-        color: "#2d5a47"
-    }
+        title: "Administration",
+        shortTitle: "Admin",
+        name: "Godfred Gyan",
+        role: "Deputy Director of Administration",
+        duty: "Oversees general administrative, logistical, and secretarial support services to ensure efficient daily operations.",
+        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/Mr%20Gyan.JPG?alt=media&token=b2590d51-fe32-41c1-b425-4a8681e37f36",
+        color: "#115E3D"
+    },
 ];
 
 const Directorates = () => {
@@ -101,7 +102,7 @@ const Directorates = () => {
                         <div className="stat-item">
                             <Users size={24} />
                             <div>
-                                <span className="stat-value">250+</span>
+                                <span className="stat-value">80+</span>
                                 <span className="stat-label">Staff Members</span>
                             </div>
                         </div>

@@ -111,7 +111,10 @@
 }
 
 .story-cta {
-    margin: 2rem 0;
+    margin: 3rem 0;
+    /* Increased margin for better separation */
+    display: flex;
+    justify-content: flex-start;
 }
 
 .story-footer {
@@ -563,6 +566,8 @@
     border-radius: 12px;
     overflow: hidden;
     background: #f9fafb;
+    width: 100%;
+    max-width: 100%;
 }
 
 .pdf-viewer-header {
@@ -597,6 +602,7 @@
 
 .pdf-viewer-embed {
     width: 100%;
+    max-width: 100%;
     height: 80vh;
     min-height: 500px;
     border: none;
@@ -605,7 +611,13 @@
 
 @media (max-width: 768px) {
     .pdf-viewer-embed {
-        height: 60vh;
+        height: 75vh;
         min-height: 400px;
+    }
+
+    .pdf-viewer-container {
+        margin: 1rem 0;
+        width: 100%;
+        max-width: 100%;
     }
 }

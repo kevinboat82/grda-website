@@ -41,48 +41,6 @@
 }
 
 /* ============================================ */
-/* Buttons - Gold & Green Theme                 */
-/* ============================================ */
-
-.btn {
-    padding: var(--spacing-md) var(--spacing-xl);
-    font-weight: 600;
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.btn-primary {
-    background: var(--color-secondary);
-    /* Gold */
-    color: var(--color-primary-dark);
-    /* Green text */
-    border: 2px solid var(--color-secondary);
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-}
-
-.btn-primary:hover {
-    background: var(--color-secondary-light);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-}
-
-.btn-outline {
-    border: 2px solid var(--color-secondary);
-    /* Gold border */
-    color: var(--color-secondary);
-    /* Gold text */
-    background: transparent;
-}
-
-.btn-outline:hover {
-    background: var(--color-secondary);
-    color: var(--color-primary-dark);
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-}
-
-/* ============================================ */
 /* Sections                                     */
 /* ============================================ */
 

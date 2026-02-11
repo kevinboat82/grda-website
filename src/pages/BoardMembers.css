@@ -1,0 +1,180 @@
+/* Board Members Page Styles */
+
+/* View Profile Button */
+.view-profile-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: auto;
+}
+
+.view-profile-btn:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+.view-profile-btn svg {
+    transition: transform 0.2s;
+}
+
+.view-profile-btn:hover svg {
+    transform: translateX(4px);
+}
+
+/* Modal Overlay */
+.profile-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Modal Content */
+.profile-modal-content {
+    background: white;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    border-radius: 16px;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Close Button */
+.profile-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+    color: #4b5563;
+}
+
+.profile-modal-close:hover {
+    background: #f3f4f6;
+    transform: rotate(90deg);
+    color: #ef4444;
+}
+
+/* Modal Layout */
+.profile-modal-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    min-height: 500px;
+}
+
+.profile-modal-image {
+    background: #f3f4f6;
+    height: 100%;
+}
+
+.profile-modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-modal-info {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+}
+
+.profile-role {
+    font-size: 1.1rem;
+    color: var(--color-secondary);
+    font-weight: 600;
+    margin: 0 0 2rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.profile-bio {
+    color: #374151;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.profile-bio p {
+    margin-bottom: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-modal-grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .profile-modal-image {
+        height: 300px;
+    }
+
+    .profile-modal-info {
+        padding: 2rem;
+    }
+
+    .profile-name {
+        font-size: 1.75rem;
+    }
+}

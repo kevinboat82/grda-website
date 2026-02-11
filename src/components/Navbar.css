@@ -18,7 +18,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
+    height: 90px;
+    /* Increased from 80px */
 }
 
 .navbar-logo {
@@ -29,7 +30,8 @@
 }
 
 .logo-image {
-    height: 48px;
+    height: 60px;
+    /* Increased from 48px */
     width: auto;
     object-fit: contain;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
@@ -43,7 +45,8 @@
 }
 
 .logo-line-1 {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
+    /* Increased from 1.1rem */
     font-weight: 800;
     letter-spacing: -0.02em;
     color: var(--color-secondary);
@@ -53,7 +56,8 @@
 }
 
 .logo-line-2 {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
+    /* Increased from 0.75rem */
     font-weight: 600;
     letter-spacing: 0.02em;
     color: rgba(255, 255, 255, 0.85);
@@ -307,17 +311,8 @@
 }
 
 /* Responsive Breakpoints */
+/* Mobile/Tablet Breakpoint */
 @media (max-width: 1024px) {
-    .navbar-links {
-        gap: var(--spacing-md);
-    }
-
-    .nav-link {
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 768px) {
     .navbar-container {
         height: 70px;
     }
@@ -336,18 +331,20 @@
 
     .mobile-nav {
         display: block;
+        max-width: 400px;
+        /* Slightly wider for tablet */
     }
 
     .logo-image {
-        height: 36px;
+        height: 40px;
     }
 
     .logo-line-1 {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
     .logo-line-2 {
-        font-size: 0.65rem;
+        font-size: 0.7rem;
     }
 }
 

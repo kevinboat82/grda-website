@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { db } from '../firebase';
-import { ArrowLeft, Calendar, Clock, ChevronRight, Archive, X, FileText, Download } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, ChevronRight, Archive, X, FileText } from 'lucide-react';
 import { archiveStories, getArchiveMonths } from '../data/archiveStories';
 import './StoryDetail.css';
 
@@ -90,13 +90,9 @@ const StoryDetail = () => {
                     <div className="pdf-viewer-header">
                         <FileText size={20} />
                         <span>PDF Document</span>
-                        <a href={contentData} target="_blank" rel="noopener noreferrer" className="pdf-download-btn">
-                            <Download size={16} />
-                            Open in New Tab
-                        </a>
                     </div>
                     <iframe
-                        src={contentData}
+                        src={`${contentData}#toolbar=0&navpanes=0&scrollbar=0`}
                         title="Story PDF"
                         className="pdf-viewer-embed"
                     />

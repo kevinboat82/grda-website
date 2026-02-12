@@ -1,6 +1,8 @@
+```
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { doc, getDoc, collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { doc, getDoc, collection, query, orderBy, limit, getDocs, where } from 'firebase/firestore';
+import SEO from '../components/SEO';
 import { db } from '../firebase';
 import { ArrowLeft, Calendar, Clock, ChevronRight, Archive, X, FileText } from 'lucide-react';
 import { archiveStories, getArchiveMonths } from '../data/archiveStories';
@@ -205,8 +207,15 @@ const StoryDetail = () => {
     }
 
     return (
-        <article className="story-detail">
-            {/* Hero Image */}
+        <div className="story-detail-page">
+            <SEO
+                title={story.title}
+                description={story.excerpt || story.content?.substring(0, 160)}
+                image={story.image}
+                url={`/stories/${id}`}
+                type="article"
+            />
+            {/* Navigation Bar */}
             <div
                 className="story-hero"
                 style={{ backgroundImage: `url('${story.image}')` }}
@@ -360,7 +369,7 @@ const StoryDetail = () => {
                     </div>
                 </div>
             )}
-        </article>
+        </div>
     );
 };
 

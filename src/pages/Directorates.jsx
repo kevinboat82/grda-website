@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEO from '../components/SEO';
 import { Users, Briefcase, ChevronRight, Building2 } from 'lucide-react';
 import './Directorates.css';
 
@@ -46,12 +47,12 @@ const directorates = [
     },
     {
         id: 5,
-        title: "Estate & Commercial",
+        title: "Revenue Mobilisation & Estate",
         shortTitle: "Estate",
-        name: "EDEM DANKU",
-        role: "Deputy Director of Estate & Commercial",
+        name: "John Apagya Quayson",
+        role: "Head of Reveue Mobilisation and Estates",
         duty: "Manages railway lands and assets, and develops commercial strategies to maximize revenue from railway operations.",
-        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/danku.JPG?alt=media&token=6f52cde3-14ce-47d8-a7f8-0c21c2885c35",
+        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/Quayson.jpeg?alt=media&token=d8860ebf-1cd7-43df-b42a-26535e6c56e7",
         color: "#c4941d"
     },
     {
@@ -81,6 +82,11 @@ const Directorates = () => {
 
     return (
         <div className="page-wrapper">
+            <SEO
+                title="Directorates"
+                description="Meet the specialized directorates and leadership team driving the Ghana Railway Development Authority's mission."
+                url="/directorates"
+            />
             <div className="page-header">
                 <div className="container">
                     <h1>Directorates</h1>

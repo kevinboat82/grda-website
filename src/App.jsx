@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -27,7 +27,7 @@ import TermsOfService from './pages/TermsOfService';
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <ScrollToTop />
       <BackToTop />
       <Routes>
@@ -61,7 +61,7 @@ function App() {
         <Route path="/admin/login" element={<Login />} />
         <Route path="/admin/signup" element={<Signup />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 

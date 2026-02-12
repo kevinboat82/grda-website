@@ -1,4 +1,6 @@
 import React from 'react';
+import SEO from '../components/SEO';
+import { Target, Flag, Scale, CheckCircle2 } from 'lucide-react';
 import RailwayHistoryTimeline from '../components/RailwayHistoryTimeline';
 import './About.css';
 

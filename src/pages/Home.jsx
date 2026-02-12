@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SEO from '../components/SEO';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HeroSlider, { defaultStories } from '../components/HeroSlider';

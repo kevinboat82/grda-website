@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { ArrowUpRight, MapPin } from 'lucide-react';
+import SEO from '../components/SEO';
+import { Search, MapPin, Building2, Calendar, ArrowRight, ArrowUpRight, Filter } from 'lucide-react';
 import InteractiveMap from '../components/InteractiveMap';
 import './Projects.css';
 

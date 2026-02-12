@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, ChevronRight } from 'lucide-react';
+import Avatar from '../components/Avatar';
 import './BoardMembers.css';
 
 const boardMembers = [
@@ -7,7 +8,7 @@ const boardMembers = [
         id: 1,
         name: "Mr. R.A.Y. Anamoo",
         role: "Board Chairperson",
-        image: "https://api.dicebear.com/7.x/personas/svg?seed=RAYAnamoo&backgroundColor=b6e3f4",
+        image: null,
         bio: "Mr. R.A.Y. Anamoo is a seasoned executive with extensive experience in the maritime and transport sectors. He brings a wealth of knowledge in strategic planning and infrastructure development to the GRDA Board."
     },
     {
@@ -66,14 +67,14 @@ In addition to his professional roles, Kwame serves on the Executive Council of 
         id: 6,
         name: "Ing. Komla W. Ofori",
         role: "Member",
-        image: "https://api.dicebear.com/7.x/personas/svg?seed=KomlaOfori&backgroundColor=bae1ff",
+        image: null,
         bio: "Ing. Komla W. Ofori is a distinguished engineer with decades of experience in civil and railway engineering. His technical expertise is crucial for the oversight of infrastructure projects."
     },
     {
         id: 7,
         name: "Ms. Nafisatu Iddrisu",
         role: "Member",
-        image: "https://api.dicebear.com/7.x/personas/svg?seed=GeorgeDebrah&backgroundColor=e2f0cb",
+        image: null,
         bio: "Ms. Nafisatu Iddrisu brings a focus on social impact and community engagement, ensuring that railway developments benefit the communities they serve."
     },
     {
@@ -146,7 +147,11 @@ const BoardMembers = () => {
                     {boardMembers.map(member => (
                         <div key={member.id} className="team-card" style={{ background: 'white', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', textAlign: 'center' }}>
                             <div style={{ height: '300px', overflow: 'hidden' }}>
-                                <img src={member.image} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }} />
+                                {member.image ? (
+                                    <img src={member.image} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }} />
+                                ) : (
+                                    <Avatar name={member.name} size="full" />
+                                )}
                             </div>
                             <div style={{ padding: '1.5rem' }}>
                                 <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--color-primary)' }}>{member.name}</h3>
@@ -169,7 +174,11 @@ const BoardMembers = () => {
                         </button>
                         <div className="profile-modal-grid">
                             <div className="profile-modal-image">
-                                <img src={selectedMember.image} alt={selectedMember.name} />
+                                {selectedMember.image ? (
+                                    <img src={selectedMember.image} alt={selectedMember.name} />
+                                ) : (
+                                    <Avatar name={selectedMember.name} size="full" />
+                                )}
                             </div>
                             <div className="profile-modal-info">
                                 <h2 className="profile-name">{selectedMember.name}</h2>

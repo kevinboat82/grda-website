@@ -2,10 +2,12 @@ import TrainScheduleCard from '../components/TrainScheduleCard';
 import { routeSchedules } from '../data/schedules';
 import React from 'react';
 import SEO from '../components/SEO';
-import { Train, Shield, Wrench, GraduationCap, Building, FileText, PenTool, BookOpen, CheckCircle, ArrowRight, Briefcase } from 'lucide-react';
+import { Train, Shield, Wrench, GraduationCap, Building, FileText, PenTool, BookOpen, CheckCircle, ArrowRight, Briefcase, Eye } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 import './Services.css';
 
 const Services = () => {
+    const navigate = useNavigate();
 
     const servicesData = [
         {
@@ -75,7 +77,7 @@ const Services = () => {
                                     <li><CheckCircle size={20} /> STEM Engineering Workshops</li>
                                     <li><CheckCircle size={20} /> Group Student Discounts</li>
                                 </ul>
-                                <button className="btn-special green" onClick={() => window.location.href = '/contact'}>
+                                <button className="btn-special green" onClick={() => navigate('/contact')}>
                                     Book a School Trip <ArrowRight size={18} />
                                 </button>
                             </div>
@@ -94,7 +96,7 @@ const Services = () => {
                                     <li><CheckCircle size={20} /> Premium Onboard Catering</li>
                                     <li><CheckCircle size={20} /> Branding & Private Carriages</li>
                                 </ul>
-                                <button className="btn-special gold" onClick={() => window.location.href = '/contact'}>
+                                <button className="btn-special gold" onClick={() => navigate('/contact')}>
                                     Inquire for Charters <ArrowRight size={18} />
                                 </button>
                             </div>
@@ -115,7 +117,9 @@ const Services = () => {
                             <div className="service-icon">{service.icon}</div>
                             <h3>{service.title}</h3>
                             <p>{service.description}</p>
-                            <a href="#" className="service-link">Learn More <ArrowRight size={16} /></a>
+                            <Link to="/contact" className="service-link">
+                                Learn More <ArrowRight size={16} />
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -125,7 +129,7 @@ const Services = () => {
             <section className="section" style={{ backgroundColor: '#F9FAFB' }}>
                 <div className="container">
                     <div className="section-header">
-                        <h2>Resources & Downloads</h2>
+                        <h2>Resources</h2>
                     </div>
                     <div className="resources-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
                         <div className="resource-card" style={{ background: 'white', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -134,7 +138,9 @@ const Services = () => {
                                 <h4 style={{ marginBottom: '0.25rem' }}>Safety Guidelines</h4>
                                 <span style={{ fontSize: '0.875rem', color: 'var(--color-text-light)' }}>PDF - 1.2MB</span>
                             </div>
-                            <a href="#" style={{ marginLeft: 'auto', color: 'var(--color-secondary)' }}>Download</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer" style={{ marginLeft: 'auto', color: 'var(--color-secondary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                View <Eye size={16} />
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -144,7 +150,7 @@ const Services = () => {
                 <div className="container" style={{ textAlign: 'center' }}>
                     <h2 style={{ marginBottom: '16px' }}>Need assistance with a specific service?</h2>
                     <p style={{ marginBottom: '32px', color: '#4B5563' }}>Our dedicated team is ready to help you navigate our regulatory content.</p>
-                    <a href="/contact" className="btn btn-primary">Contact Support</a>
+                    <Link to="/contact" className="btn btn-primary">Contact Support</Link>
                 </div>
             </section>
         </>

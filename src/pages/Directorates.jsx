@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SEO from '../components/SEO';
 import { Users, Briefcase, ChevronRight, Building2 } from 'lucide-react';
+import Avatar from '../components/Avatar';
 import './Directorates.css';
 
 const directorates = [
@@ -86,7 +87,7 @@ const directorates = [
             "Oversee the maintenance of GRDA real estate.",
             "Resolve land encroachment and disputes."
         ],
-        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/Quayson.jpeg?alt=media&token=d8860ebf-1cd7-43df-b42a-26535e6c56e7",
+        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/Quayson.jpeg?alt=media&token=a2f552d4-e4fb-4a02-ae1c-0dd9baacb009",
         color: "#c4941d"
     },
     {
@@ -103,7 +104,7 @@ const directorates = [
             "Investigate railway accidents and incidents.",
             "Monitor compliance with environmental and technical standards."
         ],
-        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/okutu.png?alt=media&token=6a0155ae-6d1d-487f-906c-61e1ed477bbc",
+        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/okutu.jpeg?alt=media&token=360919ce-66c5-4915-a9a7-f81a18e5fab9",
         color: "#8b5a2b"
     },
     {
@@ -124,6 +125,23 @@ const directorates = [
         color: "#115E3D"
     },
 ];
+
+const DirectorImage = ({ src, alt, name, className }) => {
+    const [imgError, setImgError] = useState(false);
+
+    if (imgError || !src) {
+        return <Avatar name={name} size="full" className={className} />;
+    }
+
+    return (
+        <img
+            src={src}
+            alt={alt}
+            className={className}
+            onError={() => setImgError(true)}
+        />
+    );
+};
 
 const Directorates = () => {
     const [activeCard, setActiveCard] = useState(null);
@@ -178,7 +196,12 @@ const Directorates = () => {
                                 style={{ '--card-accent': d.color }}
                             >
                                 <div className="card-image-wrapper">
-                                    <img src={d.image} alt={d.name} className="card-bg-image" />
+                                    <DirectorImage
+                                        src={d.image}
+                                        alt={d.name}
+                                        name={d.name}
+                                        className="card-bg-image"
+                                    />
                                     <div className="card-overlay"></div>
                                     <div className="card-content">
                                         <div className="director-badge">
@@ -224,7 +247,12 @@ const Directorates = () => {
                         </div>
                         <div className="modal-body">
                             <div className="modal-director-intro">
-                                <img src={activeCard.image} alt={activeCard.name} className="modal-director-img" />
+                                <DirectorImage
+                                    src={activeCard.image}
+                                    alt={activeCard.name}
+                                    name={activeCard.name}
+                                    className="modal-director-img"
+                                />
                                 <div>
                                     <h3>{activeCard.name}</h3>
                                     <p className="role-text">{activeCard.role}</p>

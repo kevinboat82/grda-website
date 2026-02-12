@@ -38,22 +38,26 @@ const Login = () => {
 
                 <form onSubmit={handleLogin}>
                     <div style={{ marginBottom: '1rem' }}>
-                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', color: 'var(--color-primary-dark)' }}>Email</label>
+                        <label htmlFor="login-email" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', color: 'var(--color-primary-dark)' }}>Email</label>
                         <input
                             type="email"
+                            id="login-email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
+                            autoComplete="email"
                             style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(0, 107, 63, 0.2)', outline: 'none' }}
                         />
                     </div>
                     <div style={{ marginBottom: '1.5rem' }}>
-                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', color: 'var(--color-primary-dark)' }}>Password</label>
+                        <label htmlFor="login-password" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', color: 'var(--color-primary-dark)' }}>Password</label>
                         <input
                             type="password"
+                            id="login-password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            autoComplete="current-password"
                             style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(0, 107, 63, 0.2)', outline: 'none' }}
                         />
                     </div>

@@ -13,8 +13,7 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
 // Configure PDF worker
-// Note: We are relying on Vite's worker loading or a separate configuration file if needed.
-// Avoiding direct workerSrc assignment here to prevent build issues.
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const StoryPage = () => {
     const { id } = useParams();

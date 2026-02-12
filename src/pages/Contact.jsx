@@ -75,31 +75,36 @@ const Contact = () => {
                         <h2 style={{ marginBottom: '24px', color: 'var(--color-primary)' }}>Send us a message</h2>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
-                                <label className="form-label">Full Name</label>
+                                <label htmlFor="contact-name" className="form-label">Full Name</label>
                                 <input
                                     type="text"
+                                    id="contact-name"
                                     name="name"
                                     className="form-input"
                                     required
+                                    autoComplete="name"
                                     value={formData.name}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Email Address</label>
+                                <label htmlFor="contact-email" className="form-label">Email Address</label>
                                 <input
                                     type="email"
+                                    id="contact-email"
                                     name="email"
                                     className="form-input"
                                     required
+                                    autoComplete="email"
                                     value={formData.email}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Subject</label>
+                                <label htmlFor="contact-subject" className="form-label">Subject</label>
                                 <input
                                     type="text"
+                                    id="contact-subject"
                                     name="subject"
                                     className="form-input"
                                     required
@@ -108,8 +113,9 @@ const Contact = () => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Message</label>
+                                <label htmlFor="contact-message" className="form-label">Message</label>
                                 <textarea
+                                    id="contact-message"
                                     name="message"
                                     className="form-textarea"
                                     required

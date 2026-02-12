@@ -270,15 +270,29 @@ const StoryDetail = () => {
                             <div className="story-gallery-section">
                                 <h3>Photo Gallery</h3>
                                 <div className="story-gallery-grid">
-                                    {story.gallery.map((url, index) => (
-                                        <div
-                                            key={index}
-                                            className="story-gallery-item"
-                                            onClick={() => setSelectedImage(url)}
-                                        >
-                                            <img src={url} alt={`Gallery ${index + 1}`} />
-                                        </div>
-                                    ))}
+                                    {story.gallery.map((item, index) => {
+                                        const url = typeof item === 'string' ? item : item.url;
+                                        const type = typeof item === 'string'
+                                            ? (url.match(/\.(mp4|webm|ogg)(\?.*)?$/i) ? 'video' : 'image')
+                                            : item.type;
+
+                                        return (
+                                            <div
+                                                key={index}
+                                                className="story-gallery-item"
+                                                onClick={() => setSelectedImage({ url, type })}
+                                            >
+                                                {type === 'video' ? (
+                                                    <div className="video-thumbnail-wrapper">
+                                                        <video src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                        <div className="play-icon-overlay">▶</div>
+                                                    </div>
+                                                ) : (
+                                                    <img src={url} alt={`Gallery ${index + 1}`} />
+                                                )}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         )}
@@ -365,7 +379,11 @@ const StoryDetail = () => {
                         <X size={32} />
                     </button>
                     <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-                        <img src={selectedImage} alt="Full size" />
+                        {selectedImage.type === 'video' ? (
+                            <video src={selectedImage.url} controls autoPlay style={{ maxWidth: '90vw', maxHeight: '90vh' }} />
+                        ) : (
+                            <img src={selectedImage.url || selectedImage} alt="Full size" />
+                        )}
                     </div>
                 </div>
             )}

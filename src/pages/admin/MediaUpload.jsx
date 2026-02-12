@@ -34,7 +34,8 @@ const MediaUpload = () => {
             const newFileObjects = newFiles.map(file => ({
                 id: `new-${Date.now()}-${Math.random()}`,
                 url: URL.createObjectURL(file),
-                file: file
+                file: file,
+                type: file.type.startsWith('video/') ? 'video' : 'image'
             }));
             setFiles(prev => [...prev, ...newFileObjects]);
         }
@@ -61,11 +62,14 @@ const MediaUpload = () => {
         setIsDragging(false);
 
         if (e.dataTransfer.files) {
-            const droppedFiles = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+            const droppedFiles = Array.from(e.dataTransfer.files).filter(file =>
+                file.type.startsWith('image/') || file.type.startsWith('video/')
+            );
             const newFileObjects = droppedFiles.map(file => ({
                 id: `new-${Date.now()}-${Math.random()}`,
                 url: URL.createObjectURL(file), // Create preview URL
-                file: file
+                file: file,
+                type: file.type.startsWith('video/') ? 'video' : 'image'
             }));
             setFiles(prev => [...prev, ...newFileObjects]);
         }
@@ -98,6 +102,7 @@ const MediaUpload = () => {
                 // 2. Save metadata to Firestore
                 await addDoc(collection(db, "media_gallery"), {
                     imageUrl: downloadURL,
+                    type: fileObj.type || (fileObj.file.type.startsWith('video/') ? 'video' : 'image'),
                     storagePath: storageRef.fullPath,
                     caption: caption,
                     category: category,
@@ -182,7 +187,11 @@ const MediaUpload = () => {
                             <div className="gallery-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))' }}>
                                 {files.map((item) => (
                                     <div key={item.id} className="gallery-item">
-                                        <img src={item.url} alt="Preview" />
+                                        {item.type === 'video' ? (
+                                            <video src={item.url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} controls />
+                                        ) : (
+                                            <img src={item.url} alt="Preview" />
+                                        )}
                                         <button
                                             type="button"
                                             onClick={() => removeFile(item.id)}
@@ -198,7 +207,7 @@ const MediaUpload = () => {
                                     <span>Add Photos</span>
                                     <input
                                         type="file"
-                                        accept="image/*"
+                                        accept="image/*,video/*"
                                         multiple
                                         onChange={handleFileSelect}
                                         style={{ display: 'none' }}

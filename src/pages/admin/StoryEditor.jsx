@@ -126,10 +126,15 @@ const StoryEditor = () => {
                         setImagePreview(data.image || null);
 
                         if (data.gallery && Array.isArray(data.gallery)) {
-                            setGallery(data.gallery.map((url, index) => ({
-                                id: `existing-${index}`,
-                                url: url
-                            })));
+                            setGallery(data.gallery.map((item, index) => {
+                                const isObj = typeof item === 'object' && item !== null;
+                                return {
+                                    id: `existing-${index}`,
+                                    url: isObj ? item.url : item,
+                                    type: isObj ? item.type : (typeof item === 'string' && item.match(/\.(mp4|webm|ogg)(\?.*)?$/i) ? 'video' : 'image'),
+                                    file: null
+                                };
+                            }));
                         }
                     } else {
                         alert("Story not found");
@@ -160,7 +165,8 @@ const StoryEditor = () => {
             const newGalleryItems = newFiles.map(file => ({
                 id: `new-${Date.now()}-${Math.random()}`,
                 url: URL.createObjectURL(file),
-                file: file
+                file: file,
+                type: file.type.startsWith('video/') ? 'video' : 'image'
             }));
             setGallery(prev => [...prev, ...newGalleryItems]);
         }
@@ -198,10 +204,29 @@ const StoryEditor = () => {
                     const storageRef = ref(storage, `story-gallery/${Date.now()}_${item.file.name}`);
                     await uploadBytes(storageRef, item.file);
                     const url = await getDownloadURL(storageRef);
-                    galleryUrls.push(url);
+                    galleryUrls.push({
+                        url,
+                        type: item.type || (item.file.type.startsWith('video/') ? 'video' : 'image')
+                    });
                 } else {
-                    // Existing image
-                    galleryUrls.push(item.url);
+                    // Steps:
+                    // 1. If existing item is just { id, url }, we might not know type unless we checked extension.
+                    // Let's store as object { url, type } in DB moving forward.
+                    // For legacy strings, we'll push just the string? No, let's try to convert to object if possible,
+                    // BUT `gallery` in DB is an array. If it was array of strings, we should ideally keep it consistent or migrate.
+                    // User's DB likely has array of strings.
+                    // If I change to array of objects, I might break frontend if it expects strings.
+                    // Let's see `StoryDetail.jsx` later. It currently maps `story.gallery`.
+                    // For now, let's just push the URL string. Video support might require checking extension on render if we stick to strings.
+                    // OR, we verify if user wants rich objects.
+                    // Given "add video uploads", best approach is to detect extension on render if we can't change DB schema easily.
+                    // But storing `{ url, type: 'video' }` is cleaner.
+                    // Let's assume we can push objects. But wait, `StoryDetail` might treat `gallery` as string array.
+                    // Let's look at `StoryEditor.jsx` line 128: `setGallery(data.gallery.map((url, index) => ...))`
+                    // It assumes strings.
+                    // I should stick to Strings for now and detect type by extension in `StoryDetail.jsx`, functionality-wise it's easier.
+                    // So here, just push `url`.
+                    galleryUrls.push(url);
                 }
             }
 
@@ -267,11 +292,14 @@ const StoryEditor = () => {
         setIsDragging(false);
 
         if (e.dataTransfer.files) {
-            const newFiles = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+            const newFiles = Array.from(e.dataTransfer.files).filter(file =>
+                file.type.startsWith('image/') || file.type.startsWith('video/')
+            );
             const newGalleryItems = newFiles.map(file => ({
                 id: `new-${Date.now()}-${Math.random()}`,
                 url: URL.createObjectURL(file), // Create preview URL
-                file: file
+                file: file,
+                type: file.type.startsWith('video/') ? 'video' : 'image'
             }));
             setGallery(prev => [...prev, ...newGalleryItems]);
         }
@@ -529,7 +557,11 @@ const StoryEditor = () => {
                             <div className="gallery-grid">
                                 {gallery.map((item) => (
                                     <div key={item.id} className="gallery-item">
-                                        <img src={item.url} alt="Gallery item" />
+                                        {item.type === 'video' || (typeof item.url === 'string' && item.url.match(/\.(mp4|webm|ogg)$/i)) ? (
+                                            <video src={item.url} className="gallery-video-preview" controls style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        ) : (
+                                            <img src={item.url} alt="Gallery item" />
+                                        )}
                                         <button
                                             type="button"
                                             onClick={() => removeGalleryImage(item.id)}

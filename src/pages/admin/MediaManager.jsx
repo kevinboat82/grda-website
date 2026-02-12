@@ -229,8 +229,16 @@ const MediaManager = () => {
                             border: '1px solid rgba(0, 107, 63, 0.06)',
                             transition: 'all 0.2s'
                         }}>
-                            <div style={{ aspectRatio: '4/3', overflow: 'hidden' }}>
-                                <img src={item.imageUrl} alt={item.caption} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }} />
+                            <div style={{ aspectRatio: '4/3', overflow: 'hidden', background: '#000' }}>
+                                {item.type === 'video' || (item.imageUrl && item.imageUrl.match && item.imageUrl.match(/\.(mp4|webm|ogg)(\?.*)?$/i)) ? (
+                                    <video
+                                        src={item.imageUrl}
+                                        controls
+                                        style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                                    />
+                                ) : (
+                                    <img src={item.imageUrl} alt={item.caption} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }} />
+                                )}
                             </div>
                             <div style={{ padding: '0.75rem' }}>
                                 <p style={{ fontSize: '0.875rem', fontWeight: '600', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: '#1f2937', marginBottom: '0.25rem' }}>

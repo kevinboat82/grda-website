@@ -2,7 +2,7 @@ import TrainScheduleCard from '../components/TrainScheduleCard';
 import { routeSchedules } from '../data/schedules';
 import React from 'react';
 import SEO from '../components/SEO';
-import { Train, Shield, Wrench, GraduationCap, Building, FileText } from 'lucide-react';
+import { Train, Shield, Wrench, GraduationCap, Building, FileText, PenTool, BookOpen, CheckCircle, ArrowRight, Briefcase } from 'lucide-react';
 import './Services.css';
 
 const Services = () => {

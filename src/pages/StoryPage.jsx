@@ -1,4 +1,4 @@
-```
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { doc, getDoc, collection, query, orderBy, limit, getDocs, where } from 'firebase/firestore';
@@ -8,16 +8,15 @@ import { ArrowLeft, Calendar, Clock, ChevronRight, Archive, X, FileText } from '
 import { archiveStories, getArchiveMonths } from '../data/archiveStories';
 import './StoryDetail.css';
 
-
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
 // Configure PDF worker
-// Configure PDF worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+// Note: We are relying on Vite's worker loading or a separate configuration file if needed.
+// Avoiding direct workerSrc assignment here to prevent build issues.
 
-const StoryDetail = () => {
+const StoryPage = () => {
     const { id } = useParams();
 
     const [story, setStory] = useState(null);
@@ -391,4 +390,4 @@ const StoryDetail = () => {
     );
 };
 
-export default StoryDetail;
+export default StoryPage;

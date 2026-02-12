@@ -7,7 +7,7 @@ import Services from './pages/Services';
 import Media from './pages/Media';
 import Contact from './pages/Contact';
 import ProjectDetail from './pages/ProjectDetail';
-import StoryDetail from './pages/StoryDetail';
+import StoryPage from './pages/StoryPage';
 import AdminLayout from './layouts/AdminLayout';
 import Login from './pages/admin/Login';
 import Signup from './pages/admin/Signup';
@@ -43,7 +43,7 @@ function App() {
           <Route path="services" element={<Services />} />
           <Route path="media" element={<Media />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="stories/:id" element={<StoryDetail />} />
+          <Route path="stories/:id" element={<StoryPage />} />
           <Route path="privacy" element={<PrivacyPolicy />} />
           <Route path="terms" element={<TermsOfService />} />
         </Route>

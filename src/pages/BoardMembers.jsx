@@ -8,7 +8,7 @@ const boardMembers = [
         id: 1,
         name: "Mr. R.A.Y. Anamoo",
         role: "Board Chairperson",
-        image: null,
+        image: "/images/anamoo.jpeg",
         bio: "Mr. R.A.Y. Anamoo is a seasoned executive with extensive experience in the maritime and transport sectors. He brings a wealth of knowledge in strategic planning and infrastructure development to the GRDA Board."
     },
     {
@@ -16,7 +16,17 @@ const boardMembers = [
         name: "Dr. Frederick Appoh",
         role: "Chief Executive Officer",
         image: "/images/ceo.jpeg",
-        bio: "Dr. Frederick Appoh is the Chief Executive Officer of the Ghana Railway Development Authority. With a background in engineering and project management, he leads the Authority's mission to revitalize Ghana's railway network."
+        bio: `Dr Frederick Appoh is a distinguished Railway Systems and Infrastructure expert with a PhD in Mechanical Engineering – Railway Systems and an MSc in Reliability Engineering and Asset Management, both from the University of Manchester, UK. He also holds an MBA from Cranfield University, UK, a bachelor’s degree in Mechanical Engineering from the Kwame Nkrumah University of Science and Technology (Ghana), and a Higher National Certificate in Electrical and Electronic Engineering from Teesside University, UK.
+
+As a Chartered Engineer (CEng) and member of the Institution of Engineering and Technology (IET), Dr Appoh has earned global recognition for his expertise in railway engineering and operations. He is a Certified Maintenance and Reliability Professional (CMRP), a Certified Reliability Engineer with the American Society of Quality (ASQ), and a Distinguished Fellow of the Institute of Project Management Professionals, Ghana.
+
+Currently, Dr Appoh serves as the Senior Railway Infrastructure Business Consultant and Executive Director at RAMS Engineering & Asset Management Consultancy Ltd in London, UK. He is also the founder of Blackstar Rail Limited in Accra, Ghana, a pioneering railway engineering firm driving infrastructure development across Africa.
+
+Dr Appoh’s career in the railway industry spans over a decade, during which he has contributed to key projects for leading organisations including Bombardier Transportation, Alstom Transport, Network Rail, Transport for London, Balfour Beatty, Great Western Railway, Northern Trains, London Overground, and Hitachi Rail Europe. His expertise extends to system integration, rolling stock and infrastructure design, signalling and electrification projects, operational excellence, and strategic funding for railway projects across Western Europe, the Middle East, Africa, and the Far East.
+
+Before transitioning to the railway sector in 2011, Dr Appoh served as an aircraft engineer in the British Armed Forces, participating in military operations in Afghanistan. This foundation in engineering excellence and discipline has underpinned his remarkable career achievements.
+
+Dr Appoh’s thought leadership is further demonstrated through his numerous technical publications in railway systems. His work continues to inspire innovation and operational excellence, shaping the future of railway infrastructure development globally.`
     },
     {
         id: 3,

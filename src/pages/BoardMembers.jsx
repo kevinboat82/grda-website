@@ -20,7 +20,7 @@ const boardMembers = [
 
 As a Chartered Engineer (CEng) and member of the Institution of Engineering and Technology (IET), Dr Appoh has earned global recognition for his expertise in railway engineering and operations. He is a Certified Maintenance and Reliability Professional (CMRP), a Certified Reliability Engineer with the American Society of Quality (ASQ), and a Distinguished Fellow of the Institute of Project Management Professionals, Ghana.
 
-Currently, Dr Appoh serves as the Senior Railway Infrastructure Business Consultant and Executive Director at RAMS Engineering & Asset Management Consultancy Ltd in London, UK. He is also the founder of Blackstar Rail Limited in Accra, Ghana, a pioneering railway engineering firm driving infrastructure development across Africa.
+Currently, Dr Appoh serves as the Senior Railway Infrastructure Business Consultant and Executive Director at RAMS Engineering & Asset Management Consultancy Ltd in London, UK.He is a pioneer in railway infrastructure across Africa and Ghana, leading a forward-thinking railway engineering firm that is driving transformative infrastructure development across the continent.
 
 Dr Appoh’s career in the railway industry spans over a decade, during which he has contributed to key projects for leading organisations including Bombardier Transportation, Alstom Transport, Network Rail, Transport for London, Balfour Beatty, Great Western Railway, Northern Trains, London Overground, and Hitachi Rail Europe. His expertise extends to system integration, rolling stock and infrastructure design, signalling and electrification projects, operational excellence, and strategic funding for railway projects across Western Europe, the Middle East, Africa, and the Far East.
 

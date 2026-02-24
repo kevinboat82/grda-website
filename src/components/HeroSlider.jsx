@@ -82,7 +82,8 @@ export const defaultStories = [
     }
 ];
 
-const HeroSlider = ({ stories = defaultStories }) => {
+const HeroSlider = ({ stories: propStories = defaultStories }) => {
+    const stories = (propStories || defaultStories).slice(0, 10);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(true);
     const [progress, setProgress] = useState(0);

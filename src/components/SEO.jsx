@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 const SEO = ({ title, description, image, url, type = 'website' }) => {
     const siteTitle = 'Ghana Railway Development Authority';
     const defaultDescription = 'Official website of the Ghana Railway Development Authority (GRDA). Promoting the development of a modern, efficient, and integrated railway system.';
-    const defaultImage = '/grda-logo.png'; // Make sure this path is correct relative to public folder
+    const defaultImage = '/grda-logo (11).png'; // Make sure this path is correct relative to public folder
     const siteUrl = 'https://grda.gov.gh'; // Replace with actual domain when known
 
     const metaTitle = title ? `${title} | ${siteTitle}` : siteTitle;

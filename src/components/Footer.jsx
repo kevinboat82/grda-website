@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="container footer-container">
                 <div className="footer-column">
                     <div className="footer-logo">
-                        <img src="/grda-logo.png" alt="GRDA Logo" className="logo-image-footer" />
+                        <img src="/grda-logo (11).png" alt="GRDA Logo" className="logo-image-footer" />
                         <h3>GRDA</h3>
                     </div>
                     <p className="footer-description">

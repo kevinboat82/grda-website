@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SEO from '../components/SEO';
-import { ArrowRight, MapPin, Calendar } from 'lucide-react';
+import { ArrowRight, MapPin, Calendar, Download, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HeroSlider, { defaultStories } from '../components/HeroSlider';
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
@@ -139,6 +139,8 @@ const Home = () => {
                 </div>
             </section>
 
+
+
             {/* Stats Section */}
             <StatisticsSection />
 
@@ -256,6 +258,65 @@ const Home = () => {
                         <Link to="/projects" className="btn btn-outline">
                             View All Projects <ArrowRight size={18} />
                         </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* Premium Lease Application CTA - Green Theme */}
+            <section className="section lease-cta-section" style={{ padding: '4rem 0' }}>
+                <div className="container">
+                    <div className="lease-cta-card animate-on-scroll fade-up" style={{ 
+                        background: 'linear-gradient(135deg, #065F46 0%, #022C22 100%)',
+                        borderRadius: 'var(--radius-xl)',
+                        padding: '4rem 2rem',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        boxShadow: '0 20px 40px -10px rgba(2, 44, 34, 0.5)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        color: 'white'
+                    }}>
+                        {/* Decorative Gradient Orbs */}
+                        <div style={{ position: 'absolute', top: '-15%', right: '-5%', width: '350px', height: '350px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
+                        <div style={{ position: 'absolute', bottom: '-20%', left: '-10%', width: '450px', height: '450px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
+                        
+                        <div style={{ position: 'relative', zIndex: 1, maxWidth: '750px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <div style={{ display: 'inline-flex', justifyContent: 'center', alignItems: 'center', width: '72px', height: '72px', borderRadius: '50%', backgroundColor: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)', marginBottom: '1.5rem', border: '1px solid rgba(52, 211, 153, 0.2)', boxShadow: '0 8px 32px rgba(0,0,0,0.1)' }}>
+                                <FileText size={36} color="#34D399" />
+                            </div>
+                            <h2 style={{ color: 'white', marginBottom: '1.25rem', fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: '800', letterSpacing: '-0.02em', lineHeight: '1.2' }}>Ready to Apply for a Lease?</h2>
+                            <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '1.15rem', marginBottom: '2.5rem', lineHeight: '1.7', maxWidth: '600px' }}>
+                                Secure strategic railway lands or properties for your commercial and private needs. Download the official application form, fill it out, and submit it directly to our office or email it to <a href="mailto:lease@grda.gov.gh" style={{ color: '#34D399', fontWeight: '600', textDecoration: 'none', borderBottom: '1px solid rgba(52, 211, 153, 0.4)', paddingBottom: '2px', transition: 'all 0.2s' }} onMouseEnter={(e) => {e.target.style.color = 'white'; e.target.style.borderColor = 'white';}} onMouseLeave={(e) => {e.target.style.color = '#34D399'; e.target.style.borderColor = 'rgba(52, 211, 153, 0.4)';}}>lease@grda.gov.gh</a>.
+                            </p>
+                            <a href="/GRDA-LEASE-APP-FORM.pdf" download style={{ 
+                                backgroundColor: '#10B981', 
+                                color: 'white', 
+                                display: 'inline-flex', 
+                                alignItems: 'center', 
+                                gap: '0.75rem', 
+                                padding: '1.125rem 2.5rem', 
+                                fontSize: '1.125rem', 
+                                fontWeight: '700',
+                                borderRadius: '50px',
+                                textDecoration: 'none',
+                                transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                                boxShadow: '0 10px 25px -5px rgba(16, 185, 129, 0.4)',
+                                border: '2px solid transparent'
+                            }}
+                            onMouseEnter={(e) => { 
+                                e.currentTarget.style.transform = 'translateY(-4px)'; 
+                                e.currentTarget.style.boxShadow = '0 15px 30px -5px rgba(16, 185, 129, 0.6)'; 
+                            }}
+                            onMouseLeave={(e) => { 
+                                e.currentTarget.style.transform = 'translateY(0)'; 
+                                e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(16, 185, 129, 0.4)'; 
+                            }}
+                            >
+                                Download Lease Form <Download size={22} strokeWidth={2.5} />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>

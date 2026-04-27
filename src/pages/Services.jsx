@@ -2,7 +2,7 @@ import TrainScheduleCard from '../components/TrainScheduleCard';
 import { routeSchedules } from '../data/schedules';
 import React from 'react';
 import SEO from '../components/SEO';
-import { Train, Shield, Wrench, GraduationCap, Building, FileText, PenTool, BookOpen, CheckCircle, ArrowRight, Briefcase, Eye } from 'lucide-react';
+import { Train, Shield, Wrench, GraduationCap, Building, FileText, PenTool, BookOpen, CheckCircle, ArrowRight, Briefcase, Eye, Download } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Services.css';
 
@@ -132,6 +132,16 @@ const Services = () => {
                         <h2>Resources</h2>
                     </div>
                     <div className="resources-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                        <div className="resource-card" style={{ background: 'white', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <FileText size={24} color="var(--color-primary)" />
+                            <div>
+                                <h4 style={{ marginBottom: '0.25rem' }}>Lease Application Form</h4>
+                                <span style={{ fontSize: '0.875rem', color: 'var(--color-text-light)' }}>PDF - Standard Form</span>
+                            </div>
+                            <a href="/GRDA-LEASE-APP-FORM.pdf" download target="_blank" rel="noopener noreferrer" style={{ marginLeft: 'auto', color: 'var(--color-secondary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                Download <Download size={16} />
+                            </a>
+                        </div>
                         <div className="resource-card" style={{ background: 'white', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                             <Shield size={24} color="var(--color-primary)" />
                             <div>

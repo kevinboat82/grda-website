@@ -18,8 +18,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 90px;
-    /* Increased from 80px */
+    height: 100px;
 }
 
 .navbar-logo {
@@ -30,8 +29,7 @@
 }
 
 .logo-image {
-    height: 60px;
-    /* Increased from 48px */
+    height: 72px;
     width: auto;
     object-fit: contain;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));

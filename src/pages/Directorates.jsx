@@ -60,7 +60,7 @@ const directorates = [
         id: 4,
         title: "Finance",
         shortTitle: "Finance",
-        name: "AKWASI ADOMAH-GYABAAH",
+        name: "KWASI ADDOMAH-GYABAAH",
         role: "Deputy Director of Finance",
         duty: "Manages the Authority's financial resources, budget preparation, financial reporting, and ensures fiscal discipline.",
         responsibilities: [

@@ -123,8 +123,8 @@ const Home = () => {
             <section className="section cta-section" style={{ backgroundColor: '#F3F4F6' }}>
                 <div className="container">
                     <div className="animate-on-scroll fade-up" style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                        <h2 style={{ color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Tema - Mpakadan Train Service</h2>
-                        <p style={{ color: '#4b5563', maxWidth: '600px', margin: '0 auto' }}>Experience safe and reliable transport on our newly commissioned standard gauge line. Check the latest passenger schedules below.</p>
+                        <h2 style={{ color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Passenger Train Services</h2>
+                        <p style={{ color: '#4b5563', maxWidth: '600px', margin: '0 auto' }}>Experience safe and reliable transport across our Accra-Tema and Western Region rail networks. Check the latest passenger schedules below.</p>
                     </div>
 
                     <div className="schedule-cards-container animate-on-scroll fade-up">

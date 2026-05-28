@@ -1,5 +1,5 @@
 // Train Schedule Data - Based on Official GRDA Train Timetable
-// Routes: Tema Harbour ↔ Afienya (Zone 1), Afienya ↔ Adomi (Zone 2)
+// Routes: Tema Harbour ↔ Afienya (Zone 1), Afienya ↔ Adomi (Zone 2), Kojokrom ↔ Sekondi/Takoradi (Western)
 
 export const routeSchedules = [
     // ============================================
@@ -10,6 +10,7 @@ export const routeSchedules = [
         origin: "Tema Harbour",
         destination: "Afienya",
         serviceName: "Tema - Afienya Service",
+        region: "accra",
         days: "Daily",
         schedules: [
             {
@@ -49,11 +50,9 @@ export const routeSchedules = [
                 ]
             }
         ],
-        fares: {
-            temaToAfienya: "GHS 15.00",
-            afienyaToAdomi: "GHS 25.00",
-            temaToAdomi: "GHS 40.00"
-        }
+        fares: [
+            { route: "Tema Harbour - Afienya", adult: 15, children: 7 }
+        ]
     },
 
     // ============================================
@@ -64,6 +63,7 @@ export const routeSchedules = [
         origin: "Afienya",
         destination: "Tema Harbour",
         serviceName: "Afienya - Tema Service",
+        region: "accra",
         days: "Daily",
         schedules: [
             {
@@ -113,11 +113,9 @@ export const routeSchedules = [
                 note: "Adomi Train Mop Up - Last Train"
             }
         ],
-        fares: {
-            temaToAfienya: "GHS 15.00",
-            afienyaToAdomi: "GHS 25.00",
-            temaToAdomi: "GHS 40.00"
-        }
+        fares: [
+            { route: "Tema Harbour - Afienya", adult: 15, children: 7 }
+        ]
     },
 
     // ============================================
@@ -128,6 +126,7 @@ export const routeSchedules = [
         origin: "Afienya",
         destination: "Adomi",
         serviceName: "Afienya - Adomi Service",
+        region: "accra",
         days: "Daily",
         schedules: [
             {
@@ -155,11 +154,9 @@ export const routeSchedules = [
                 ]
             }
         ],
-        fares: {
-            temaToAfienya: "GHS 15.00",
-            afienyaToAdomi: "GHS 25.00",
-            temaToAdomi: "GHS 40.00"
-        }
+        fares: [
+            { route: "Afienya - Doryumu JC", adult: 10, children: 5 }
+        ]
     },
 
     // ============================================
@@ -170,6 +167,7 @@ export const routeSchedules = [
         origin: "Adomi",
         destination: "Afienya",
         serviceName: "Adomi - Afienya Service",
+        region: "accra",
         days: "Daily",
         schedules: [
             {
@@ -197,11 +195,83 @@ export const routeSchedules = [
                 ]
             }
         ],
-        fares: {
-            temaToAfienya: "GHS 15.00",
-            afienyaToAdomi: "GHS 25.00",
-            temaToAdomi: "GHS 40.00"
-        }
+        fares: [
+            { route: "Afienya - Doryumu JC", adult: 10, children: 5 }
+        ]
+    },
+
+    // ============================================
+    // ROUTE 5: KOJOKROM ↔ SEKONDI (Round Trip - Western)
+    // ============================================
+    {
+        id: 5,
+        origin: "Kojokrom",
+        destination: "Sekondi",
+        serviceName: "Kojokrom - Sekondi Service",
+        region: "takoradi",
+        roundTrip: true,
+        days: "Daily",
+        schedules: [
+            {
+                period: "Morning",
+                stops: [
+                    { station: "Kojokrom", arrival: null, departure: "6:40am", isStop: false },
+                    { station: "Gyandu Halt", arrival: null, departure: null, isStop: true },
+                    { station: "Sekondi", arrival: "6:50am", departure: null, isStop: false }
+                ]
+            },
+            {
+                period: "Evening (Return)",
+                stops: [
+                    { station: "Sekondi", arrival: null, departure: "5:45pm", isStop: false },
+                    { station: "Gyandu Halt", arrival: null, departure: null, isStop: true },
+                    { station: "Kojokrom", arrival: "5:55pm", departure: null, isStop: false }
+                ]
+            }
+        ],
+        fares: [
+            { route: "Kojokrom - Sekondi", adult: 5, children: 3 }
+        ]
+    },
+
+    // ============================================
+    // ROUTE 6: KOJOKROM ↔ TAKORADI (Round Trip - Western)
+    // ============================================
+    {
+        id: 6,
+        origin: "Kojokrom",
+        destination: "Takoradi",
+        serviceName: "Kojokrom - Takoradi Service",
+        region: "takoradi",
+        roundTrip: true,
+        days: "Daily",
+        schedules: [
+            {
+                period: "Morning",
+                stops: [
+                    { station: "Kojokrom", arrival: null, departure: "7:20am", isStop: false },
+                    { station: "Ketan", arrival: null, departure: null, isStop: true },
+                    { station: "Adiembra", arrival: null, departure: null, isStop: true },
+                    { station: "Essaman", arrival: null, departure: null, isStop: true },
+                    { station: "Butuah", arrival: null, departure: null, isStop: true },
+                    { station: "Takoradi", arrival: "7:40am", departure: null, isStop: false }
+                ]
+            },
+            {
+                period: "Evening (Return)",
+                stops: [
+                    { station: "Takoradi", arrival: null, departure: "5:20pm", isStop: false },
+                    { station: "Butuah", arrival: null, departure: null, isStop: true },
+                    { station: "Essaman", arrival: null, departure: null, isStop: true },
+                    { station: "Adiembra", arrival: null, departure: null, isStop: true },
+                    { station: "Ketan", arrival: null, departure: null, isStop: true },
+                    { station: "Kojokrom", arrival: "5:40pm", departure: null, isStop: false }
+                ]
+            }
+        ],
+        fares: [
+            { route: "Kojokrom - Takoradi", adult: 7, children: 4 }
+        ]
     }
 ];
 
@@ -213,5 +283,5 @@ export const schedules = routeSchedules.map(route => ({
     destination: route.destination,
     departureTime: route.schedules[0].stops[0].departure,
     days: route.days,
-    fares: { firstClass: route.fares.temaToAdomi, standard: route.fares.temaToAfienya }
+    fares: { adult: route.fares[0]?.adult, children: route.fares[0]?.children }
 }));

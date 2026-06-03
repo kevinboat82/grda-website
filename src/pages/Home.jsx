@@ -119,8 +119,96 @@ const Home = () => {
             {/* Hero Section with Slider */}
             <HeroSlider stories={stories} />
 
+            {/* Hero-to-Content Transition (AGRA-inspired with train) */}
+            <div className="hero-transition">
+                {/* Curved SVG wave overlay at bottom of hero */}
+                <svg className="hero-curve" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0,64 C360,140 1080,-20 1440,80 L1440,160 L0,160 Z" fill="#F3F4F6"/>
+                </svg>
+
+                {/* Gold diagonal accent stripe with train */}
+                <div className="hero-gold-stripe">
+                    <div className="gold-stripe-inner">
+                        <svg className="stripe-train" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            {/* Train body */}
+                            <g fill="currentColor">
+                                {/* Locomotive nose */}
+                                <path d="M50,120 Q50,80 90,75 L150,70 L150,140 L90,140 Q50,140 50,120 Z"/>
+                                {/* Locomotive cabin */}
+                                <rect x="150" y="60" width="120" height="80" rx="4"/>
+                                {/* Windows on locomotive */}
+                                <rect x="160" y="70" width="30" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="200" y="70" width="30" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="240" y="70" width="20" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                {/* Coach 1 */}
+                                <rect x="275" y="65" width="160" height="75" rx="4"/>
+                                <rect x="285" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="315" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="345" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="375" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="405" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                {/* Coach 2 */}
+                                <rect x="440" y="65" width="160" height="75" rx="4"/>
+                                <rect x="450" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="480" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="510" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="540" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="570" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                {/* Coach 3 (partial) */}
+                                <rect x="605" y="65" width="130" height="75" rx="4"/>
+                                <rect x="615" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="645" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="675" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="705" y="75" width="22" height="22" rx="3" fill="rgba(255,255,255,0.3)"/>
+                                {/* Wheels */}
+                                <circle cx="110" cy="145" r="12"/>
+                                <circle cx="145" cy="145" r="12"/>
+                                <circle cx="200" cy="145" r="12"/>
+                                <circle cx="235" cy="145" r="12"/>
+                                <circle cx="310" cy="145" r="12"/>
+                                <circle cx="345" cy="145" r="12"/>
+                                <circle cx="400" cy="145" r="12"/>
+                                <circle cx="475" cy="145" r="12"/>
+                                <circle cx="510" cy="145" r="12"/>
+                                <circle cx="565" cy="145" r="12"/>
+                                <circle cx="640" cy="145" r="12"/>
+                                <circle cx="700" cy="145" r="12"/>
+                                {/* Wheel inner circles */}
+                                <circle cx="110" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="145" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="200" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="235" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="310" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="345" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="400" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="475" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="510" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="565" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="640" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                <circle cx="700" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+                                {/* Rail line */}
+                                <rect x="0" y="155" width="800" height="3" rx="1.5"/>
+                                {/* Pantograph on locomotive */}
+                                <path d="M210,60 L210,40 L220,25 L230,40 L230,60" fill="none" stroke="currentColor" strokeWidth="3"/>
+                                {/* Headlight */}
+                                <circle cx="60" cy="100" r="8" fill="rgba(255,255,255,0.5)"/>
+                                {/* Coupling links */}
+                                <rect x="268" y="100" width="7" height="8" rx="2"/>
+                                <rect x="433" y="100" width="7" height="8" rx="2"/>
+                                <rect x="598" y="100" width="7" height="8" rx="2"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                {/* Gold outline curve accent */}
+                <svg className="hero-curve-accent" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0,90 C400,160 1000,10 1440,100" fill="none" stroke="var(--color-secondary)" strokeWidth="3" strokeDasharray="0" opacity="0.5"/>
+                </svg>
+            </div>
+
             {/* Train Services CTA */}
-            <section className="section cta-section" style={{ backgroundColor: '#F3F4F6' }}>
+            <section className="section cta-section" style={{ backgroundColor: '#F3F4F6', marginTop: '-1px' }}>
                 <div className="container">
                     <div className="animate-on-scroll fade-up" style={{ textAlign: 'center', marginBottom: '3rem' }}>
                         <h2 style={{ color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Passenger Train Services</h2>

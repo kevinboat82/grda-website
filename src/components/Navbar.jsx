@@ -1,18 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Search } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(null);
+    const [scrolled, setScrolled] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const searchInputRef = useRef(null);
     const location = useLocation();
 
     // Close mobile menu on route change
     useEffect(() => {
         setIsOpen(false);
         setOpenDropdown(null);
+        setSearchOpen(false);
     }, [location]);
+
+    // Handle scroll for navbar background enhancement
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     // Prevent body scroll when menu is open
     useEffect(() => {
@@ -26,60 +40,158 @@ const Navbar = () => {
         };
     }, [isOpen]);
 
+    // Focus search input when opened
+    useEffect(() => {
+        if (searchOpen && searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    }, [searchOpen]);
+
     const toggleDropdown = (name) => {
         setOpenDropdown(openDropdown === name ? null : name);
     };
 
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            // Navigate to search or handle search
+            console.log('Search:', searchQuery);
+            setSearchOpen(false);
+            setSearchQuery('');
+        }
+    };
+
     return (
-        <nav className="navbar">
-            <div className="container navbar-container">
-                <NavLink to="/" className="navbar-logo">
-                    <img src="/grda-logo (11).png" alt="GRDA Logo" className="logo-image" />
-                    <div className="navbar-logo-text">
-                        <span className="logo-line-1">GHANA RAILWAY</span>
-                        <span className="logo-line-2">DEVELOPMENT AUTHORITY</span>
-                    </div>
-                </NavLink>
-
-                {/* Desktop Navigation */}
-                <div className="navbar-links">
-                    <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Home</NavLink>
-
-                    <div className="dropdown-container">
-                        <NavLink to="/about" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>About Us</NavLink>
-                        <div className="dropdown-menu">
-                            <NavLink to="/about" className="dropdown-item">Overview</NavLink>
-                            <NavLink to="/about/board" className="dropdown-item">Board Members</NavLink>
+        <header className={`navbar-header ${scrolled ? 'scrolled' : ''}`}>
+            <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
+                <div className="navbar-container">
+                    {/* Logo */}
+                    <NavLink to="/" className="navbar-logo">
+                        <img src="/grda-logo (11).png" alt="GRDA Logo" className="logo-image" />
+                        <div className="navbar-logo-text">
+                            <span className="logo-line-1">GHANA RAILWAY</span>
+                            <span className="logo-line-2">DEVELOPMENT AUTHORITY</span>
                         </div>
-                    </div>
+                    </NavLink>
 
-                    <NavLink to="/directorates" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Directorates</NavLink>
+                    {/* Desktop Navigation */}
+                    <div className="navbar-links">
+                        <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} end>
+                            Home
+                        </NavLink>
 
-                    <div className="dropdown-container">
-                        <NavLink to="/units" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Units</NavLink>
-                        <div className="dropdown-menu">
-                            <NavLink to="/units#hse" className="dropdown-item">HSE Unit</NavLink>
-                            <NavLink to="/units#it" className="dropdown-item">IT Unit</NavLink>
-                            <NavLink to="/units#procurement" className="dropdown-item">Procurement</NavLink>
-                            <NavLink to="/units#records" className="dropdown-item">Records Unit</NavLink>
-                            <NavLink to="/units#audit" className="dropdown-item">Audit Unit</NavLink>
+                        <div className="dropdown-container">
+                            <NavLink to="/about" className={({ isActive }) => `nav-link has-dropdown ${isActive ? 'active' : ''}`}>
+                                About Us <span className="dropdown-indicator">+</span>
+                            </NavLink>
+                            <div className="dropdown-menu">
+                                <div className="dropdown-menu-inner">
+                                    <NavLink to="/about" className="dropdown-item">
+                                        <span>Overview</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                                    </NavLink>
+                                    <NavLink to="/about/board" className="dropdown-item">
+                                        <span>Board Members</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                                    </NavLink>
+                                </div>
+                            </div>
                         </div>
+
+                        <NavLink to="/directorates" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                            Directorates
+                        </NavLink>
+
+                        <div className="dropdown-container">
+                            <NavLink to="/units" className={({ isActive }) => `nav-link has-dropdown ${isActive ? 'active' : ''}`}>
+                                Units <span className="dropdown-indicator">+</span>
+                            </NavLink>
+                            <div className="dropdown-menu">
+                                <div className="dropdown-menu-inner">
+                                    <NavLink to="/units#hse" className="dropdown-item">
+                                        <span>HSE Unit</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                                    </NavLink>
+                                    <NavLink to="/units#it" className="dropdown-item">
+                                        <span>IT Unit</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                                    </NavLink>
+                                    <NavLink to="/units#procurement" className="dropdown-item">
+                                        <span>Procurement</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                                    </NavLink>
+                                    <NavLink to="/units#records" className="dropdown-item">
+                                        <span>Records Unit</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                                    </NavLink>
+                                    <NavLink to="/units#audit" className="dropdown-item">
+                                        <span>Audit Unit</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                                    </NavLink>
+                                </div>
+                            </div>
+                        </div>
+
+                        <NavLink to="/projects" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                            Projects
+                        </NavLink>
+                        <NavLink to="/services" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                            Services
+                        </NavLink>
+                        <NavLink to="/media" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                            Blog & Media
+                        </NavLink>
+                        <NavLink to="/contact" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                            Contact
+                        </NavLink>
                     </div>
 
-                    <NavLink to="/projects" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Projects</NavLink>
-                    <NavLink to="/services" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Services</NavLink>
-                    <NavLink to="/media" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Blog & Media</NavLink>
-                    <NavLink to="/contact" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contact</NavLink>
+                    {/* Right side actions */}
+                    <div className="navbar-actions">
+                        {/* Search Button */}
+                        <button
+                            className="search-toggle"
+                            onClick={() => setSearchOpen(!searchOpen)}
+                            aria-label="Toggle search"
+                        >
+                            <Search size={18} />
+                        </button>
+
+                        {/* Mobile Menu Toggle */}
+                        <button
+                            className="mobile-menu-toggle"
+                            onClick={() => setIsOpen(!isOpen)}
+                            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                        >
+                            {isOpen ? <X size={22} /> : <Menu size={22} />}
+                        </button>
+                    </div>
                 </div>
+            </nav>
 
-                {/* Mobile Menu Toggle */}
-                <button
-                    className="mobile-menu-toggle"
-                    onClick={() => setIsOpen(!isOpen)}
-                    aria-label={isOpen ? 'Close menu' : 'Open menu'}
-                >
-                    {isOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
+            {/* Search Overlay */}
+            <div className={`search-overlay ${searchOpen ? 'active' : ''}`}>
+                <form className="search-form" onSubmit={handleSearchSubmit}>
+                    <input
+                        ref={searchInputRef}
+                        type="search"
+                        placeholder="Search GRDA..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="search-input"
+                    />
+                    <button type="submit" className="search-submit" aria-label="Submit search">
+                        <Search size={20} />
+                    </button>
+                    <button
+                        type="button"
+                        className="search-close"
+                        onClick={() => setSearchOpen(false)}
+                        aria-label="Close search"
+                    >
+                        <X size={20} />
+                    </button>
+                </form>
             </div>
 
             {/* Mobile Navigation Overlay */}
@@ -87,43 +199,53 @@ const Navbar = () => {
 
             {/* Mobile Navigation Menu */}
             <div className={`mobile-nav ${isOpen ? 'active' : ''}`}>
+                <div className="mobile-nav-header">
+                    <NavLink to="/" className="mobile-nav-logo" onClick={() => setIsOpen(false)}>
+                        <img src="/grda-logo (11).png" alt="GRDA Logo" className="mobile-logo-image" />
+                        <span className="mobile-logo-text">GRDA</span>
+                    </NavLink>
+                    <button className="mobile-nav-close" onClick={() => setIsOpen(false)} aria-label="Close menu">
+                        <X size={22} />
+                    </button>
+                </div>
+
                 <div className="mobile-nav-content">
-                    <NavLink to="/" className="mobile-nav-link">Home</NavLink>
+                    <NavLink to="/" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Home</NavLink>
 
                     <div className="mobile-dropdown">
                         <button className="mobile-dropdown-toggle" onClick={() => toggleDropdown('about')}>
-                            About Us
-                            <ChevronDown size={18} className={openDropdown === 'about' ? 'rotate' : ''} />
+                            <span>About Us</span>
+                            <span className={`mobile-toggle-icon ${openDropdown === 'about' ? 'open' : ''}`}>+</span>
                         </button>
                         <div className={`mobile-dropdown-menu ${openDropdown === 'about' ? 'open' : ''}`}>
-                            <NavLink to="/about" className="mobile-dropdown-item">Overview</NavLink>
-                            <NavLink to="/about/board" className="mobile-dropdown-item">Board Members</NavLink>
+                            <NavLink to="/about" className="mobile-dropdown-item" onClick={() => setIsOpen(false)}>Overview</NavLink>
+                            <NavLink to="/about/board" className="mobile-dropdown-item" onClick={() => setIsOpen(false)}>Board Members</NavLink>
                         </div>
                     </div>
 
-                    <NavLink to="/directorates" className="mobile-nav-link">Directorates</NavLink>
+                    <NavLink to="/directorates" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Directorates</NavLink>
 
                     <div className="mobile-dropdown">
                         <button className="mobile-dropdown-toggle" onClick={() => toggleDropdown('units')}>
-                            Units
-                            <ChevronDown size={18} className={openDropdown === 'units' ? 'rotate' : ''} />
+                            <span>Units</span>
+                            <span className={`mobile-toggle-icon ${openDropdown === 'units' ? 'open' : ''}`}>+</span>
                         </button>
                         <div className={`mobile-dropdown-menu ${openDropdown === 'units' ? 'open' : ''}`}>
-                            <NavLink to="/units#hse" className="mobile-dropdown-item">HSE Unit</NavLink>
-                            <NavLink to="/units#it" className="mobile-dropdown-item">IT Unit</NavLink>
-                            <NavLink to="/units#procurement" className="mobile-dropdown-item">Procurement</NavLink>
-                            <NavLink to="/units#records" className="mobile-dropdown-item">Records Unit</NavLink>
-                            <NavLink to="/units#audit" className="mobile-dropdown-item">Audit Unit</NavLink>
+                            <NavLink to="/units#hse" className="mobile-dropdown-item" onClick={() => setIsOpen(false)}>HSE Unit</NavLink>
+                            <NavLink to="/units#it" className="mobile-dropdown-item" onClick={() => setIsOpen(false)}>IT Unit</NavLink>
+                            <NavLink to="/units#procurement" className="mobile-dropdown-item" onClick={() => setIsOpen(false)}>Procurement</NavLink>
+                            <NavLink to="/units#records" className="mobile-dropdown-item" onClick={() => setIsOpen(false)}>Records Unit</NavLink>
+                            <NavLink to="/units#audit" className="mobile-dropdown-item" onClick={() => setIsOpen(false)}>Audit Unit</NavLink>
                         </div>
                     </div>
 
-                    <NavLink to="/projects" className="mobile-nav-link">Projects</NavLink>
-                    <NavLink to="/services" className="mobile-nav-link">Services</NavLink>
-                    <NavLink to="/media" className="mobile-nav-link">Blog & Media</NavLink>
-                    <NavLink to="/contact" className="mobile-nav-link">Contact</NavLink>
+                    <NavLink to="/projects" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Projects</NavLink>
+                    <NavLink to="/services" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Services</NavLink>
+                    <NavLink to="/media" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Blog & Media</NavLink>
+                    <NavLink to="/contact" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Contact</NavLink>
                 </div>
             </div>
-        </nav>
+        </header>
     );
 };
 

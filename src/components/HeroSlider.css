@@ -9,6 +9,8 @@
     max-height: 900px;
     overflow: hidden;
     background-color: #003d23;
+    margin-top: -80px;
+    margin-bottom: 0;
 }
 
 /* ====================================== */
@@ -90,6 +92,7 @@
     display: flex;
     align-items: center;
     padding-top: clamp(60px, 8vh, 80px);
+    padding-bottom: 160px; /* Keeps long text from overlapping bottom controls */
 }
 
 @media (max-height: 800px) {
@@ -158,12 +161,18 @@
 
 .hero-title {
     color: white;
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 800;
-    line-height: 1.1;
+    line-height: 1.15;
     margin-bottom: 1.5rem;
     opacity: 0;
     transform: translateY(30px);
+    
+    /* Prevent extremely long text from breaking layout */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .hero-title.animate {
@@ -176,6 +185,12 @@
     line-height: 1.7;
     margin-bottom: 2rem;
     max-width: 550px;
+    
+    /* Prevent extremely long descriptions from breaking layout */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     opacity: 0;
     transform: translateY(30px);
 }
@@ -338,7 +353,7 @@
     left: 0;
     right: 0;
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
-    padding: 2rem 0;
+    padding: 2rem 0 100px 0; /* 100px bottom padding clears the desktop transition overlap */
     z-index: 15;
 }
 
@@ -480,6 +495,10 @@
         min-height: 550px;
     }
 
+    .hero-bottom-controls {
+        padding: 1.5rem 0 80px 0; /* Clears the 80px tablet transition overlap */
+    }
+
     .hero-content-layer {
         padding-top: 60px;
     }
@@ -530,6 +549,10 @@
 }
 
 @media (max-width: 480px) {
+    .hero-bottom-controls {
+        padding: 1rem 0 60px 0; /* Clears the 60px mobile transition overlap */
+    }
+
     .hero-title {
         font-size: 1.75rem;
     }

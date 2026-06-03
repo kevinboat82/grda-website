@@ -41,6 +41,164 @@
 }
 
 /* ============================================ */
+/* Hero-to-Content Transition (AGRA-inspired)  */
+/* ============================================ */
+
+.hero-transition {
+    position: relative;
+    height: 100px;
+    margin-top: -100px;
+    z-index: 20;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.hero-curve {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 2;
+}
+
+.hero-curve-accent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 4;
+}
+
+/* Gold diagonal accent stripe */
+.hero-gold-stripe {
+    position: absolute;
+    bottom: 10px;
+    left: -5%;
+    width: 110%;
+    height: 60px;
+    z-index: 3;
+    transform: rotate(-1.5deg);
+    transform-origin: center center;
+    overflow: hidden;
+}
+
+.gold-stripe-inner {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 215, 0, 0.2) 10%,
+        rgba(255, 215, 0, 0.4) 30%,
+        rgba(253, 185, 19, 0.5) 50%,
+        rgba(255, 215, 0, 0.4) 70%,
+        rgba(255, 215, 0, 0.2) 90%,
+        transparent 100%
+    );
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8%;
+}
+
+.stripe-train {
+    height: 40px;
+    width: auto;
+    color: rgba(255, 185, 0, 0.6);
+    filter: drop-shadow(0 2px 12px rgba(255, 215, 0, 0.3));
+    animation: trainGlide 18s linear infinite;
+}
+
+@keyframes trainGlide {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(120vw);
+        opacity: 0;
+    }
+}
+
+/* Gold stripe top and bottom border lines */
+.hero-gold-stripe::before,
+.hero-gold-stripe::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 215, 0, 0.5) 15%,
+        rgba(255, 215, 0, 0.85) 50%,
+        rgba(255, 215, 0, 0.5) 85%,
+        transparent 100%
+    );
+}
+
+.hero-gold-stripe::before {
+    top: 0;
+}
+
+.hero-gold-stripe::after {
+    bottom: 0;
+}
+
+/* Responsive adjustments for transition */
+@media (max-width: 768px) {
+    .hero-transition {
+        height: 80px;
+        margin-top: -80px;
+    }
+
+    .hero-curve,
+    .hero-curve-accent {
+        height: 80px;
+    }
+
+    .hero-gold-stripe {
+        height: 45px;
+        bottom: 8px;
+    }
+
+    .stripe-train {
+        height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-transition {
+        height: 60px;
+        margin-top: -60px;
+    }
+
+    .hero-curve,
+    .hero-curve-accent {
+        height: 60px;
+    }
+
+    .hero-gold-stripe {
+        height: 35px;
+        bottom: 5px;
+    }
+
+    .stripe-train {
+        height: 22px;
+    }
+}
+
+/* ============================================ */
 /* Sections                                     */
 /* ============================================ */
 

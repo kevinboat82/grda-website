@@ -6,7 +6,6 @@
     position: relative;
     height: 100vh;
     min-height: 650px;
-    max-height: 900px;
     overflow: hidden;
     background-color: #003d23;
     margin-top: -80px;
@@ -353,7 +352,7 @@
     left: 0;
     right: 0;
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
-    padding: 2rem 0 100px 0; /* 100px bottom padding clears the desktop transition overlap */
+    padding: 2rem 0 120px 0; /* 120px bottom padding clears the desktop transition overlap */
     z-index: 15;
 }
 
@@ -496,7 +495,7 @@
     }
 
     .hero-bottom-controls {
-        padding: 1.5rem 0 80px 0; /* Clears the 80px tablet transition overlap */
+        padding: 1.5rem 0 100px 0; /* Clears the 100px tablet transition overlap */
     }
 
     .hero-content-layer {
@@ -550,7 +549,7 @@
 
 @media (max-width: 480px) {
     .hero-bottom-controls {
-        padding: 1rem 0 60px 0; /* Clears the 60px mobile transition overlap */
+        padding: 1rem 0 80px 0; /* Clears the 80px mobile transition overlap */
     }
 
     .hero-title {

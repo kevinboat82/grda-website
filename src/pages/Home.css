@@ -46,11 +46,12 @@
 
 .hero-transition {
     position: relative;
-    height: 100px;
-    margin-top: -100px;
+    height: 120px;
+    margin-top: -120px;
     z-index: 20;
     pointer-events: none;
     overflow: visible;
+    background: linear-gradient(to bottom, transparent 0%, #F3F4F6 100%);
 }
 
 .hero-curve {
@@ -58,7 +59,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 100px;
+    height: 120px;
     z-index: 2;
 }
 
@@ -67,7 +68,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 100px;
+    height: 120px;
     z-index: 4;
 }
 
@@ -158,13 +159,13 @@
 /* Responsive adjustments for transition */
 @media (max-width: 768px) {
     .hero-transition {
-        height: 80px;
-        margin-top: -80px;
+        height: 100px;
+        margin-top: -100px;
     }
 
     .hero-curve,
     .hero-curve-accent {
-        height: 80px;
+        height: 100px;
     }
 
     .hero-gold-stripe {
@@ -179,13 +180,13 @@
 
 @media (max-width: 480px) {
     .hero-transition {
-        height: 60px;
-        margin-top: -60px;
+        height: 80px;
+        margin-top: -80px;
     }
 
     .hero-curve,
     .hero-curve-accent {
-        height: 60px;
+        height: 80px;
     }
 
     .hero-gold-stripe {

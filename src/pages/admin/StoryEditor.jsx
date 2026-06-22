@@ -226,7 +226,7 @@ const StoryEditor = () => {
                     // It assumes strings.
                     // I should stick to Strings for now and detect type by extension in `StoryDetail.jsx`, functionality-wise it's easier.
                     // So here, just push `url`.
-                    galleryUrls.push(url);
+                    galleryUrls.push({ url: item.url, type: item.type || 'image' });
                 }
             }
 

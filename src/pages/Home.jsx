@@ -123,7 +123,7 @@ const Home = () => {
             <div className="hero-transition">
                 {/* Curved SVG wave overlay at bottom of hero */}
                 <svg className="hero-curve" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0,64 C360,140 1080,-20 1440,80 L1440,160 L0,160 Z" fill="#F3F4F6"/>
+                    <path d="M0,0 L0,64 C360,140 1080,-20 1440,80 L1440,160 L0,160 Z" fill="#F3F4F6"/>
                 </svg>
 
                 {/* Gold diagonal accent stripe with train */}

@@ -10,16 +10,18 @@ import ProjectDetail from './pages/ProjectDetail';
 import StoryPage from './pages/StoryPage';
 import AdminLayout from './layouts/AdminLayout';
 import Login from './pages/admin/Login';
-import Signup from './pages/admin/Signup';
 import Dashboard from './pages/admin/Dashboard';
 import StoryEditor from './pages/admin/StoryEditor';
 import ProjectEditor from './pages/admin/ProjectEditor';
 import MediaManager from './pages/admin/MediaManager';
 import MediaUpload from './pages/admin/MediaUpload';
+import BulletinManager from './pages/admin/BulletinManager';
+import BulletinUpload from './pages/admin/BulletinUpload';
 import BoardMembers from './pages/BoardMembers';
 import ExecutiveProfiles from './pages/ExecutiveProfiles';
 import Directorates from './pages/Directorates';
 import Units from './pages/Units';
+import Bulletin from './pages/Bulletin';
 import ScrollToTop from './components/ScrollToTop';
 import BackToTop from './components/BackToTop';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -42,6 +44,7 @@ function App() {
           <Route path="projects/:id" element={<ProjectDetail />} />
           <Route path="services" element={<Services />} />
           <Route path="media" element={<Media />} />
+          <Route path="bulletin" element={<Bulletin />} />
           <Route path="contact" element={<Contact />} />
           <Route path="stories/:id" element={<StoryPage />} />
           <Route path="privacy" element={<PrivacyPolicy />} />
@@ -57,9 +60,10 @@ function App() {
           <Route path="projects/edit/:id" element={<ProjectEditor />} />
           <Route path="media" element={<MediaManager />} />
           <Route path="media/upload" element={<MediaUpload />} />
+          <Route path="bulletins" element={<BulletinManager />} />
+          <Route path="bulletins/upload" element={<BulletinUpload />} />
         </Route>
         <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin/signup" element={<Signup />} />
       </Routes>
     </Router>
   );

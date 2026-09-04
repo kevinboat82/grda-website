@@ -1,77 +1,113 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
-import { useNavigate } from 'react-router-dom';
-import { Train } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Eye, EyeOff, Lock, Mail, ArrowRight } from 'lucide-react';
+import './Login.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setError('');
         try {
             await signInWithEmailAndPassword(auth, email, password);
             navigate('/admin/dashboard');
         } catch (err) {
-            setError('Failed to login. Please check your credentials.');
+            setError('Failed to sign in. Check your email and password.');
             console.error(err);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #003d23 0%, #006B3F 50%, #004d2c 100%)' }}>
-            <div style={{ backgroundColor: 'white', padding: '2.5rem', borderRadius: '16px', boxShadow: '0 20px 40px rgba(0, 50, 30, 0.3)', width: '100%', maxWidth: '420px', border: '1px solid rgba(255, 215, 0, 0.2)', position: 'relative', overflow: 'hidden' }}>
-                {/* Gold accent bar */}
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(90deg, #FFD700, #FFE44D, #FFD700)' }} />
-                <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                        <img src="/grda-logo.png" alt="GRDA Logo" style={{ height: '80px', width: 'auto' }} />
+        <div className="admin-auth-page">
+            <div className="admin-auth-shell">
+                <aside className="admin-auth-brand">
+                    <div className="admin-auth-brand-inner">
+                        <div className="admin-auth-logo-wrap">
+                            <img
+                                src="/grda-logo.png"
+                                alt="Ghana Railway Development Authority"
+                            />
+                        </div>
+                        <h1>GRDA Content Admin</h1>
+                        <p>
+                            Manage stories, projects, media, and bulletins for the
+                            Ghana Railway Development Authority website.
+                        </p>
+                        <Link to="/" className="admin-auth-back-site">
+                            ← Back to website
+                        </Link>
                     </div>
-                    <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--color-primary-dark)' }}>Admin Login</h1>
-                    <p style={{ color: 'var(--color-text-light)' }}>Sign in to manage website content</p>
-                </div>
+                </aside>
 
-                {error && <div style={{ backgroundColor: '#FEE2E2', color: '#B91C1C', padding: '0.75rem', borderRadius: 'var(--radius-md)', marginBottom: '1rem', fontSize: '0.875rem' }}>{error}</div>}
+                <section className="admin-auth-panel">
+                    <div className="admin-auth-panel-inner">
+                        <div className="admin-auth-mobile-logo">
+                            <img src="/grda-logo.png" alt="GRDA" />
+                        </div>
 
-                <form onSubmit={handleLogin}>
-                    <div style={{ marginBottom: '1rem' }}>
-                        <label htmlFor="login-email" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', color: 'var(--color-primary-dark)' }}>Email</label>
-                        <input
-                            type="email"
-                            id="login-email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            autoComplete="email"
-                            style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(0, 107, 63, 0.2)', outline: 'none' }}
-                        />
+                        <div className="admin-auth-heading">
+                            <p className="admin-auth-eyebrow">Welcome back</p>
+                            <h2>Sign in</h2>
+                            <p>Use your admin account to continue.</p>
+                        </div>
+
+                        {error && <div className="admin-auth-error" role="alert">{error}</div>}
+
+                        <form onSubmit={handleLogin} className="admin-auth-form">
+                            <label htmlFor="login-email">Email</label>
+                            <div className="admin-auth-input">
+                                <Mail size={18} />
+                                <input
+                                    type="email"
+                                    id="login-email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    autoComplete="email"
+                                    placeholder="you@grda.gov.gh"
+                                />
+                            </div>
+
+                            <label htmlFor="login-password">Password</label>
+                            <div className="admin-auth-input">
+                                <Lock size={18} />
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    id="login-password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    autoComplete="current-password"
+                                    placeholder="Enter your password"
+                                />
+                                <button
+                                    type="button"
+                                    className="admin-auth-eye"
+                                    onClick={() => setShowPassword((v) => !v)}
+                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
+
+                            <button type="submit" className="admin-auth-submit" disabled={loading}>
+                                {loading ? 'Signing in…' : 'Sign in'}
+                                {!loading && <ArrowRight size={18} />}
+                            </button>
+                        </form>
                     </div>
-                    <div style={{ marginBottom: '1.5rem' }}>
-                        <label htmlFor="login-password" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', color: 'var(--color-primary-dark)' }}>Password</label>
-                        <input
-                            type="password"
-                            id="login-password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            autoComplete="current-password"
-                            style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(0, 107, 63, 0.2)', outline: 'none' }}
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        style={{ width: '100%', padding: '0.875rem', background: 'linear-gradient(135deg, #FFD700, #FDB913)', color: '#003d23', fontWeight: '700', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontSize: '1rem', boxShadow: '0 4px 15px rgba(255, 215, 0, 0.3)' }}
-                    >
-                        Sign In
-                    </button>
-                </form>
-                <div style={{ marginTop: '1.25rem', textAlign: 'center', fontSize: '0.875rem' }}>
-                    <span style={{ color: '#6b7280' }}>Don't have an account? </span>
-                    <a href="/admin/signup" style={{ color: 'var(--color-primary)', fontWeight: '600' }}>Register here</a>
-                </div>
+                </section>
             </div>
         </div>
     );

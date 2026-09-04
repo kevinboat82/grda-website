@@ -1,0 +1,295 @@
+/* Admin auth — login & signup */
+
+.admin-auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background:
+        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(255, 215, 0, 0.14), transparent 55%),
+        radial-gradient(ellipse 50% 40% at 100% 100%, rgba(0, 107, 63, 0.45), transparent 50%),
+        linear-gradient(160deg, #001a10 0%, #003d23 45%, #006B3F 100%);
+}
+
+.admin-auth-shell {
+    width: min(920px, 100%);
+    min-height: min(560px, calc(100vh - 2.5rem));
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+        0 30px 60px rgba(0, 15, 8, 0.4),
+        0 0 0 1px rgba(255, 215, 0, 0.12);
+}
+
+/* Brand panel */
+.admin-auth-brand {
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.18), transparent 45%),
+        linear-gradient(165deg, #002a18 0%, #004d2c 55%, #006B3F 100%);
+    color: #fff;
+    padding: 2.5rem 2.25rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.admin-auth-brand::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #FFD700, #FFE44D, #FDB913);
+}
+
+.admin-auth-brand-inner {
+    width: 100%;
+}
+
+.admin-auth-logo-wrap {
+    width: 112px;
+    height: 112px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #000;
+    border: 2px solid rgba(255, 215, 0, 0.65);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    margin-bottom: 1.5rem;
+}
+
+.admin-auth-logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.admin-auth-brand h1 {
+    margin: 0 0 0.65rem;
+    font-size: 1.65rem;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    color: #fff;
+    font-family: var(--font-heading);
+    line-height: 1.2;
+}
+
+.admin-auth-brand p {
+    margin: 0 0 1.5rem;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    max-width: 28ch;
+}
+
+.admin-auth-back-site {
+    color: #FFD700;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 650;
+}
+
+.admin-auth-back-site:hover {
+    text-decoration: underline;
+}
+
+/* Form panel */
+.admin-auth-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.25rem;
+    background: #fafbfa;
+}
+
+.admin-auth-panel-inner {
+    width: 100%;
+    max-width: 360px;
+}
+
+.admin-auth-mobile-logo {
+    display: none;
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    border: 2px solid rgba(255, 215, 0, 0.55);
+    margin: 0 auto 1.25rem;
+}
+
+.admin-auth-mobile-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.admin-auth-eyebrow {
+    margin: 0 0 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-primary);
+}
+
+.admin-auth-heading h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.65rem;
+    font-weight: 750;
+    color: #0f291c;
+    letter-spacing: -0.02em;
+    font-family: var(--font-heading);
+}
+
+.admin-auth-heading p {
+    margin: 0 0 1.5rem;
+    color: #6b7280;
+    font-size: 0.92rem;
+}
+
+.admin-auth-error {
+    background: #fef2f2;
+    color: #b91c1c;
+    padding: 0.75rem 0.9rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    border: 1px solid #fecaca;
+}
+
+.admin-auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.admin-auth-form label {
+    font-size: 0.82rem;
+    font-weight: 650;
+    color: #0f291c;
+    margin-top: 0.55rem;
+}
+
+.admin-auth-input {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: #fff;
+    border: 1px solid rgba(15, 41, 28, 0.12);
+    border-radius: 12px;
+    padding: 0 0.85rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.admin-auth-input:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 107, 63, 0.12);
+}
+
+.admin-auth-input svg {
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.admin-auth-input input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0.85rem 0;
+    font-size: 0.95rem;
+    color: #0f291c;
+    min-width: 0;
+}
+
+.admin-auth-eye {
+    background: none;
+    border: none;
+    padding: 0.35rem;
+    cursor: pointer;
+    color: #9ca3af;
+    display: flex;
+    border-radius: 6px;
+}
+
+.admin-auth-eye:hover {
+    color: #0f291c;
+    background: rgba(15, 41, 28, 0.05);
+}
+
+.admin-auth-submit {
+    margin-top: 1.25rem;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: linear-gradient(135deg, #FFD700, #FDB913);
+    color: #003d23;
+    font-weight: 750;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.98rem;
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.32);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+.admin-auth-submit:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(255, 215, 0, 0.42);
+}
+
+.admin-auth-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.admin-auth-footer {
+    margin: 1.35rem 0 0;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.admin-auth-footer a {
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.admin-auth-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 820px) {
+    .admin-auth-shell {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .admin-auth-brand {
+        display: none;
+    }
+
+    .admin-auth-mobile-logo {
+        display: block;
+    }
+
+    .admin-auth-panel {
+        padding: 1.75rem 1.35rem;
+    }
+
+    .admin-auth-heading {
+        text-align: center;
+    }
+}

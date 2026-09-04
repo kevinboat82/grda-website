@@ -141,6 +141,9 @@ const Navbar = () => {
                         <NavLink to="/media" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
                             Blog & Media
                         </NavLink>
+                        <NavLink to="/bulletin" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                            Bulletin
+                        </NavLink>
                         <NavLink to="/contact" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
                             Contact
                         </NavLink>
@@ -242,6 +245,7 @@ const Navbar = () => {
                     <NavLink to="/projects" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Projects</NavLink>
                     <NavLink to="/services" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Services</NavLink>
                     <NavLink to="/media" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Blog & Media</NavLink>
+                    <NavLink to="/bulletin" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Bulletin</NavLink>
                     <NavLink to="/contact" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Contact</NavLink>
                 </div>
             </div>

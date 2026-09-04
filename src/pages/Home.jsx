@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import SEO from '../components/SEO';
-import { ArrowRight, MapPin, Calendar, Download, FileText } from 'lucide-react';
+import { ArrowRight, MapPin, Calendar, Download, FileText, Building2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HeroSlider, { defaultStories } from '../components/HeroSlider';
-import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import TrainScheduleCard from '../components/TrainScheduleCard';
 import StatisticsSection from '../components/StatisticsSection';
@@ -11,6 +11,7 @@ import PartnersCarousel from '../components/PartnersCarousel';
 import useScrollAnimation from '../hooks/useScrollAnimation';
 import { routeSchedules } from '../data/schedules';
 import { archiveStories } from '../data/archiveStories';
+import { getSourceLabel } from '../data/bulletinSources';
 import './Home.css';
 
 // Format date for display (archive stories)
@@ -27,34 +28,40 @@ const formatFirebaseDate = (timestamp) => {
 };
 
 const Home = () => {
-    const [stories, setStories] = useState(defaultStories);
+    const [stories, setStories] = useState([]);
+    const [storiesLoading, setStoriesLoading] = useState(true);
     const [projects, setProjects] = useState([]);
     const [latestNews, setLatestNews] = useState([]);
+    const [latestBulletins, setLatestBulletins] = useState([]);
     useScrollAnimation();
 
     useEffect(() => {
         const fetchStories = async () => {
             try {
                 const storiesRef = collection(db, "stories");
-                const q = query(storiesRef, orderBy("createdAt", "desc"));
-                const querySnapshot = await getDocs(q);
+                // Avoid orderBy so stories without createdAt still load
+                const querySnapshot = await getDocs(storiesRef);
                 const storiesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
+                storiesData.sort((a, b) => {
+                    const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt) || new Date(0);
+                    const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt) || new Date(0);
+                    return dateB - dateA;
+                });
+
                 if (storiesData.length > 0) {
-                    // Prepare Firebase stories for the HeroSlider
+                    // Hero: published Firebase stories only (no hardcoded placeholders mixed in)
                     const sliderStories = storiesData
-                        .filter(s => s.image) // Only include stories that have an image
+                        .filter(s => s.image)
                         .map(s => ({
                             ...s,
                             subtitle: s.category || 'Latest Update',
-                            linkText: 'Read Full Story',
+                            linkText: s.linkText || 'Read Full Story',
                             stats: s.stats || null
                         }));
 
-                    // Put newest Firebase stories FIRST, then defaults
-                    setStories([...sliderStories, ...defaultStories]);
+                    setStories(sliderStories.length > 0 ? sliderStories : defaultStories);
 
-                    // Set latest news: Firebase stories first (newest), then archive stories
                     const firebaseNewsCards = storiesData.slice(0, 3).map(s => ({
                         id: s.id,
                         title: s.title,
@@ -64,25 +71,10 @@ const Home = () => {
                         date: s.createdAt,
                         isFirebase: true
                     }));
-
-                    // Get archive stories as fallback
-                    const archiveNewsCards = [...archiveStories]
-                        .sort((a, b) => new Date(b.date + '-01') - new Date(a.date + '-01'))
-                        .slice(0, 3)
-                        .map(s => ({
-                            ...s,
-                            isFirebase: false
-                        }));
-
-                    // Combine: Firebase stories first, fill remaining spots with archive
-                    const combined = [...firebaseNewsCards];
-                    const remaining = 3 - combined.length;
-                    if (remaining > 0) {
-                        combined.push(...archiveNewsCards.slice(0, remaining));
-                    }
-                    setLatestNews(combined);
+                    setLatestNews(firebaseNewsCards);
                 } else {
-                    // No Firebase stories — use archive stories only
+                    // Empty CMS — use curated defaults / archive only as last resort
+                    setStories(defaultStories);
                     const archiveNewsCards = [...archiveStories]
                         .sort((a, b) => new Date(b.date + '-01') - new Date(a.date + '-01'))
                         .slice(0, 3)
@@ -91,12 +83,14 @@ const Home = () => {
                 }
             } catch (error) {
                 console.log("Error fetching stories (using defaults):", error);
-                // Fallback to archive stories
+                setStories(defaultStories);
                 const archiveNewsCards = [...archiveStories]
                     .sort((a, b) => new Date(b.date + '-01') - new Date(a.date + '-01'))
                     .slice(0, 3)
                     .map(s => ({ ...s, isFirebase: false }));
                 setLatestNews(archiveNewsCards);
+            } finally {
+                setStoriesLoading(false);
             }
         };
 
@@ -110,14 +104,30 @@ const Home = () => {
             }
         };
 
+        const fetchBulletins = async () => {
+            try {
+                const snapshot = await getDocs(collection(db, 'bulletins'));
+                const data = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+                data.sort((a, b) => {
+                    const dateA = a.createdAt?.toDate?.() || new Date(a.publishedAt || a.createdAt) || new Date(0);
+                    const dateB = b.createdAt?.toDate?.() || new Date(b.publishedAt || b.createdAt) || new Date(0);
+                    return dateB - dateA;
+                });
+                setLatestBulletins(data.slice(0, 4));
+            } catch (error) {
+                console.log('Error fetching bulletins:', error);
+            }
+        };
+
         fetchStories();
         fetchProjects();
+        fetchBulletins();
     }, []);
 
     return (
         <>
             {/* Hero Section with Slider */}
-            <HeroSlider stories={stories} />
+            <HeroSlider stories={storiesLoading && stories.length === 0 ? defaultStories : (stories.length > 0 ? stories : defaultStories)} />
 
             {/* Hero-to-Content Transition (AGRA-inspired with train) */}
             <div className="hero-transition">
@@ -284,6 +294,58 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Bulletin snippets */}
+            {latestBulletins.length > 0 && (
+                <section className="section home-bulletin-section">
+                    <div className="container">
+                        <div className="section-header animate-on-scroll fade-up">
+                            <h2>Latest Bulletins</h2>
+                            <p>Official notices and circulars from GRDA directorates and units.</p>
+                        </div>
+
+                        <div className="home-bulletin-grid">
+                            {latestBulletins.map((b, index) => (
+                                <Link
+                                    key={b.id}
+                                    to="/bulletin"
+                                    className="home-bulletin-card animate-on-scroll fade-up"
+                                    style={{ animationDelay: `${index * 0.1}s` }}
+                                >
+                                    <div className="home-bulletin-icon">
+                                        <FileText size={22} />
+                                    </div>
+                                    <div className="home-bulletin-body">
+                                        <div className="home-bulletin-meta">
+                                            <span className="home-bulletin-source">
+                                                <Building2 size={12} />
+                                                {getSourceLabel(b.sourceType, b.sourceId, b.sourceName)}
+                                            </span>
+                                            <span className="home-bulletin-date">
+                                                <Calendar size={12} />
+                                                {formatFirebaseDate(b.publishedAt || b.createdAt)}
+                                            </span>
+                                        </div>
+                                        <h3>{b.title}</h3>
+                                        {b.description && (
+                                            <p>{b.description}</p>
+                                        )}
+                                        <span className="home-bulletin-link">
+                                            View bulletin <ArrowRight size={15} />
+                                        </span>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+
+                        <div className="news-section-cta animate-on-scroll fade-up">
+                            <Link to="/bulletin" className="btn btn-outline">
+                                View All Bulletins <ArrowRight size={18} />
+                            </Link>
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* Featured Projects */}
             <section className="section featured-projects-section">

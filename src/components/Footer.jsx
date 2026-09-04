@@ -49,10 +49,10 @@ const Footer = () => {
                     <h3>Resources</h3>
                     <div className="footer-links">
                         <Link to="/media" className="footer-link">Press Releases</Link>
+                        <Link to="/bulletin" className="footer-link">Bulletin</Link>
                         <Link to="/services" className="footer-link">Regulations</Link>
                         <Link to="/services" className="footer-link">Licensing</Link>
                         <Link to="/media" className="footer-link">Gallery</Link>
-                        <Link to="/admin/login" className="footer-link">Staff Login</Link>
                     </div>
                 </div>
 

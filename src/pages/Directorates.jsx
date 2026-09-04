@@ -124,6 +124,25 @@ const directorates = [
         image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/Mr%20Gyan.JPG?alt=media&token=b2590d51-fe32-41c1-b425-4a8681e37f36",
         color: "#115E3D"
     },
+
+    {
+        id: 8,
+        title: "Strategic Initiatives & Business Development",
+        shortTitle: "Business Development",
+        name: "Augustine Baidoo",
+        role: "Deputy Director of Strategic Initiatives & Business Development",
+        duty: "Strategic Initiatives and Business Development leads the identification, evaluation, and development of new business opportunities and strategic projects for the Ghana Railway Development Authority.",
+        responsibilities: [
+            "Formulate and drive strategic initiatives for the commercialization of GRDA's railway corridors..",
+            "Negotiate and secure freight off-take agreements with shipping lines and logistics operators.",
+            "Develop pricing strategies and financial models to support revenue growth.",
+            "Turn railway assets into profitable, revenue-generating ventures through strategic monetization.",
+            "Lead capital acquisition efforts and structure Public-Private Partnership (PPP) arrangements.",
+            "Coordinate cross-agency collaboration on rail freight operations and compliance frameworks.",
+        ],
+        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/augustine%20baidoo.png?alt=media&token=dc565cd1-d045-47e8-b88b-500e00186270",
+        color: "#115E3D"
+    },
 ];
 
 const DirectorImage = ({ src, alt, name, className }) => {

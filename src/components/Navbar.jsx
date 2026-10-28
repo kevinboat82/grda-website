@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Search } from 'lucide-react';
+import PinkRibbon from './PinkRibbon';
+import { isPinkOctober } from '../utils/pinkOctober';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -72,6 +74,11 @@ const Navbar = () => {
                             <span className="logo-line-1">GHANA RAILWAY</span>
                             <span className="logo-line-2">DEVELOPMENT AUTHORITY</span>
                         </div>
+                        {isPinkOctober() && (
+                            <span className="navbar-pink-ribbon">
+                                <PinkRibbon size={34} />
+                            </span>
+                        )}
                     </NavLink>
 
                     {/* Desktop Navigation */}

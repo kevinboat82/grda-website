@@ -12,6 +12,8 @@ import useScrollAnimation from '../hooks/useScrollAnimation';
 import { routeSchedules } from '../data/schedules';
 import { archiveStories } from '../data/archiveStories';
 import { getSourceLabel } from '../data/bulletinSources';
+import PinkOctoberSection from '../components/PinkOctoberSection';
+import { isPinkOctober } from '../utils/pinkOctober';
 import './Home.css';
 
 // Format date for display (archive stories)
@@ -236,6 +238,8 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {isPinkOctober() && <PinkOctoberSection />}
 
 
 

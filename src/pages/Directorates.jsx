@@ -143,6 +143,24 @@ const directorates = [
         image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/augustine%20baidoo.png?alt=media&token=dc565cd1-d045-47e8-b88b-500e00186270",
         color: "#115E3D"
     },
+
+    {
+        id: 8,
+        title: "Planning, Project Monitoring & Evaluation",
+        shortTitle: "PPRME",
+        name: "Dr. Prince Eyi-Mensah",
+        role: "Deputy Director PPRME",
+        duty: "Shapes and oversees the Authority’s strategic and operational functions.",
+        responsibilities: [
+            "Formulating and reviewing agency policy to ensure alignment with national railway development objectives.",
+            "Managing freight operations to enhance efficiency and service delivery across corridors",
+            "Collaborating with implementing partners and major stakeholders to drive coordinated project execution and sectoral growth.",
+            "Monitoring and evaluating railway projects to assess performance, impact, and compliance with standards.",
+            "Coordinating and supervising field work and related activities to ensure effective implementation and reporting.",
+        ],
+        image: "https://firebasestorage.googleapis.com/v0/b/grda-website.firebasestorage.app/o/Eyi-mensah.PNG?alt=media&token=6a0b6d8d-4efb-477f-997a-4745f64bff33",
+        color: "#115E3D"
+    },
 ];
 
 const DirectorImage = ({ src, alt, name, className }) => {
